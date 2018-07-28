@@ -70,16 +70,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../googletest/include;../../googletest</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../googletest/include;../../googletest;../../../cppasm/src</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../googletest/include;../../googletest</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../googletest/include;../../googletest;../../../cppasm/src</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../googletest/include;../../googletest</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../googletest/include;../../googletest;../../../cppasm/src</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../googletest/include;../../googletest</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../googletest/include;../../googletest;../../../cppasm/src</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -126,8 +126,43 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\cppasm\src\asmstream.cpp" />
+    <ClCompile Include="..\..\..\cppasm\src\cppasm.cpp" />
+    <ClCompile Include="..\..\..\cppasm\src\Instruction.cpp" />
+    <ClCompile Include="..\..\..\cppasm\src\keyword.cpp" />
+    <ClCompile Include="..\..\..\cppasm\src\label.cpp" />
+    <ClCompile Include="..\..\..\cppasm\src\section.cpp" />
+    <ClCompile Include="..\..\..\cppasm\src\st.cpp" />
     <ClCompile Include="..\..\googletest\src\gtest-all.cc" />
     <ClCompile Include="..\..\tests\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\cppasm\src\asmstream.h" />
+    <ClInclude Include="..\..\..\cppasm\src\cppasm.h" />
+    <ClInclude Include="..\..\..\cppasm\src\imm.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction10_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction12_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction16_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction1_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction26_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction2_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction36_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction3_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction4_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction5_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction6_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction7_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction8_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction9_Types.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Instruction_x.h" />
+    <ClInclude Include="..\..\..\cppasm\src\keyword.h" />
+    <ClInclude Include="..\..\..\cppasm\src\label.h" />
+    <ClInclude Include="..\..\..\cppasm\src\m.h" />
+    <ClInclude Include="..\..\..\cppasm\src\Operands_x.h" />
+    <ClInclude Include="..\..\..\cppasm\src\reg.h" />
+    <ClInclude Include="..\..\..\cppasm\src\section.h" />
+    <ClInclude Include="..\..\..\cppasm\src\st.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
