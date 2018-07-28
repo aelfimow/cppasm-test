@@ -1,0 +1,6 @@
+VisualStudio2017/cppasm-test/.vs/
+VisualStudio2017/cppasm-test/Debug/
+VisualStudio2017/cppasm-test/cppasm-test.vcxproj.filters
+VisualStudio2017/cppasm-test/cppasm-test.vcxproj.user
+googletest/include/
+googletest/src/
