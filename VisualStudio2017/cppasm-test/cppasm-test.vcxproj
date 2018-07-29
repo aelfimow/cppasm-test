@@ -135,6 +135,7 @@
     <ClCompile Include="..\..\..\cppasm\src\st.cpp" />
     <ClCompile Include="..\..\googletest\src\gtest-all.cc" />
     <ClCompile Include="..\..\tests\main.cpp" />
+    <ClCompile Include="..\..\tests\test_Instruction1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\cppasm\src\asmstream.h" />
