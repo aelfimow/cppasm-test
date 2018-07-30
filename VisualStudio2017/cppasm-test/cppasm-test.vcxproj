@@ -133,6 +133,7 @@
     <ClCompile Include="..\..\..\cppasm\src\label.cpp" />
     <ClCompile Include="..\..\..\cppasm\src\section.cpp" />
     <ClCompile Include="..\..\..\cppasm\src\st.cpp" />
+    <ClCompile Include="..\..\..\cppasm\src\streamdest_cout.cpp" />
     <ClCompile Include="..\..\googletest\src\gtest-all.cc" />
     <ClCompile Include="..\..\tests\main.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction1.cpp" />
@@ -164,6 +165,8 @@
     <ClInclude Include="..\..\..\cppasm\src\reg.h" />
     <ClInclude Include="..\..\..\cppasm\src\section.h" />
     <ClInclude Include="..\..\..\cppasm\src\st.h" />
+    <ClInclude Include="..\..\..\cppasm\src\streamdest.h" />
+    <ClInclude Include="..\..\..\cppasm\src\streamdest_cout.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
