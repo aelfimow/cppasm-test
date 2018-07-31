@@ -1,170 +1,6 @@
 #include <gtest/gtest.h>
 #include <cppasm.h>
 
-static void gen_Instruction1_Type6(Instruction1_Type6 &instr)
-{
-    m16 addr { RAX };
-
-    instr(addr);
-}
-
-static void gen_Instruction1_Type7(Instruction1_Type7 &instr)
-{
-    m64 addr { RAX };
-
-    instr(addr);
-}
-
-static void gen_Instruction1_Type8(Instruction1_Type8 &instr)
-{
-    m128 addr { RAX };
-
-    instr(addr);
-}
-
-static void gen_Instruction1_Type9(Instruction1_Type9 &instr)
-{
-    imm16 param1 { 65535 };
-    imm8 param2 { 255 };
-
-    instr(param1, param2);
-}
-
-static void gen_Instruction1_Type10(Instruction1_Type10 &instr)
-{
-    imm8 param1 { 255 };
-
-    instr(param1);
-}
-
-static void gen_Instruction1_Type11_1(Instruction1_Type11 &instr)
-{
-    instr();
-    STOSB();
-}
-
-static void gen_Instruction1_Type11_2(Instruction1_Type11 &instr)
-{
-    instr();
-    m64 addr { RBX };
-    XCHG(RAX, addr);
-}
-
-static void gen_Instruction1_Type12(Instruction1_Type12 &instr)
-{
-    m80bcd addr { RAX };
-
-    instr(addr);
-}
-
-static void gen_Instruction1_Type13(Instruction1_Type13 &instr)
-{
-    instr(ST(0));
-}
-
-static void gen_Instruction1_Type14(Instruction1_Type14 &instr)
-{
-    m32 addr { RAX };
-
-    instr(addr);
-}
-
-static void gen_Instruction1_Type15(Instruction1_Type15 &instr)
-{
-    instr(MM1, MM0);
-}
-
-static void gen_Instruction1_Type16(Instruction1_Type16 &instr)
-{
-    m64 addr { RAX };
-
-    instr(addr, MM0);
-}
-
-static void gen_Instruction1_Type17(Instruction1_Type17 &instr)
-{
-    m128 addr { EAX };
-
-    instr(addr, XMM0);
-}
-
-static void gen_Instruction1_Type18(Instruction1_Type18 &instr)
-{
-    m64 addr { RAX };
-
-    instr(XMM0, addr);
-}
-
-static void gen_Instruction1_Type19(Instruction1_Type19 &instr)
-{
-    m128 addr { RAX };
-
-    instr(addr, XMM0);
-}
-
-static void gen_Instruction1_Type20(Instruction1_Type20 &instr)
-{
-    instr(XMM0, MM0);
-}
-
-static void gen_Instruction1_Type21(Instruction1_Type21 &instr)
-{
-    instr(MM0, XMM0);
-}
-
-static void gen_Instruction1_Type22(Instruction1_Type22 &instr)
-{
-    imm8 shift1 { 1U };
-    imm8 shift2 { 128U };
-
-    instr(XMM0, shift1);
-    instr(XMM0, shift2);
-}
-
-static void gen_Instruction1_Type23(Instruction1_Type23 &instr)
-{
-    m128 addr { RAX };
-
-    instr(XMM0, addr);
-}
-
-static void gen_Instruction1_Type24(Instruction1_Type24 &instr)
-{
-    m128 addr { RAX };
-
-    instr(XMM0, addr);
-}
-
-static void gen_Instruction1_Type25(Instruction1_Type25 &instr)
-{
-    m256 addr { RBX };
-    instr(ZMM0, addr);
-    instr(ZMM0.k1, addr);
-    instr(ZMM0.k1.z, addr);
-}
-
-static void gen_Instruction1_Type26(Instruction1_Type26 &instr)
-{
-    m128 addr { RAX };
-
-    instr(YMM0, addr);
-}
-
-static void gen_Instruction1_Type27(Instruction1_Type27 &instr)
-{
-    instr(k1, k2, k3);
-}
-
-static void gen_Instruction1_Type28(Instruction1_Type28 &instr)
-{
-    instr(k1, k2);
-}
-
-static void gen_Instruction1_Type29(Instruction1_Type29 &instr)
-{
-    imm8 value { 0 };
-    instr(k1, k2, value);
-}
 
 extern std::string asmstr();
 
@@ -797,185 +633,401 @@ TEST(Instruction1, Type5)
 
 TEST(Instruction1, Type6)
 {
-    gen_Instruction1_Type6(FSTCW);
-    gen_Instruction1_Type6(FNSTCW);
-    gen_Instruction1_Type6(FLDCW);
+    m16 addr { RAX };
+
+    FSTCW(addr);
+    EXPECT_EQ(asmstr(), "fstcw (%rax)");
+
+    FNSTCW(addr);
+    EXPECT_EQ(asmstr(), "fnstcw (%rax)");
+
+    FLDCW(addr);
+    EXPECT_EQ(asmstr(), "fldcw (%rax)");
 }
 
 TEST(Instruction1, Type7)
 {
-    gen_Instruction1_Type7(CMPXCHG8B);
+    m64 addr { RAX };
+
+    CMPXCHG8B(addr);
+    EXPECT_EQ(asmstr(), "cmpxchg8b (%rax)");
 }
 
 TEST(Instruction1, Type8)
 {
-    gen_Instruction1_Type8(CMPXCHG16B);
+    m128 addr { RAX };
+
+    CMPXCHG16B(addr);
+    EXPECT_EQ(asmstr(), "cmpxchg16b (%rax)");
 }
 
 TEST(Instruction1, Type9)
 {
-    gen_Instruction1_Type9(ENTER);
+    imm16 param1 { 65535 };
+    imm8 param2 { 255 };
+
+    ENTER(param1, param2);
+    EXPECT_EQ(asmstr(), "enter $0xFFFF, $0xFF");
 }
 
 TEST(Instruction1, Type10)
 {
-    gen_Instruction1_Type10(INT);
-    gen_Instruction1_Type10(XABORT);
+    imm8 param1 { 255 };
+
+    INT(param1);
+    EXPECT_EQ(asmstr(), "int $0xFF");
+
+    XABORT(param1);
+    EXPECT_EQ(asmstr(), "xabort $0xFF");
 }
 
 TEST(Instruction1, Type11)
 {
-    gen_Instruction1_Type11_1(REP);
-    gen_Instruction1_Type11_1(REPE);
-    gen_Instruction1_Type11_1(REPZ);
-    gen_Instruction1_Type11_1(REPNE);
-    gen_Instruction1_Type11_1(REPNZ);
+    REP();
+    STOSB();
+    EXPECT_EQ(asmstr(), "rep stosb");
 
-    gen_Instruction1_Type11_2(XRELEASE);
-    gen_Instruction1_Type11_2(XACQUIRE);
+    REPE();
+    STOSB();
+    EXPECT_EQ(asmstr(), "repe stosb");
+
+    REPZ();
+    STOSB();
+    EXPECT_EQ(asmstr(), "repz stosb");
+
+    REPNE();
+    STOSB();
+    EXPECT_EQ(asmstr(), "repne stosb");
+
+    REPNZ();
+    STOSB();
+    EXPECT_EQ(asmstr(), "repnz stosb");
+
+    m64 addr { RBX };
+
+    XRELEASE();
+    XCHG(RAX, addr);
+    EXPECT_EQ(asmstr(), "xrelease xchg (%rbx), %rax");
+
+    XACQUIRE();
+    XCHG(RAX, addr);
+    EXPECT_EQ(asmstr(), "xacquire xchg (%rbx), %rax");
 }
 
 TEST(Instruction1, Type12)
 {
-    gen_Instruction1_Type12(FBLD);
-    gen_Instruction1_Type12(FBSTP);
+    m80bcd addr { RAX };
+
+    FBLD(addr);
+    EXPECT_EQ(asmstr(), "fbld (%rax)");
+
+    FBSTP(addr);
+    EXPECT_EQ(asmstr(), "fbstp (%rax)");
 }
 
 TEST(Instruction1, Type13)
 {
-    gen_Instruction1_Type13(FFREE);
+    FFREE(ST(0));
+    EXPECT_EQ(asmstr(), "ffree %st(0)");
 }
 
 TEST(Instruction1, Type14)
 {
-    gen_Instruction1_Type14(LDMXCSR);
-    gen_Instruction1_Type14(STMXCSR);
-    gen_Instruction1_Type14(VLDMXCSR);
-    gen_Instruction1_Type14(VSTMXCSR);
+    m32 addr { RAX };
+
+    LDMXCSR(addr);
+    EXPECT_EQ(asmstr(), "ldmxcsr (%rax)");
+
+    STMXCSR(addr);
+    EXPECT_EQ(asmstr(), "stmxcsr (%rax)");
+
+    VLDMXCSR(addr);
+    EXPECT_EQ(asmstr(), "vldmxcsr (%rax)");
+
+    VSTMXCSR(addr);
+    EXPECT_EQ(asmstr(), "vstmxcsr (%rax)");
 }
 
 TEST(Instruction1, Type15)
 {
-    gen_Instruction1_Type15(MASKMOVQ);
+    MASKMOVQ(MM1, MM0);
+    EXPECT_EQ(asmstr(), "maskmovq %mm0, %mm1");
 }
 
 TEST(Instruction1, Type16)
 {
-    gen_Instruction1_Type16(MOVNTQ);
+    m64 addr { RAX };
+
+    MOVNTQ(addr, MM0);
+    EXPECT_EQ(asmstr(), "movntq %mm0, (%rax)");
 }
 
 TEST(Instruction1, Type17)
 {
-    gen_Instruction1_Type17(MOVNTPS);
+    m128 addr { EAX };
+
+    MOVNTPS(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movntps %xmm0, (%eax)");
 }
 
 TEST(Instruction1, Type18)
 {
-    gen_Instruction1_Type18(MOVHPD);
-    gen_Instruction1_Type18(MOVLPD);
+    m64 addr { RAX };
+
+    MOVHPD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movhpd (%rax), %xmm0");
+
+    MOVLPD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movlpd (%rax), %xmm0");
 }
 
 TEST(Instruction1, Type19)
 {
-    gen_Instruction1_Type19(MOVNTPD);
-    gen_Instruction1_Type19(MOVNTDQ);
+    m128 addr { RAX };
+
+    MOVNTPD(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movntpd %xmm0, (%rax)");
+
+    MOVNTDQ(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movntdq %xmm0, (%rax)");
 }
 
 TEST(Instruction1, Type20)
 {
-    gen_Instruction1_Type20(MOVQ2DQ);
+    MOVQ2DQ(XMM0, MM0);
+    EXPECT_EQ(asmstr(), "movq2dq %mm0, %xmm0");
 }
 
 TEST(Instruction1, Type21)
 {
-    gen_Instruction1_Type21(MOVDQ2Q);
+    MOVDQ2Q(MM0, XMM0);
+    EXPECT_EQ(asmstr(), "movdq2q %xmm0, %mm0");
 }
 
 TEST(Instruction1, Type22)
 {
-    gen_Instruction1_Type22(PSLLDQ);
-    gen_Instruction1_Type22(PSRLDQ);
+    imm8 shift1 { 1U };
+    imm8 shift2 { 128U };
+
+    PSLLDQ(XMM0, shift1);
+    EXPECT_EQ(asmstr(), "pslldq $0x01, %xmm0");
+    PSLLDQ(XMM0, shift2);
+    EXPECT_EQ(asmstr(), "pslldq $0x80, %xmm0");
+
+    PSRLDQ(XMM0, shift1);
+    EXPECT_EQ(asmstr(), "psrldq $0x01, %xmm0");
+    PSRLDQ(XMM0, shift2);
+    EXPECT_EQ(asmstr(), "psrldq $0x80, %xmm0");
 }
 
 TEST(Instruction1, Type23)
 {
-    gen_Instruction1_Type23(LDDQU);
+    m128 addr { RAX };
+
+    LDDQU(XMM0, addr);
+    EXPECT_EQ(asmstr(), "lddqu (%rax), %xmm0");
 }
 
 TEST(Instruction1, Type24)
 {
-    gen_Instruction1_Type24(MOVNTDQA);
+    m128 addr { RAX };
+
+    MOVNTDQA(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movntdqa (%rax), %xmm0");
 }
 
 TEST(Instruction1, Type25)
 {
-    gen_Instruction1_Type25(VBROADCASTF32X8);
-    gen_Instruction1_Type25(VBROADCASTI32X8);
-    gen_Instruction1_Type25(VBROADCASTF64X4);
-    gen_Instruction1_Type25(VBROADCASTI64X4);
+    m256 addr { RBX };
+
+    VBROADCASTF32X8(ZMM0, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastf32x8 (%rbx), %zmm0");
+    VBROADCASTF32X8(ZMM0.k1, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastf32x8 (%rbx), %zmm0{%k1}");
+    VBROADCASTF32X8(ZMM0.k1.z, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastf32x8 (%rbx), %zmm0{%k1}{z}");
+
+    VBROADCASTI32X8(ZMM0, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x8 (%rbx), %zmm0");
+    VBROADCASTI32X8(ZMM0.k1, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x8 (%rbx), %zmm0{%k1}");
+    VBROADCASTI32X8(ZMM0.k1.z, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x8 (%rbx), %zmm0{%k1}{z}");
+
+    VBROADCASTF64X4(ZMM0, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastf64x4 (%rbx), %zmm0");
+    VBROADCASTF64X4(ZMM0.k1, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastf64x4 (%rbx), %zmm0{%k1}");
+    VBROADCASTF64X4(ZMM0.k1.z, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastf64x4 (%rbx), %zmm0{%k1}{z}");
+
+    VBROADCASTI64X4(ZMM0, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti64x4 (%rbx), %zmm0");
+    VBROADCASTI64X4(ZMM0.k1, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti64x4 (%rbx), %zmm0{%k1}");
+    VBROADCASTI64X4(ZMM0.k1.z, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti64x4 (%rbx), %zmm0{%k1}{z}");
 }
 
 TEST(Instruction1, Type26)
 {
-    gen_Instruction1_Type26(VBROADCASTF128);
-    gen_Instruction1_Type26(VBROADCASTI128);
+    m128 addr { RAX };
+
+    VBROADCASTF128(YMM0, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastf128 (%rax), %ymm0");
+
+    VBROADCASTI128(YMM0, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti128 (%rax), %ymm0");
 }
 
 TEST(Instruction1, Type27)
 {
-    gen_Instruction1_Type27(KADDB);
-    gen_Instruction1_Type27(KADDW);
-    gen_Instruction1_Type27(KADDD);
-    gen_Instruction1_Type27(KADDQ);
-    gen_Instruction1_Type27(KANDB);
-    gen_Instruction1_Type27(KANDW);
-    gen_Instruction1_Type27(KANDD);
-    gen_Instruction1_Type27(KANDQ);
-    gen_Instruction1_Type27(KANDNB);
-    gen_Instruction1_Type27(KANDNW);
-    gen_Instruction1_Type27(KANDND);
-    gen_Instruction1_Type27(KANDNQ);
-    gen_Instruction1_Type27(KORB);
-    gen_Instruction1_Type27(KORW);
-    gen_Instruction1_Type27(KORD);
-    gen_Instruction1_Type27(KORQ);
-    gen_Instruction1_Type27(KUNPCKBW);
-    gen_Instruction1_Type27(KUNPCKWD);
-    gen_Instruction1_Type27(KUNPCKDQ);
-    gen_Instruction1_Type27(KXNORB);
-    gen_Instruction1_Type27(KXNORW);
-    gen_Instruction1_Type27(KXNORD);
-    gen_Instruction1_Type27(KXNORQ);
-    gen_Instruction1_Type27(KXORB);
-    gen_Instruction1_Type27(KXORW);
-    gen_Instruction1_Type27(KXORD);
-    gen_Instruction1_Type27(KXORQ);
+    KADDB(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kaddb %k3, %k2, %k1");
+
+    KADDW(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kaddw %k3, %k2, %k1");
+
+    KADDD(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kaddd %k3, %k2, %k1");
+
+    KADDQ(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kaddq %k3, %k2, %k1");
+
+    KANDB(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kandb %k3, %k2, %k1");
+
+    KANDW(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kandw %k3, %k2, %k1");
+
+    KANDD(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kandd %k3, %k2, %k1");
+
+    KANDQ(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kandq %k3, %k2, %k1");
+
+    KANDNB(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kandnb %k3, %k2, %k1");
+
+    KANDNW(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kandnw %k3, %k2, %k1");
+
+    KANDND(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kandnd %k3, %k2, %k1");
+
+    KANDNQ(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kandnq %k3, %k2, %k1");
+
+    KORB(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "korb %k3, %k2, %k1");
+
+    KORW(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "korw %k3, %k2, %k1");
+
+    KORD(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kord %k3, %k2, %k1");
+
+    KORQ(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "korq %k3, %k2, %k1");
+
+    KUNPCKBW(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kunpckbw %k3, %k2, %k1");
+
+    KUNPCKWD(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kunpckwd %k3, %k2, %k1");
+
+    KUNPCKDQ(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kunpckdq %k3, %k2, %k1");
+
+    KXNORB(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kxnorb %k3, %k2, %k1");
+
+    KXNORW(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kxnorw %k3, %k2, %k1");
+
+    KXNORD(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kxnord %k3, %k2, %k1");
+
+    KXNORQ(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kxnorq %k3, %k2, %k1");
+
+    KXORB(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kxorb %k3, %k2, %k1");
+
+    KXORW(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kxorw %k3, %k2, %k1");
+
+    KXORD(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kxord %k3, %k2, %k1");
+
+    KXORQ(k1, k2, k3);
+    EXPECT_EQ(asmstr(), "kxorq %k3, %k2, %k1");
 }
 
 TEST(Instruction1, Type28)
 {
-    gen_Instruction1_Type28(KNOTB);
-    gen_Instruction1_Type28(KNOTW);
-    gen_Instruction1_Type28(KNOTD);
-    gen_Instruction1_Type28(KNOTQ);
-    gen_Instruction1_Type28(KORTESTB);
-    gen_Instruction1_Type28(KORTESTW);
-    gen_Instruction1_Type28(KORTESTD);
-    gen_Instruction1_Type28(KORTESTQ);
-    gen_Instruction1_Type28(KTESTB);
-    gen_Instruction1_Type28(KTESTW);
-    gen_Instruction1_Type28(KTESTD);
-    gen_Instruction1_Type28(KTESTQ);
+    KNOTB(k1, k2);
+    EXPECT_EQ(asmstr(), "knotb %k2, %k1");
+
+    KNOTW(k1, k2);
+    EXPECT_EQ(asmstr(), "knotw %k2, %k1");
+
+    KNOTD(k1, k2);
+    EXPECT_EQ(asmstr(), "knotd %k2, %k1");
+
+    KNOTQ(k1, k2);
+    EXPECT_EQ(asmstr(), "knotq %k2, %k1");
+
+    KORTESTB(k1, k2);
+    EXPECT_EQ(asmstr(), "kortestb %k2, %k1");
+
+    KORTESTW(k1, k2);
+    EXPECT_EQ(asmstr(), "kortestw %k2, %k1");
+
+    KORTESTD(k1, k2);
+    EXPECT_EQ(asmstr(), "kortestd %k2, %k1");
+
+    KORTESTQ(k1, k2);
+    EXPECT_EQ(asmstr(), "kortestq %k2, %k1");
+
+    KTESTB(k1, k2);
+    EXPECT_EQ(asmstr(), "ktestb %k2, %k1");
+
+    KTESTW(k1, k2);
+    EXPECT_EQ(asmstr(), "ktestw %k2, %k1");
+
+    KTESTD(k1, k2);
+    EXPECT_EQ(asmstr(), "ktestd %k2, %k1");
+
+    KTESTQ(k1, k2);
+    EXPECT_EQ(asmstr(), "ktestq %k2, %k1");
 }
 
 TEST(Instruction1, Type29)
 {
-    gen_Instruction1_Type29(KSHIFTLB);
-    gen_Instruction1_Type29(KSHIFTLW);
-    gen_Instruction1_Type29(KSHIFTLD);
-    gen_Instruction1_Type29(KSHIFTLQ);
-    gen_Instruction1_Type29(KSHIFTRB);
-    gen_Instruction1_Type29(KSHIFTRW);
-    gen_Instruction1_Type29(KSHIFTRD);
-    gen_Instruction1_Type29(KSHIFTRQ);
+    imm8 value { 0 };
+
+    KSHIFTLB(k1, k2, value);
+    EXPECT_EQ(asmstr(), "kshiftlb $0x00, %k2, %k1");
+
+    KSHIFTLW(k1, k2, value);
+    EXPECT_EQ(asmstr(), "kshiftlw $0x00, %k2, %k1");
+
+    KSHIFTLD(k1, k2, value);
+    EXPECT_EQ(asmstr(), "kshiftld $0x00, %k2, %k1");
+
+    KSHIFTLQ(k1, k2, value);
+    EXPECT_EQ(asmstr(), "kshiftlq $0x00, %k2, %k1");
+
+    KSHIFTRB(k1, k2, value);
+    EXPECT_EQ(asmstr(), "kshiftrb $0x00, %k2, %k1");
+
+    KSHIFTRW(k1, k2, value);
+    EXPECT_EQ(asmstr(), "kshiftrw $0x00, %k2, %k1");
+
+    KSHIFTRD(k1, k2, value);
+    EXPECT_EQ(asmstr(), "kshiftrd $0x00, %k2, %k1");
+
+    KSHIFTRQ(k1, k2, value);
+    EXPECT_EQ(asmstr(), "kshiftrq $0x00, %k2, %k1");
 }
