@@ -1,11 +1,6 @@
 #include <gtest/gtest.h>
 #include <cppasm.h>
 
-static void gen_Instruction1_Type1(Instruction1_Type1 &instr)
-{
-    instr();
-}
-
 static void gen_Instruction1_Type2(Instruction1_Type2 &instr)
 {
     m64 addr { RAX };
@@ -193,132 +188,372 @@ static void gen_Instruction1_Type29(Instruction1_Type29 &instr)
     instr(k1, k2, value);
 }
 
+extern std::string asmstr();
+
 TEST(Instruction1, Type1)
 {
-    gen_Instruction1_Type1(CWD);
-    gen_Instruction1_Type1(CDQ);
-    gen_Instruction1_Type1(CQO);
-    gen_Instruction1_Type1(LEAVE);
-    gen_Instruction1_Type1(IRET);
-    gen_Instruction1_Type1(IRETD);
-    gen_Instruction1_Type1(IRETQ);
-    gen_Instruction1_Type1(MOVSB);
-    gen_Instruction1_Type1(MOVSW);
-    gen_Instruction1_Type1(MOVSD);
-    gen_Instruction1_Type1(MOVSQ);
-    gen_Instruction1_Type1(CMPSB);
-    gen_Instruction1_Type1(CMPSW);
-    gen_Instruction1_Type1(CMPSD);
-    gen_Instruction1_Type1(CMPSQ);
-    gen_Instruction1_Type1(SCASB);
-    gen_Instruction1_Type1(SCASW);
-    gen_Instruction1_Type1(SCASD);
-    gen_Instruction1_Type1(SCASQ);
-    gen_Instruction1_Type1(LODSB);
-    gen_Instruction1_Type1(LODSW);
-    gen_Instruction1_Type1(LODSD);
-    gen_Instruction1_Type1(LODSQ);
-    gen_Instruction1_Type1(STOSB);
-    gen_Instruction1_Type1(STOSW);
-    gen_Instruction1_Type1(STOSD);
-    gen_Instruction1_Type1(STOSQ);
-    gen_Instruction1_Type1(INSB);
-    gen_Instruction1_Type1(INSW);
-    gen_Instruction1_Type1(INSD);
-    gen_Instruction1_Type1(OUTSB);
-    gen_Instruction1_Type1(OUTSW);
-    gen_Instruction1_Type1(OUTSD);
-    gen_Instruction1_Type1(CLC);
-    gen_Instruction1_Type1(CLD);
-    gen_Instruction1_Type1(CLI);
-    gen_Instruction1_Type1(CMC);
-    gen_Instruction1_Type1(LAHF);
-    gen_Instruction1_Type1(SAHF);
-    gen_Instruction1_Type1(PUSHF);
-    gen_Instruction1_Type1(POPF);
-    gen_Instruction1_Type1(POPFQ);
-    gen_Instruction1_Type1(STC);
-    gen_Instruction1_Type1(STI);
-    gen_Instruction1_Type1(STD);
-    gen_Instruction1_Type1(UD);
-    gen_Instruction1_Type1(UD1);
-    gen_Instruction1_Type1(UD2);
-    gen_Instruction1_Type1(CPUID);
-    gen_Instruction1_Type1(XLAT);
-    gen_Instruction1_Type1(XGETBV);
-    gen_Instruction1_Type1(FPREM);
-    gen_Instruction1_Type1(FPREM1);
-    gen_Instruction1_Type1(FABS);
-    gen_Instruction1_Type1(FCHS);
-    gen_Instruction1_Type1(FRNDINT);
-    gen_Instruction1_Type1(FSCALE);
-    gen_Instruction1_Type1(FSQRT);
-    gen_Instruction1_Type1(FXTRACT);
-    gen_Instruction1_Type1(FCOMPP);
-    gen_Instruction1_Type1(FUCOMPP);
-    gen_Instruction1_Type1(FTST);
-    gen_Instruction1_Type1(FXAM);
-    gen_Instruction1_Type1(FSIN);
-    gen_Instruction1_Type1(FSINCOS);
-    gen_Instruction1_Type1(FCOS);
-    gen_Instruction1_Type1(FPTAN);
-    gen_Instruction1_Type1(FPATAN);
-    gen_Instruction1_Type1(F2XM1);
-    gen_Instruction1_Type1(FYL2X);
-    gen_Instruction1_Type1(FYL2XP1);
-    gen_Instruction1_Type1(FLD1);
-    gen_Instruction1_Type1(FLDL2T);
-    gen_Instruction1_Type1(FLDL2E);
-    gen_Instruction1_Type1(FLDPI);
-    gen_Instruction1_Type1(FLDLG2);
-    gen_Instruction1_Type1(FLDLN2);
-    gen_Instruction1_Type1(FLDZ);
-    gen_Instruction1_Type1(FINCSTP);
-    gen_Instruction1_Type1(FDECSTP);
-    gen_Instruction1_Type1(FINIT);
-    gen_Instruction1_Type1(FNINIT);
-    gen_Instruction1_Type1(FCLEX);
-    gen_Instruction1_Type1(FNCLEX);
-    gen_Instruction1_Type1(FNOP);
-    gen_Instruction1_Type1(FWAIT);
-    gen_Instruction1_Type1(WAIT);
-    gen_Instruction1_Type1(EMMS);
-    gen_Instruction1_Type1(SFENCE);
-    gen_Instruction1_Type1(LFENCE);
-    gen_Instruction1_Type1(MFENCE);
-    gen_Instruction1_Type1(PAUSE);
-    gen_Instruction1_Type1(MONITOR);
-    gen_Instruction1_Type1(MWAIT);
-    gen_Instruction1_Type1(VZEROALL);
-    gen_Instruction1_Type1(VZEROUPPER);
-    gen_Instruction1_Type1(CLAC);
-    gen_Instruction1_Type1(STAC);
-    gen_Instruction1_Type1(CLTS);
-    gen_Instruction1_Type1(INVD);
-    gen_Instruction1_Type1(WBINVD);
-    gen_Instruction1_Type1(HLT);
-    gen_Instruction1_Type1(RSM);
-    gen_Instruction1_Type1(RDMSR);
-    gen_Instruction1_Type1(WRMSR);
-    gen_Instruction1_Type1(RDPMC);
-    gen_Instruction1_Type1(RDTSC);
-    gen_Instruction1_Type1(RDTSCP);
-    gen_Instruction1_Type1(SYSENTER);
-    gen_Instruction1_Type1(SYSEXIT);
-    gen_Instruction1_Type1(XSETBV);
-    gen_Instruction1_Type1(SYSCALL);
-    gen_Instruction1_Type1(SYSRET);
+    CWD();
+    EXPECT_EQ(asmstr(), "cwtd");
 
-    gen_Instruction1_Type1(XEND);
-    gen_Instruction1_Type1(XTEST);
+    CDQ();
+    EXPECT_EQ(asmstr(), "cltd");
 
-    gen_Instruction1_Type1(VMCALL);
-    gen_Instruction1_Type1(VMFUNC);
-    gen_Instruction1_Type1(VMLAUNCH);
-    gen_Instruction1_Type1(VMRESUME);
-    gen_Instruction1_Type1(VMXOFF);
+    CQO();
+    EXPECT_EQ(asmstr(), "cqto");
 
-    gen_Instruction1_Type1(GETSEC);
+    LEAVE();
+    EXPECT_EQ(asmstr(), "leave");
+
+    IRET();
+    EXPECT_EQ(asmstr(), "iret");
+
+    IRETD();
+    EXPECT_EQ(asmstr(), "iretl");
+
+    IRETQ();
+    EXPECT_EQ(asmstr(), "iretq");
+
+    MOVSB();
+    EXPECT_EQ(asmstr(), "movsb");
+
+    MOVSW();
+    EXPECT_EQ(asmstr(), "movsw");
+
+    MOVSD();
+    EXPECT_EQ(asmstr(), "movsl");
+
+    MOVSQ();
+    EXPECT_EQ(asmstr(), "movsq");
+
+    CMPSB();
+    EXPECT_EQ(asmstr(), "cmpsb");
+
+    CMPSW();
+    EXPECT_EQ(asmstr(), "cmpsw");
+
+    CMPSD();
+    EXPECT_EQ(asmstr(), "cmpsl");
+
+    CMPSQ();
+    EXPECT_EQ(asmstr(), "cmpsq");
+
+    SCASB();
+    EXPECT_EQ(asmstr(), "scasb");
+
+    SCASW();
+    EXPECT_EQ(asmstr(), "scasw");
+
+    SCASD();
+    EXPECT_EQ(asmstr(), "scasl");
+
+    SCASQ();
+    EXPECT_EQ(asmstr(), "scasq");
+
+    LODSB();
+    EXPECT_EQ(asmstr(), "lodsb");
+
+    LODSW();
+    EXPECT_EQ(asmstr(), "lodsw");
+
+    LODSD();
+    EXPECT_EQ(asmstr(), "lodsl");
+
+    LODSQ();
+    EXPECT_EQ(asmstr(), "lodsq");
+
+    STOSB();
+    EXPECT_EQ(asmstr(), "stosb");
+
+    STOSW();
+    EXPECT_EQ(asmstr(), "stosw");
+
+    STOSD();
+    EXPECT_EQ(asmstr(), "stosl");
+
+    STOSQ();
+    EXPECT_EQ(asmstr(), "stosq");
+
+    INSB();
+    EXPECT_EQ(asmstr(), "insb");
+
+    INSW();
+    EXPECT_EQ(asmstr(), "insw");
+
+    INSD();
+    EXPECT_EQ(asmstr(), "insl");
+
+    OUTSB();
+    EXPECT_EQ(asmstr(), "outsb");
+
+    OUTSW();
+    EXPECT_EQ(asmstr(), "outsw");
+
+    OUTSD();
+    EXPECT_EQ(asmstr(), "outsl");
+
+    CLC();
+    EXPECT_EQ(asmstr(), "clc");
+
+    CLD();
+    EXPECT_EQ(asmstr(), "cld");
+
+    CLI();
+    EXPECT_EQ(asmstr(), "cli");
+
+    CMC();
+    EXPECT_EQ(asmstr(), "cmc");
+
+    LAHF();
+    EXPECT_EQ(asmstr(), "lahf");
+
+    SAHF();
+    EXPECT_EQ(asmstr(), "sahf");
+
+    PUSHF();
+    EXPECT_EQ(asmstr(), "pushf");
+
+    POPF();
+    EXPECT_EQ(asmstr(), "popf");
+
+    POPFQ();
+    EXPECT_EQ(asmstr(), "popfq");
+
+    STC();
+    EXPECT_EQ(asmstr(), "stc");
+
+    STI();
+    EXPECT_EQ(asmstr(), "sti");
+
+    STD();
+    EXPECT_EQ(asmstr(), "std");
+
+    UD();
+    EXPECT_EQ(asmstr(), ".byte 0x0F, 0xFF");
+
+    UD1();
+    EXPECT_EQ(asmstr(), "ud1");
+
+    UD2();
+    EXPECT_EQ(asmstr(), "ud2");
+
+    CPUID();
+    EXPECT_EQ(asmstr(), "cpuid");
+
+    XLAT();
+    EXPECT_EQ(asmstr(), "xlat");
+
+    XGETBV();
+    EXPECT_EQ(asmstr(), "xgetbv");
+
+    FPREM();
+    EXPECT_EQ(asmstr(), "fprem");
+
+    FPREM1();
+    EXPECT_EQ(asmstr(), "fprem1");
+
+    FABS();
+    EXPECT_EQ(asmstr(), "fabs");
+
+    FCHS();
+    EXPECT_EQ(asmstr(), "fchs");
+
+    FRNDINT();
+    EXPECT_EQ(asmstr(), "frndint");
+
+    FSCALE();
+    EXPECT_EQ(asmstr(), "fscale");
+
+    FSQRT();
+    EXPECT_EQ(asmstr(), "fsqrt");
+
+    FXTRACT();
+    EXPECT_EQ(asmstr(), "fxtract");
+
+    FCOMPP();
+    EXPECT_EQ(asmstr(), "fcompp");
+
+    FUCOMPP();
+    EXPECT_EQ(asmstr(), "fucompp");
+
+    FTST();
+    EXPECT_EQ(asmstr(), "ftst");
+
+    FXAM();
+    EXPECT_EQ(asmstr(), "fxam");
+
+    FSIN();
+    EXPECT_EQ(asmstr(), "fsin");
+
+    FSINCOS();
+    EXPECT_EQ(asmstr(), "fsincos");
+
+    FCOS();
+    EXPECT_EQ(asmstr(), "fcos");
+
+    FPTAN();
+    EXPECT_EQ(asmstr(), "fptan");
+
+    FPATAN();
+    EXPECT_EQ(asmstr(), "fpatan");
+
+    F2XM1();
+    EXPECT_EQ(asmstr(), "f2xm1");
+
+    FYL2X();
+    EXPECT_EQ(asmstr(), "fyl2x");
+
+    FYL2XP1();
+    EXPECT_EQ(asmstr(), "fyl2xp1");
+
+    FLD1();
+    EXPECT_EQ(asmstr(), "fld1");
+
+    FLDL2T();
+    EXPECT_EQ(asmstr(), "fldl2t");
+
+    FLDL2E();
+    EXPECT_EQ(asmstr(), "fldl2e");
+
+    FLDPI();
+    EXPECT_EQ(asmstr(), "fldpi");
+
+    FLDLG2();
+    EXPECT_EQ(asmstr(), "fldlg2");
+
+    FLDLN2();
+    EXPECT_EQ(asmstr(), "fldln2");
+
+    FLDZ();
+    EXPECT_EQ(asmstr(), "fldz");
+
+    FINCSTP();
+    EXPECT_EQ(asmstr(), "fincstp");
+
+    FDECSTP();
+    EXPECT_EQ(asmstr(), "fdecstp");
+
+    FINIT();
+    EXPECT_EQ(asmstr(), "finit");
+
+    FNINIT();
+    EXPECT_EQ(asmstr(), "fninit");
+
+    FCLEX();
+    EXPECT_EQ(asmstr(), "fclex");
+
+    FNCLEX();
+    EXPECT_EQ(asmstr(), "fnclex");
+
+    FNOP();
+    EXPECT_EQ(asmstr(), "fnop");
+
+    FWAIT();
+    EXPECT_EQ(asmstr(), "fwait");
+
+    WAIT();
+    EXPECT_EQ(asmstr(), "wait");
+
+    EMMS();
+    EXPECT_EQ(asmstr(), "emms");
+
+    SFENCE();
+    EXPECT_EQ(asmstr(), "sfence");
+
+    LFENCE();
+    EXPECT_EQ(asmstr(), "lfence");
+
+    MFENCE();
+    EXPECT_EQ(asmstr(), "mfence");
+
+    PAUSE();
+    EXPECT_EQ(asmstr(), "pause");
+
+    MONITOR();
+    EXPECT_EQ(asmstr(), "monitor");
+
+    MWAIT();
+    EXPECT_EQ(asmstr(), "mwait");
+
+    VZEROALL();
+    EXPECT_EQ(asmstr(), "vzeroall");
+
+    VZEROUPPER();
+    EXPECT_EQ(asmstr(), "vzeroupper");
+
+    CLAC();
+    EXPECT_EQ(asmstr(), "clac");
+
+    STAC();
+    EXPECT_EQ(asmstr(), "stac");
+
+    CLTS();
+    EXPECT_EQ(asmstr(), "clts");
+
+    INVD();
+    EXPECT_EQ(asmstr(), "invd");
+
+    WBINVD();
+    EXPECT_EQ(asmstr(), "wbinvd");
+
+    HLT();
+    EXPECT_EQ(asmstr(), "hlt");
+
+    RSM();
+    EXPECT_EQ(asmstr(), "rsm");
+
+    RDMSR();
+    EXPECT_EQ(asmstr(), "rdmsr");
+
+    WRMSR();
+    EXPECT_EQ(asmstr(), "wrmsr");
+
+    RDPMC();
+    EXPECT_EQ(asmstr(), "rdpmc");
+
+    RDTSC();
+    EXPECT_EQ(asmstr(), "rdtsc");
+
+    RDTSCP();
+    EXPECT_EQ(asmstr(), "rdtscp");
+
+    SYSENTER();
+    EXPECT_EQ(asmstr(), "sysenter");
+
+    SYSEXIT();
+    EXPECT_EQ(asmstr(), "sysexit");
+
+    XSETBV();
+    EXPECT_EQ(asmstr(), "xsetbv");
+
+    SYSCALL();
+    EXPECT_EQ(asmstr(), "syscall");
+
+    SYSRET();
+    EXPECT_EQ(asmstr(), "sysret");
+
+    XEND();
+    EXPECT_EQ(asmstr(), "xend");
+
+    XTEST();
+    EXPECT_EQ(asmstr(), "xtest");
+
+    VMCALL();
+    EXPECT_EQ(asmstr(), "vmcall");
+
+    VMFUNC();
+    EXPECT_EQ(asmstr(), "vmfunc");
+
+    VMLAUNCH();
+    EXPECT_EQ(asmstr(), "vmlaunch");
+
+    VMRESUME();
+    EXPECT_EQ(asmstr(), "vmresume");
+
+    VMXOFF();
+    EXPECT_EQ(asmstr(), "vmxoff");
+
+    GETSEC();
+    EXPECT_EQ(asmstr(), "getsec");
 }
 
 TEST(Instruction1, Type2)
