@@ -1,28 +1,6 @@
 #include <gtest/gtest.h>
 #include <cppasm.h>
 
-static void gen_Instruction1_Type2(Instruction1_Type2 &instr)
-{
-    m64 addr { RAX };
-
-    instr(addr);
-}
-
-static void gen_Instruction1_Type3(Instruction1_Type3 &instr)
-{
-    instr(XMM1, XMM0);
-}
-
-static void gen_Instruction1_Type4(Instruction1_Type4 &instr, std::string &L)
-{
-    instr(L);
-}
-
-static void gen_Instruction1_Type5(Instruction1_Type5 &instr)
-{
-    instr(ST(0), ST(1));
-}
-
 static void gen_Instruction1_Type6(Instruction1_Type6 &instr)
 {
     m16 addr { RAX };
@@ -558,101 +536,263 @@ TEST(Instruction1, Type1)
 
 TEST(Instruction1, Type2)
 {
-    gen_Instruction1_Type2(CLFLUSH);
-    gen_Instruction1_Type2(CLFLUSHOPT);
-    gen_Instruction1_Type2(XSAVE);
-    gen_Instruction1_Type2(XSAVEC);
-    gen_Instruction1_Type2(XSAVEOPT);
-    gen_Instruction1_Type2(XRSTOR);
-    gen_Instruction1_Type2(FSTENV);
-    gen_Instruction1_Type2(FNSTENV);
-    gen_Instruction1_Type2(FLDENV);
-    gen_Instruction1_Type2(FSAVE);
-    gen_Instruction1_Type2(FNSAVE);
-    gen_Instruction1_Type2(FRSTOR);
-    gen_Instruction1_Type2(FXSAVE);
-    gen_Instruction1_Type2(FXRSTOR);
-    gen_Instruction1_Type2(PREFETCHT0);
-    gen_Instruction1_Type2(PREFETCHT1);
-    gen_Instruction1_Type2(PREFETCHT2);
-    gen_Instruction1_Type2(PREFETCHNTA);
-    gen_Instruction1_Type2(PREFETCHW);
-    gen_Instruction1_Type2(PREFETCHWT1);
-    gen_Instruction1_Type2(LGDT);
-    gen_Instruction1_Type2(LIDT);
-    gen_Instruction1_Type2(SIDT);
-    gen_Instruction1_Type2(INVLPG);
-    gen_Instruction1_Type2(XRSTORS);
-    gen_Instruction1_Type2(XRSTORS64);
-    gen_Instruction1_Type2(XSAVES);
-    gen_Instruction1_Type2(XSAVES64);
+    m64 addr { RAX };
+
+    CLFLUSH(addr);
+    EXPECT_EQ(asmstr(), "clflush (%rax)");
+
+    CLFLUSHOPT(addr);
+    EXPECT_EQ(asmstr(), "clflushopt (%rax)");
+
+    XSAVE(addr);
+    EXPECT_EQ(asmstr(), "xsave (%rax)");
+
+    XSAVEC(addr);
+    EXPECT_EQ(asmstr(), "xsavec (%rax)");
+
+    XSAVEOPT(addr);
+    EXPECT_EQ(asmstr(), "xsaveopt (%rax)");
+
+    XRSTOR(addr);
+    EXPECT_EQ(asmstr(), "xrstor (%rax)");
+
+    FSTENV(addr);
+    EXPECT_EQ(asmstr(), "fstenv (%rax)");
+
+    FNSTENV(addr);
+    EXPECT_EQ(asmstr(), "fnstenv (%rax)");
+
+    FLDENV(addr);
+    EXPECT_EQ(asmstr(), "fldenv (%rax)");
+
+    FSAVE(addr);
+    EXPECT_EQ(asmstr(), "fsave (%rax)");
+
+    FNSAVE(addr);
+    EXPECT_EQ(asmstr(), "fnsave (%rax)");
+
+    FRSTOR(addr);
+    EXPECT_EQ(asmstr(), "frstor (%rax)");
+
+    FXSAVE(addr);
+    EXPECT_EQ(asmstr(), "fxsave (%rax)");
+
+    FXRSTOR(addr);
+    EXPECT_EQ(asmstr(), "fxrstor (%rax)");
+
+    PREFETCHT0(addr);
+    EXPECT_EQ(asmstr(), "prefetcht0 (%rax)");
+
+    PREFETCHT1(addr);
+    EXPECT_EQ(asmstr(), "prefetcht1 (%rax)");
+
+    PREFETCHT2(addr);
+    EXPECT_EQ(asmstr(), "prefetcht2 (%rax)");
+
+    PREFETCHNTA(addr);
+    EXPECT_EQ(asmstr(), "prefetchnta (%rax)");
+
+    PREFETCHW(addr);
+    EXPECT_EQ(asmstr(), "prefetchw (%rax)");
+
+    PREFETCHWT1(addr);
+    EXPECT_EQ(asmstr(), "prefetchwt1 (%rax)");
+
+    LGDT(addr);
+    EXPECT_EQ(asmstr(), "lgdt (%rax)");
+
+    LIDT(addr);
+    EXPECT_EQ(asmstr(), "lidt (%rax)");
+
+    SIDT(addr);
+    EXPECT_EQ(asmstr(), "sidt (%rax)");
+
+    INVLPG(addr);
+    EXPECT_EQ(asmstr(), "invlpg (%rax)");
+
+    XRSTORS(addr);
+    EXPECT_EQ(asmstr(), "xrstors (%rax)");
+
+    XRSTORS64(addr);
+    EXPECT_EQ(asmstr(), "xrstors64 (%rax)");
+
+    XSAVES(addr);
+    EXPECT_EQ(asmstr(), "xsaves (%rax)");
+
+    XSAVES64(addr);
+    EXPECT_EQ(asmstr(), "xsaves64 (%rax)");
 }
 
 TEST(Instruction1, Type3)
 {
-    gen_Instruction1_Type3(MOVLHPS);
-    gen_Instruction1_Type3(MOVHLPS);
-    gen_Instruction1_Type3(MASKMOVDQU);
+    MOVLHPS(XMM1, XMM0);
+    EXPECT_EQ(asmstr(), "movlhps %xmm0, %xmm1");
+
+    MOVHLPS(XMM1, XMM0);
+    EXPECT_EQ(asmstr(), "movhlps %xmm0, %xmm1");
+
+    MASKMOVDQU(XMM1, XMM0);
+    EXPECT_EQ(asmstr(), "maskmovdqu %xmm0, %xmm1");
 }
 
 TEST(Instruction1, Type4)
 {
-    std::string L { "Instruction1_Type4_Label" };
+    std::string L { "testlabel" };
     label(L);
-    gen_Instruction1_Type4(JA, L);
-    gen_Instruction1_Type4(JAE, L);
-    gen_Instruction1_Type4(JB, L);
-    gen_Instruction1_Type4(JBE, L);
-    gen_Instruction1_Type4(JC, L);
-    gen_Instruction1_Type4(JECXZ, L);
-    gen_Instruction1_Type4(JRCXZ, L);
-    gen_Instruction1_Type4(JE, L);
-    gen_Instruction1_Type4(JG, L);
-    gen_Instruction1_Type4(JGE, L);
-    gen_Instruction1_Type4(JL, L);
-    gen_Instruction1_Type4(JLE, L);
-    gen_Instruction1_Type4(JNA, L);
-    gen_Instruction1_Type4(JNAE, L);
-    gen_Instruction1_Type4(JNB, L);
-    gen_Instruction1_Type4(JNBE, L);
-    gen_Instruction1_Type4(JNC, L);
-    gen_Instruction1_Type4(JNE, L);
-    gen_Instruction1_Type4(JNG, L);
-    gen_Instruction1_Type4(JNGE, L);
-    gen_Instruction1_Type4(JNL, L);
-    gen_Instruction1_Type4(JNLE, L);
-    gen_Instruction1_Type4(JNO, L);
-    gen_Instruction1_Type4(JNP, L);
-    gen_Instruction1_Type4(JNS, L);
-    gen_Instruction1_Type4(JNZ, L);
-    gen_Instruction1_Type4(JO, L);
-    gen_Instruction1_Type4(JP, L);
-    gen_Instruction1_Type4(JPE, L);
-    gen_Instruction1_Type4(JPO, L);
-    gen_Instruction1_Type4(JS, L);
-    gen_Instruction1_Type4(JZ, L);
-    gen_Instruction1_Type4(LOOP, L);
-    gen_Instruction1_Type4(LOOPE, L);
-    gen_Instruction1_Type4(LOOPNE, L);
-    gen_Instruction1_Type4(LOOPZ, L);
-    gen_Instruction1_Type4(LOOPNZ, L);
-    gen_Instruction1_Type4(XBEGIN, L);
+    EXPECT_EQ(asmstr(), "testlabel:");
+
+    JA(L);
+    EXPECT_EQ(asmstr(), "ja testlabel");
+
+    JAE(L);
+    EXPECT_EQ(asmstr(), "jae testlabel");
+
+    JB(L);
+    EXPECT_EQ(asmstr(), "jb testlabel");
+
+    JBE(L);
+    EXPECT_EQ(asmstr(), "jbe testlabel");
+
+    JC(L);
+    EXPECT_EQ(asmstr(), "jc testlabel");
+
+    JECXZ(L);
+    EXPECT_EQ(asmstr(), "jecxz testlabel");
+
+    JRCXZ(L);
+    EXPECT_EQ(asmstr(), "jrcxz testlabel");
+
+    JE(L);
+    EXPECT_EQ(asmstr(), "je testlabel");
+
+    JG(L);
+    EXPECT_EQ(asmstr(), "jg testlabel");
+
+    JGE(L);
+    EXPECT_EQ(asmstr(), "jge testlabel");
+
+    JL(L);
+    EXPECT_EQ(asmstr(), "jl testlabel");
+
+    JLE(L);
+    EXPECT_EQ(asmstr(), "jle testlabel");
+
+    JNA(L);
+    EXPECT_EQ(asmstr(), "jna testlabel");
+
+    JNAE(L);
+    EXPECT_EQ(asmstr(), "jnae testlabel");
+
+    JNB(L);
+    EXPECT_EQ(asmstr(), "jnb testlabel");
+
+    JNBE(L);
+    EXPECT_EQ(asmstr(), "jnbe testlabel");
+
+    JNC(L);
+    EXPECT_EQ(asmstr(), "jnc testlabel");
+
+    JNE(L);
+    EXPECT_EQ(asmstr(), "jne testlabel");
+
+    JNG(L);
+    EXPECT_EQ(asmstr(), "jng testlabel");
+
+    JNGE(L);
+    EXPECT_EQ(asmstr(), "jnge testlabel");
+
+    JNL(L);
+    EXPECT_EQ(asmstr(), "jnl testlabel");
+
+    JNLE(L);
+    EXPECT_EQ(asmstr(), "jnle testlabel");
+
+    JNO(L);
+    EXPECT_EQ(asmstr(), "jno testlabel");
+
+    JNP(L);
+    EXPECT_EQ(asmstr(), "jnp testlabel");
+
+    JNS(L);
+    EXPECT_EQ(asmstr(), "jns testlabel");
+
+    JNZ(L);
+    EXPECT_EQ(asmstr(), "jnz testlabel");
+
+    JO(L);
+    EXPECT_EQ(asmstr(), "jo testlabel");
+
+    JP(L);
+    EXPECT_EQ(asmstr(), "jp testlabel");
+
+    JPE(L);
+    EXPECT_EQ(asmstr(), "jpe testlabel");
+
+    JPO(L);
+    EXPECT_EQ(asmstr(), "jpo testlabel");
+
+    JS(L);
+    EXPECT_EQ(asmstr(), "js testlabel");
+
+    JZ(L);
+    EXPECT_EQ(asmstr(), "jz testlabel");
+
+    LOOP(L);
+    EXPECT_EQ(asmstr(), "loop testlabel");
+
+    LOOPE(L);
+    EXPECT_EQ(asmstr(), "loope testlabel");
+
+    LOOPNE(L);
+    EXPECT_EQ(asmstr(), "loopne testlabel");
+
+    LOOPZ(L);
+    EXPECT_EQ(asmstr(), "loopz testlabel");
+
+    LOOPNZ(L);
+    EXPECT_EQ(asmstr(), "loopnz testlabel");
+
+    XBEGIN(L);
+    EXPECT_EQ(asmstr(), "xbegin testlabel");
 }
 
 TEST(Instruction1, Type5)
 {
-    gen_Instruction1_Type5(FCMOVB);
-    gen_Instruction1_Type5(FCMOVE);
-    gen_Instruction1_Type5(FCMOVBE);
-    gen_Instruction1_Type5(FCMOVU);
-    gen_Instruction1_Type5(FCMOVNB);
-    gen_Instruction1_Type5(FCMOVNE);
-    gen_Instruction1_Type5(FCMOVNBE);
-    gen_Instruction1_Type5(FCMOVNU);
-    gen_Instruction1_Type5(FCOMI);
-    gen_Instruction1_Type5(FCOMIP);
-    gen_Instruction1_Type5(FUCOMI);
-    gen_Instruction1_Type5(FUCOMIP);
+    FCMOVB(ST(0), ST(1));
+    EXPECT_EQ(asmstr(), "fcmovb %st(1), %st(0)");
+
+    FCMOVE(ST(0), ST(1));
+    EXPECT_EQ(asmstr(), "fcmove %st(1), %st(0)");
+
+    FCMOVBE(ST(0), ST(1));
+    EXPECT_EQ(asmstr(), "fcmovbe %st(1), %st(0)");
+
+    FCMOVU(ST(0), ST(1));
+    EXPECT_EQ(asmstr(), "fcmovu %st(1), %st(0)");
+
+    FCMOVNB(ST(0), ST(1));
+    EXPECT_EQ(asmstr(), "fcmovnb %st(1), %st(0)");
+
+    FCMOVNE(ST(0), ST(1));
+    EXPECT_EQ(asmstr(), "fcmovne %st(1), %st(0)");
+
+    FCMOVNBE(ST(0), ST(1));
+    EXPECT_EQ(asmstr(), "fcmovnbe %st(1), %st(0)");
+
+    FCMOVNU(ST(0), ST(1));
+    EXPECT_EQ(asmstr(), "fcmovnu %st(1), %st(0)");
+
+    FCOMI(ST(0), ST(1));
+    EXPECT_EQ(asmstr(), "fcomi %st(1), %st(0)");
+
+    FCOMIP(ST(0), ST(1));
+    EXPECT_EQ(asmstr(), "fcomip %st(1), %st(0)");
+
+    FUCOMI(ST(0), ST(1));
+    EXPECT_EQ(asmstr(), "fucomi %st(1), %st(0)");
+
+    FUCOMIP(ST(0), ST(1));
+    EXPECT_EQ(asmstr(), "fucomip %st(1), %st(0)");
 }
 
 TEST(Instruction1, Type6)
