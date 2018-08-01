@@ -3,19 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type2(Instruction2_Type2 &instr)
-{
-    imm16 value { 65535 };
-    instr();
-    instr(value);
-}
-
-static void gen_Instruction2_Type3(Instruction2_Type3 &instr)
-{
-    instr(EAX);
-    instr(RAX);
-}
-
 static void gen_Instruction2_Type4(Instruction2_Type4 &instr)
 {
     instr(EAX, XMM0);
@@ -310,19 +297,51 @@ static void gen_Instruction2_Type42(Instruction2_Type42 &instr)
     instr(ZMM0.k1.z, ZMM1, addr, mask);
 }
 
+TEST(Instruction2, Type2)
+{
+    imm16 value { 65535 };
+
+    RET();
+    EXPECT_EQ(asmstr(), "ret");
+    RET(value);
+    EXPECT_EQ(asmstr(), "ret $0xFFFF");
+
+    RET_FAR();
+    EXPECT_EQ(asmstr(), "lret");
+    RET_FAR(value);
+    EXPECT_EQ(asmstr(), "lret $0xFFFF");
+}
+
+TEST(Instruction2, Type3)
+{
+    RDFSBASE(EAX);
+    EXPECT_EQ(asmstr(), "rdfsbase %eax");
+    RDFSBASE(RAX);
+    EXPECT_EQ(asmstr(), "rdfsbase %rax");
+
+    RDGSBASE(EAX);
+    EXPECT_EQ(asmstr(), "rdgsbase %eax");
+    RDGSBASE(RAX);
+    EXPECT_EQ(asmstr(), "rdgsbase %rax");
+
+    WRFSBASE(EAX);
+    EXPECT_EQ(asmstr(), "wrfsbase %eax");
+    WRFSBASE(RAX);
+    EXPECT_EQ(asmstr(), "wrfsbase %rax");
+
+    WRGSBASE(EAX);
+    EXPECT_EQ(asmstr(), "wrgsbase %eax");
+    WRGSBASE(RAX);
+    EXPECT_EQ(asmstr(), "wrgsbase %rax");
+
+    BSWAP(EAX);
+    EXPECT_EQ(asmstr(), "bswap %eax");
+    BSWAP(RAX);
+    EXPECT_EQ(asmstr(), "bswap %rax");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    comment("gen_Instruction2");
-
-    gen_Instruction2_Type2(RET);
-    gen_Instruction2_Type2(RET_FAR);
-
-    gen_Instruction2_Type3(RDFSBASE);
-    gen_Instruction2_Type3(RDGSBASE);
-    gen_Instruction2_Type3(WRFSBASE);
-    gen_Instruction2_Type3(WRGSBASE);
-    gen_Instruction2_Type3(BSWAP);
-
     gen_Instruction2_Type4(MOVMSKPS);
     gen_Instruction2_Type4(MOVMSKPD);
 
