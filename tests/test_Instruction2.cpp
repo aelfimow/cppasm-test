@@ -3,26 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type4(Instruction2_Type4 &instr)
-{
-    instr(EAX, XMM0);
-    instr(RAX, XMM0);
-}
-
-static void gen_Instruction2_Type5(Instruction2_Type5 &instr)
-{
-    instr();
-    instr(ST(1));
-}
-
-static void gen_Instruction2_Type6(Instruction2_Type6 &instr)
-{
-    instr(AX);
-
-    m16 addr { RAX };
-    instr(addr);
-}
-
 static void gen_Instruction2_Type7(Instruction2_Type7 &instr)
 {
     instr(AL);
@@ -340,23 +320,79 @@ TEST(Instruction2, Type3)
     EXPECT_EQ(asmstr(), "bswap %rax");
 }
 
+TEST(Instruction2, Type4)
+{
+    MOVMSKPS(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "movmskps %xmm0, %eax");
+    MOVMSKPS(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "movmskps %xmm0, %rax");
+
+    MOVMSKPD(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "movmskpd %xmm0, %eax");
+    MOVMSKPD(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "movmskpd %xmm0, %rax");
+}
+
+TEST(Instruction2, Type5)
+{
+    FXCH();
+    EXPECT_EQ(asmstr(), "fxch");
+    FXCH(ST(1));
+    EXPECT_EQ(asmstr(), "fxch %st(1)");
+
+    FUCOM();
+    EXPECT_EQ(asmstr(), "fucom");
+    FUCOM(ST(1));
+    EXPECT_EQ(asmstr(), "fucom %st(1)");
+
+    FUCOMP();
+    EXPECT_EQ(asmstr(), "fucomp");
+    FUCOMP(ST(1));
+    EXPECT_EQ(asmstr(), "fucomp %st(1)");
+}
+
+TEST(Instruction2, Type6)
+{
+    m16 addr { RAX };
+
+    FSTSW(AX);
+    EXPECT_EQ(asmstr(), "fstsw %ax");
+    FSTSW(addr);
+    EXPECT_EQ(asmstr(), "fstsw (%rax)");
+
+    FNSTSW(AX);
+    EXPECT_EQ(asmstr(), "fnstsw %ax");
+    FNSTSW(addr);
+    EXPECT_EQ(asmstr(), "fnstsw (%rax)");
+
+    LLDT(AX);
+    EXPECT_EQ(asmstr(), "lldt %ax");
+    LLDT(addr);
+    EXPECT_EQ(asmstr(), "lldt (%rax)");
+
+    LMSW(AX);
+    EXPECT_EQ(asmstr(), "lmsw %ax");
+    LMSW(addr);
+    EXPECT_EQ(asmstr(), "lmsw (%rax)");
+
+    VERR(AX);
+    EXPECT_EQ(asmstr(), "verr %ax");
+    VERR(addr);
+    EXPECT_EQ(asmstr(), "verr (%rax)");
+
+    VERW(AX);
+    EXPECT_EQ(asmstr(), "verw %ax");
+    VERW(addr);
+    EXPECT_EQ(asmstr(), "verw (%rax)");
+
+    LTR(AX);
+    EXPECT_EQ(asmstr(), "ltr %ax");
+    LTR(addr);
+    EXPECT_EQ(asmstr(), "ltr (%rax)");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type4(MOVMSKPS);
-    gen_Instruction2_Type4(MOVMSKPD);
-
-    gen_Instruction2_Type5(FXCH);
-    gen_Instruction2_Type5(FUCOM);
-    gen_Instruction2_Type5(FUCOMP);
-
-    gen_Instruction2_Type6(FSTSW);
-    gen_Instruction2_Type6(FNSTSW);
-    gen_Instruction2_Type6(LLDT);
-    gen_Instruction2_Type6(LMSW);
-    gen_Instruction2_Type6(VERR);
-    gen_Instruction2_Type6(VERW);
-    gen_Instruction2_Type6(LTR);
-
     gen_Instruction2_Type7(SETA);
     gen_Instruction2_Type7(SETAE);
     gen_Instruction2_Type7(SETB);
