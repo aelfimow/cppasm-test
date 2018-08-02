@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type15(Instruction2_Type15 &instr)
-{
-    m64 addr { RAX };
-    imm8 mask { 255 };
-    instr(XMM0, XMM1, mask);
-    instr(XMM0, addr, mask);
-}
-
 static void gen_Instruction2_Type16(Instruction2_Type16 &instr)
 {
     m16 addr1 { RAX };
@@ -1176,11 +1168,24 @@ TEST(Instruction2, Type14)
     EXPECT_EQ(asmstr(), "pmovzxdq (%rax), %xmm0");
 }
 
+TEST(Instruction2, Type15)
+{
+    m64 addr { RAX };
+    imm8 mask { 255 };
+
+    CMPSD_SSE2(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "cmpsd $0xFF, %xmm1, %xmm0");
+    CMPSD_SSE2(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "cmpsd $0xFF, (%rax), %xmm0");
+
+    ROUNDSD(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "roundsd $0xFF, %xmm1, %xmm0");
+    ROUNDSD(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "roundsd $0xFF, (%rax), %xmm0");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type15(CMPSD_SSE2);
-    gen_Instruction2_Type15(ROUNDSD);
-
     gen_Instruction2_Type16(FIST);
     gen_Instruction2_Type16(FIADD);
     gen_Instruction2_Type16(FISUB);
