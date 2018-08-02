@@ -3,13 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type19(Instruction2_Type19 &instr)
-{
-    m128 addr { RAX };
-    instr(MM0, XMM0);
-    instr(MM0, addr);
-}
-
 static void gen_Instruction2_Type20(Instruction2_Type20 &instr)
 {
     instr();
@@ -1243,12 +1236,23 @@ TEST(Instruction2, Type18)
     EXPECT_EQ(asmstr(), "cvttps2pi (%rax), %mm0");
 }
 
+TEST(Instruction2, Type19)
+{
+    m128 addr { RAX };
+
+    CVTPD2PI(MM0, XMM0);
+    EXPECT_EQ(asmstr(), "cvtpd2pi %xmm0, %mm0");
+    CVTPD2PI(MM0, addr);
+    EXPECT_EQ(asmstr(), "cvtpd2pi (%rax), %mm0");
+
+    CVTTPD2PI(MM0, XMM0);
+    EXPECT_EQ(asmstr(), "cvttpd2pi %xmm0, %mm0");
+    CVTTPD2PI(MM0, addr);
+    EXPECT_EQ(asmstr(), "cvttpd2pi (%rax), %mm0");
+}
+
 TEST(Instruction2, AllTypes)
 {
-
-    gen_Instruction2_Type19(CVTPD2PI);
-    gen_Instruction2_Type19(CVTTPD2PI);
-
     gen_Instruction2_Type20(FADDP);
     gen_Instruction2_Type20(FSUBP);
     gen_Instruction2_Type20(FSUBRP);
