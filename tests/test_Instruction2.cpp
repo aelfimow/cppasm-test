@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type7(Instruction2_Type7 &instr)
-{
-    instr(AL);
-
-    m8 addr { RAX };
-    instr(addr);
-}
-
 static void gen_Instruction2_Type9(Instruction2_Type9 &instr)
 {
     m64 addr { RAX };
@@ -391,39 +383,163 @@ TEST(Instruction2, Type6)
     EXPECT_EQ(asmstr(), "ltr (%rax)");
 }
 
+TEST(Instruction2, Type7)
+{
+    m8 addr { RAX };
+
+    SETA(AL);
+    EXPECT_EQ(asmstr(), "seta %al");
+    SETA(addr);
+    EXPECT_EQ(asmstr(), "seta (%rax)");
+
+    SETAE(AL);
+    EXPECT_EQ(asmstr(), "setae %al");
+    SETAE(addr);
+    EXPECT_EQ(asmstr(), "setae (%rax)");
+
+    SETB(AL);
+    EXPECT_EQ(asmstr(), "setb %al");
+    SETB(addr);
+    EXPECT_EQ(asmstr(), "setb (%rax)");
+
+    SETBE(AL);
+    EXPECT_EQ(asmstr(), "setbe %al");
+    SETBE(addr);
+    EXPECT_EQ(asmstr(), "setbe (%rax)");
+
+    SETC(AL);
+    EXPECT_EQ(asmstr(), "setc %al");
+    SETC(addr);
+    EXPECT_EQ(asmstr(), "setc (%rax)");
+
+    SETE(AL);
+    EXPECT_EQ(asmstr(), "sete %al");
+    SETE(addr);
+    EXPECT_EQ(asmstr(), "sete (%rax)");
+
+    SETG(AL);
+    EXPECT_EQ(asmstr(), "setg %al");
+    SETG(addr);
+    EXPECT_EQ(asmstr(), "setg (%rax)");
+
+    SETGE(AL);
+    EXPECT_EQ(asmstr(), "setge %al");
+    SETGE(addr);
+    EXPECT_EQ(asmstr(), "setge (%rax)");
+
+    SETL(AL);
+    EXPECT_EQ(asmstr(), "setl %al");
+    SETL(addr);
+    EXPECT_EQ(asmstr(), "setl (%rax)");
+
+    SETLE(AL);
+    EXPECT_EQ(asmstr(), "setle %al");
+    SETLE(addr);
+    EXPECT_EQ(asmstr(), "setle (%rax)");
+
+    SETNA(AL);
+    EXPECT_EQ(asmstr(), "setna %al");
+    SETNA(addr);
+    EXPECT_EQ(asmstr(), "setna (%rax)");
+
+    SETNAE(AL);
+    EXPECT_EQ(asmstr(), "setnae %al");
+    SETNAE(addr);
+    EXPECT_EQ(asmstr(), "setnae (%rax)");
+
+    SETNB(AL);
+    EXPECT_EQ(asmstr(), "setnb %al");
+    SETNB(addr);
+    EXPECT_EQ(asmstr(), "setnb (%rax)");
+
+    SETNBE(AL);
+    EXPECT_EQ(asmstr(), "setnbe %al");
+    SETNBE(addr);
+    EXPECT_EQ(asmstr(), "setnbe (%rax)");
+
+    SETNC(AL);
+    EXPECT_EQ(asmstr(), "setnc %al");
+    SETNC(addr);
+    EXPECT_EQ(asmstr(), "setnc (%rax)");
+
+    SETNE(AL);
+    EXPECT_EQ(asmstr(), "setne %al");
+    SETNE(addr);
+    EXPECT_EQ(asmstr(), "setne (%rax)");
+
+    SETNG(AL);
+    EXPECT_EQ(asmstr(), "setng %al");
+    SETNG(addr);
+    EXPECT_EQ(asmstr(), "setng (%rax)");
+
+    SETNGE(AL);
+    EXPECT_EQ(asmstr(), "setnge %al");
+    SETNGE(addr);
+    EXPECT_EQ(asmstr(), "setnge (%rax)");
+
+    SETNL(AL);
+    EXPECT_EQ(asmstr(), "setnl %al");
+    SETNL(addr);
+    EXPECT_EQ(asmstr(), "setnl (%rax)");
+
+    SETNLE(AL);
+    EXPECT_EQ(asmstr(), "setle %al");
+    SETNLE(addr);
+    EXPECT_EQ(asmstr(), "setle (%rax)");
+
+    SETNO(AL);
+    EXPECT_EQ(asmstr(), "setno %al");
+    SETNO(addr);
+    EXPECT_EQ(asmstr(), "setno (%rax)");
+
+    SETNP(AL);
+    EXPECT_EQ(asmstr(), "setnp %al");
+    SETNP(addr);
+    EXPECT_EQ(asmstr(), "setnp (%rax)");
+
+    SETNS(AL);
+    EXPECT_EQ(asmstr(), "setns %al");
+    SETNS(addr);
+    EXPECT_EQ(asmstr(), "setns (%rax)");
+
+    SETNZ(AL);
+    EXPECT_EQ(asmstr(), "setnz %al");
+    SETNZ(addr);
+    EXPECT_EQ(asmstr(), "setnz (%rax)");
+
+    SETO(AL);
+    EXPECT_EQ(asmstr(), "seto %al");
+    SETO(addr);
+    EXPECT_EQ(asmstr(), "seto (%rax)");
+
+    SETP(AL);
+    EXPECT_EQ(asmstr(), "setp %al");
+    SETP(addr);
+    EXPECT_EQ(asmstr(), "setp (%rax)");
+
+    SETPE(AL);
+    EXPECT_EQ(asmstr(), "setpe %al");
+    SETPE(addr);
+    EXPECT_EQ(asmstr(), "setpe (%rax)");
+
+    SETPO(AL);
+    EXPECT_EQ(asmstr(), "setpo %al");
+    SETPO(addr);
+    EXPECT_EQ(asmstr(), "setpo (%rax)");
+
+    SETS(AL);
+    EXPECT_EQ(asmstr(), "sets %al");
+    SETS(addr);
+    EXPECT_EQ(asmstr(), "sets (%rax)");
+
+    SETZ(AL);
+    EXPECT_EQ(asmstr(), "setz %al");
+    SETZ(addr);
+    EXPECT_EQ(asmstr(), "setz (%rax)");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type7(SETA);
-    gen_Instruction2_Type7(SETAE);
-    gen_Instruction2_Type7(SETB);
-    gen_Instruction2_Type7(SETBE);
-    gen_Instruction2_Type7(SETC);
-    gen_Instruction2_Type7(SETE);
-    gen_Instruction2_Type7(SETG);
-    gen_Instruction2_Type7(SETGE);
-    gen_Instruction2_Type7(SETL);
-    gen_Instruction2_Type7(SETLE);
-    gen_Instruction2_Type7(SETNA);
-    gen_Instruction2_Type7(SETNAE);
-    gen_Instruction2_Type7(SETNB);
-    gen_Instruction2_Type7(SETNBE);
-    gen_Instruction2_Type7(SETNC);
-    gen_Instruction2_Type7(SETNE);
-    gen_Instruction2_Type7(SETNG);
-    gen_Instruction2_Type7(SETNGE);
-    gen_Instruction2_Type7(SETNL);
-    gen_Instruction2_Type7(SETNLE);
-    gen_Instruction2_Type7(SETNO);
-    gen_Instruction2_Type7(SETNP);
-    gen_Instruction2_Type7(SETNS);
-    gen_Instruction2_Type7(SETNZ);
-    gen_Instruction2_Type7(SETO);
-    gen_Instruction2_Type7(SETP);
-    gen_Instruction2_Type7(SETPE);
-    gen_Instruction2_Type7(SETPO);
-    gen_Instruction2_Type7(SETS);
-    gen_Instruction2_Type7(SETZ);
-
     gen_Instruction2_Type9(MOVHPS);
     gen_Instruction2_Type9(MOVLPS);
 
