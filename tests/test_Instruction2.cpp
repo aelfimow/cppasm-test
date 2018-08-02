@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type12(Instruction2_Type12 &instr)
-{
-    m128 addr { RAX };
-    imm8 mask { 255 };
-    instr(XMM0, XMM1, mask);
-    instr(XMM0, addr, mask);
-}
-
 static void gen_Instruction2_Type13(Instruction2_Type13 &instr)
 {
     m32 addr { RAX };
@@ -967,31 +959,119 @@ TEST(Instruction2, Type11)
     EXPECT_EQ(asmstr(), "rsqrtss (%rax), %xmm0");
 }
 
+TEST(Instruction2, Type12)
+{
+    m128 addr { RAX };
+    imm8 mask { 255 };
+
+    CMPPS(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "cmpps $0xFF, %xmm1, %xmm0");
+    CMPPS(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "cmpps $0xFF, (%rax), %xmm0");
+
+    SHUFPS(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "shufps $0xFF, %xmm1, %xmm0");
+    SHUFPS(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "shufps $0xFF, (%rax), %xmm0");
+
+    CMPPD(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "cmppd $0xFF, %xmm1, %xmm0");
+    CMPPD(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "cmppd $0xFF, (%rax), %xmm0");
+
+    SHUFPD(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "shufpd $0xFF, %xmm1, %xmm0");
+    SHUFPD(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "shufpd $0xFF, (%rax), %xmm0");
+
+    PSHUFLW(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "pshuflw $0xFF, %xmm1, %xmm0");
+    PSHUFLW(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pshuflw $0xFF, (%rax), %xmm0");
+
+    PSHUFHW(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "pshufhw $0xFF, %xmm1, %xmm0");
+    PSHUFHW(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pshufhw $0xFF, (%rax), %xmm0");
+
+    PSHUFD(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "pshufd $0xFF, %xmm1, %xmm0");
+    PSHUFD(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pshufd $0xFF, (%rax), %xmm0");
+
+    DPPD(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "dppd $0xFF, %xmm1, %xmm0");
+    DPPD(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "dppd $0xFF, (%rax), %xmm0");
+
+    DPPS(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "dpps $0xFF, %xmm1, %xmm0");
+    DPPS(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "dpps $0xFF, (%rax), %xmm0");
+
+    BLENDPD(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "blendpd $0xFF, %xmm1, %xmm0");
+    BLENDPD(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "blendpd $0xFF, (%rax), %xmm0");
+
+    BLENDPS(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "blendps $0xFF, %xmm1, %xmm0");
+    BLENDPS(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "blendps $0xFF, (%rax), %xmm0");
+
+    PBLENDW(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "pblendw $0xFF, %xmm1, %xmm0");
+    PBLENDW(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pblendw $0xFF, (%rax), %xmm0");
+
+    ROUNDPS(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "roundps $0xFF, %xmm1, %xmm0");
+    ROUNDPS(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "roundps $0xFF, (%rax), %xmm0");
+
+    ROUNDPD(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "roundpd $0xFF, %xmm1, %xmm0");
+    ROUNDPD(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "roundpd $0xFF, (%rax), %xmm0");
+
+    MPSADBW(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "mpsadbw $0xFF, %xmm1, %xmm0");
+    MPSADBW(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "mpsadbw $0xFF, (%rax), %xmm0");
+
+    PCMPESTRI(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "pcmpestri $0xFF, %xmm1, %xmm0");
+    PCMPESTRI(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pcmpestri $0xFF, (%rax), %xmm0");
+
+    PCMPESTRM(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "pcmpestrm $0xFF, %xmm1, %xmm0");
+    PCMPESTRM(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pcmpestrm $0xFF, (%rax), %xmm0");
+
+    PCMPISTRI(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "pcmpistri $0xFF, %xmm1, %xmm0");
+    PCMPISTRI(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pcmpistri $0xFF, (%rax), %xmm0");
+
+    PCMPISTRM(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "pcmpistrm $0xFF, %xmm1, %xmm0");
+    PCMPISTRM(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pcmpistrm $0xFF, (%rax), %xmm0");
+
+    AESKEYGENASSIST(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "aeskeygenassist $0xFF, %xmm1, %xmm0");
+    AESKEYGENASSIST(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "aeskeygenassist $0xFF, (%rax), %xmm0");
+
+    PCLMULQDQ(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "pclmulqdq $0xFF, %xmm1, %xmm0");
+    PCLMULQDQ(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pclmulqdq $0xFF, (%rax), %xmm0");
+}
+
 TEST(Instruction2, AllTypes)
 {
-
-    gen_Instruction2_Type12(CMPPS);
-    gen_Instruction2_Type12(SHUFPS);
-    gen_Instruction2_Type12(CMPPD);
-    gen_Instruction2_Type12(SHUFPD);
-    gen_Instruction2_Type12(PSHUFLW);
-    gen_Instruction2_Type12(PSHUFHW);
-    gen_Instruction2_Type12(PSHUFD);
-    gen_Instruction2_Type12(DPPD);
-    gen_Instruction2_Type12(DPPS);
-    gen_Instruction2_Type12(BLENDPD);
-    gen_Instruction2_Type12(BLENDPS);
-    gen_Instruction2_Type12(PBLENDW);
-    gen_Instruction2_Type12(ROUNDPS);
-    gen_Instruction2_Type12(ROUNDPD);
-    gen_Instruction2_Type12(MPSADBW);
-    gen_Instruction2_Type12(PCMPESTRI);
-    gen_Instruction2_Type12(PCMPESTRM);
-    gen_Instruction2_Type12(PCMPISTRI);
-    gen_Instruction2_Type12(PCMPISTRM);
-    gen_Instruction2_Type12(AESKEYGENASSIST);
-    gen_Instruction2_Type12(PCLMULQDQ);
-
     gen_Instruction2_Type13(CMPSS);
     gen_Instruction2_Type13(ROUNDSS);
     gen_Instruction2_Type13(INSERTPS);
