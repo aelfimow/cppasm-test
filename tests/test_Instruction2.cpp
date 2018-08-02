@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type13(Instruction2_Type13 &instr)
-{
-    m32 addr { RAX };
-    imm8 mask { 255 };
-    instr(XMM0, XMM1, mask);
-    instr(XMM0, addr, mask);
-}
-
 static void gen_Instruction2_Type14(Instruction2_Type14 &instr)
 {
     m64 addr { RAX };
@@ -1070,12 +1062,29 @@ TEST(Instruction2, Type12)
     EXPECT_EQ(asmstr(), "pclmulqdq $0xFF, (%rax), %xmm0");
 }
 
+TEST(Instruction2, Type13)
+{
+    m32 addr { RAX };
+    imm8 mask { 255 };
+
+    CMPSS(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "cmpss $0xFF, %xmm1, %xmm0");
+    CMPSS(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "cmpss $0xFF, (%rax), %xmm0");
+
+    ROUNDSS(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "roundss $0xFF, %xmm1, %xmm0");
+    ROUNDSS(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "roundss $0xFF, (%rax), %xmm0");
+
+    INSERTPS(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "insertps $0xFF, %xmm1, %xmm0");
+    INSERTPS(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "insertps $0xFF, (%rax), %xmm0");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type13(CMPSS);
-    gen_Instruction2_Type13(ROUNDSS);
-    gen_Instruction2_Type13(INSERTPS);
-
     gen_Instruction2_Type14(ADDSD);
     gen_Instruction2_Type14(SUBSD);
     gen_Instruction2_Type14(MULSD);
