@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type22(Instruction2_Type22 &instr)
-{
-    m32 addr1 { RAX };
-    m64 addr2 { RBX };
-    instr(addr1, ECX);
-    instr(addr2, RCX);
-}
-
 static void gen_Instruction2_Type23(Instruction2_Type23 &instr)
 {
     m8 addr { RAX };
@@ -1281,10 +1273,19 @@ TEST(Instruction2, Type21)
     EXPECT_EQ(asmstr(), "pshufw $0xFF, (%rax), %mm0");
 }
 
+TEST(Instruction2, Type22)
+{
+    m32 addr1 { RAX };
+    m64 addr2 { RBX };
+
+    MOVNTI(addr1, ECX);
+    EXPECT_EQ(asmstr(), "movnti %ecx, (%rax)");
+    MOVNTI(addr2, RCX);
+    EXPECT_EQ(asmstr(), "movnti %rcx, (%rbx)");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type22(MOVNTI);
-
     gen_Instruction2_Type23(PINSRB);
 
     gen_Instruction2_Type24(PINSRD);
