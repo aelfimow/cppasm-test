@@ -3,13 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type9(Instruction2_Type9 &instr)
-{
-    m64 addr { RAX };
-    instr(XMM0, addr);
-    instr(addr, XMM0);
-}
-
 static void gen_Instruction2_Type10(Instruction2_Type10 &instr)
 {
     m128 addr { RAX };
@@ -538,11 +531,23 @@ TEST(Instruction2, Type7)
     EXPECT_EQ(asmstr(), "setz (%rax)");
 }
 
+TEST(Instruction2, Type9)
+{
+    m64 addr { RAX };
+
+    MOVHPS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movhps (%rax), %xmm0");
+    MOVHPS(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movhps %xmm0, (%rax)");
+
+    MOVLPS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movlps (%rax), %xmm0");
+    MOVLPS(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movlps %xmm0, (%rax)");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type9(MOVHPS);
-    gen_Instruction2_Type9(MOVLPS);
-
     gen_Instruction2_Type10(ADDPS);
     gen_Instruction2_Type10(SUBPS);
     gen_Instruction2_Type10(MULPS);
