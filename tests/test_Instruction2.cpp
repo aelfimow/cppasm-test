@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type16(Instruction2_Type16 &instr)
-{
-    m16 addr1 { RAX };
-    m32 addr2 { RBX };
-    instr(addr1);
-    instr(addr2);
-}
-
 static void gen_Instruction2_Type17(Instruction2_Type17 &instr)
 {
     m64 addr { RAX };
@@ -1184,18 +1176,59 @@ TEST(Instruction2, Type15)
     EXPECT_EQ(asmstr(), "roundsd $0xFF, (%rax), %xmm0");
 }
 
+TEST(Instruction2, Type16)
+{
+    m16 addr1 { RAX };
+    m32 addr2 { RBX };
+
+    FIST(addr1);
+    EXPECT_EQ(asmstr(), "fist (%rax)");
+    FIST(addr2);
+    EXPECT_EQ(asmstr(), "fistl (%rbx)");
+
+    FIADD(addr1);
+    EXPECT_EQ(asmstr(), "fiadd (%rax)");
+    FIADD(addr2);
+    EXPECT_EQ(asmstr(), "fiaddl (%rbx)");
+
+    FISUB(addr1);
+    EXPECT_EQ(asmstr(), "fisub (%rax)");
+    FISUB(addr2);
+    EXPECT_EQ(asmstr(), "fisubl (%rbx)");
+
+    FISUBR(addr1);
+    EXPECT_EQ(asmstr(), "fisubr (%rax)");
+    FISUBR(addr2);
+    EXPECT_EQ(asmstr(), "fisubrl (%rbx)");
+
+    FIMUL(addr1);
+    EXPECT_EQ(asmstr(), "fimul (%rax)");
+    FIMUL(addr2);
+    EXPECT_EQ(asmstr(), "fimull (%rbx)");
+
+    FIDIV(addr1);
+    EXPECT_EQ(asmstr(), "fidiv (%rax)");
+    FIDIV(addr2);
+    EXPECT_EQ(asmstr(), "fidivl (%rbx)");
+
+    FIDIVR(addr1);
+    EXPECT_EQ(asmstr(), "fidivr (%rax)");
+    FIDIVR(addr2);
+    EXPECT_EQ(asmstr(), "fidivrl (%rbx)");
+
+    FICOM(addr1);
+    EXPECT_EQ(asmstr(), "ficom (%rax)");
+    FICOM(addr2);
+    EXPECT_EQ(asmstr(), "ficoml (%rbx)");
+
+    FICOMP(addr1);
+    EXPECT_EQ(asmstr(), "ficomp (%rax)");
+    FICOMP(addr2);
+    EXPECT_EQ(asmstr(), "ficompl (%rbx)");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type16(FIST);
-    gen_Instruction2_Type16(FIADD);
-    gen_Instruction2_Type16(FISUB);
-    gen_Instruction2_Type16(FISUBR);
-    gen_Instruction2_Type16(FIMUL);
-    gen_Instruction2_Type16(FIDIV);
-    gen_Instruction2_Type16(FIDIVR);
-    gen_Instruction2_Type16(FICOM);
-    gen_Instruction2_Type16(FICOMP);
-
     gen_Instruction2_Type17(CVTPI2PS);
     gen_Instruction2_Type17(CVTPI2PD);
 
