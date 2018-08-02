@@ -3,13 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type11(Instruction2_Type11 &instr)
-{
-    m32 addr { RAX };
-    instr(XMM0, XMM1);
-    instr(XMM0, addr);
-}
-
 static void gen_Instruction2_Type12(Instruction2_Type12 &instr)
 {
     m128 addr { RAX };
@@ -889,24 +882,93 @@ TEST(Instruction2, Type10)
     EXPECT_EQ(asmstr(), "sha256msg2 (%rax), %xmm0");
 }
 
+TEST(Instruction2, Type11)
+{
+    m32 addr { RAX };
+
+    ADDSS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "addss %xmm1, %xmm0");
+    ADDSS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "addss (%rax), %xmm0");
+
+    SUBSS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "subss %xmm1, %xmm0");
+    SUBSS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "subss (%rax), %xmm0");
+
+    MULSS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "mulss %xmm1, %xmm0");
+    MULSS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "mulss (%rax), %xmm0");
+
+    DIVSS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "divss %xmm1, %xmm0");
+    DIVSS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "divss (%rax), %xmm0");
+
+    RCPSS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "rcpss %xmm1, %xmm0");
+    RCPSS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "rcpss (%rax), %xmm0");
+
+    SQRTSS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "sqrtss %xmm1, %xmm0");
+    SQRTSS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "sqrtss (%rax), %xmm0");
+
+    MAXSS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "maxss %xmm1, %xmm0");
+    MAXSS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "maxss (%rax), %xmm0");
+
+    MINSS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "minss %xmm1, %xmm0");
+    MINSS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "minss (%rax), %xmm0");
+
+    COMISS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "comiss %xmm1, %xmm0");
+    COMISS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "comiss (%rax), %xmm0");
+
+    UCOMISS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "ucomiss %xmm1, %xmm0");
+    UCOMISS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "ucomiss (%rax), %xmm0");
+
+    CVTSS2SD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "cvtss2sd %xmm1, %xmm0");
+    CVTSS2SD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "cvtss2sd (%rax), %xmm0");
+
+    PMOVSXBD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmovsxbd %xmm1, %xmm0");
+    PMOVSXBD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pmovsxbd (%rax), %xmm0");
+
+    PMOVSXWQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmovsxwq %xmm1, %xmm0");
+    PMOVSXWQ(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pmovsxwq (%rax), %xmm0");
+
+    PMOVZXBD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmovzxbd %xmm1, %xmm0");
+    PMOVZXBD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pmovzxbd (%rax), %xmm0");
+
+    PMOVZXWQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmovzxwq %xmm1, %xmm0");
+    PMOVZXWQ(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pmovzxwq (%rax), %xmm0");
+
+    RSQRTSS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "rsqrtss %xmm1, %xmm0");
+    RSQRTSS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "rsqrtss (%rax), %xmm0");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type11(ADDSS);
-    gen_Instruction2_Type11(SUBSS);
-    gen_Instruction2_Type11(MULSS);
-    gen_Instruction2_Type11(DIVSS);
-    gen_Instruction2_Type11(RCPSS);
-    gen_Instruction2_Type11(SQRTSS);
-    gen_Instruction2_Type11(MAXSS);
-    gen_Instruction2_Type11(MINSS);
-    gen_Instruction2_Type11(COMISS);
-    gen_Instruction2_Type11(UCOMISS);
-    gen_Instruction2_Type11(CVTSS2SD);
-    gen_Instruction2_Type11(PMOVSXBD);
-    gen_Instruction2_Type11(PMOVSXWQ);
-    gen_Instruction2_Type11(PMOVZXBD);
-    gen_Instruction2_Type11(PMOVZXWQ);
-    gen_Instruction2_Type11(RSQRTSS);
 
     gen_Instruction2_Type12(CMPPS);
     gen_Instruction2_Type12(SHUFPS);
