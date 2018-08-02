@@ -3,13 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type14(Instruction2_Type14 &instr)
-{
-    m64 addr { RAX };
-    instr(XMM0, XMM1);
-    instr(XMM0, addr);
-}
-
 static void gen_Instruction2_Type15(Instruction2_Type15 &instr)
 {
     m64 addr { RAX };
@@ -1083,28 +1076,108 @@ TEST(Instruction2, Type13)
     EXPECT_EQ(asmstr(), "insertps $0xFF, (%rax), %xmm0");
 }
 
+TEST(Instruction2, Type14)
+{
+    m64 addr { RAX };
+
+    ADDSD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "addsd %xmm1, %xmm0");
+    ADDSD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "addsd (%rax), %xmm0");
+
+    SUBSD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "subsd %xmm1, %xmm0");
+    SUBSD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "subsd (%rax), %xmm0");
+
+    MULSD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "mulsd %xmm1, %xmm0");
+    MULSD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "mulsd (%rax), %xmm0");
+
+    DIVSD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "divsd %xmm1, %xmm0");
+    DIVSD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "divsd (%rax), %xmm0");
+
+    SQRTSD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "sqrtsd %xmm1, %xmm0");
+    SQRTSD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "sqrtsd (%rax), %xmm0");
+
+    MAXSD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "maxsd %xmm1, %xmm0");
+    MAXSD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "maxsd (%rax), %xmm0");
+
+    MINSD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "minsd %xmm1, %xmm0");
+    MINSD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "minsd (%rax), %xmm0");
+
+    COMISD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "comisd %xmm1, %xmm0");
+    COMISD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "comisd (%rax), %xmm0");
+
+    UCOMISD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "ucomisd %xmm1, %xmm0");
+    UCOMISD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "ucomisd (%rax), %xmm0");
+
+    CVTDQ2PD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "cvtdq2pd %xmm1, %xmm0");
+    CVTDQ2PD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "cvtdq2pd (%rax), %xmm0");
+
+    CVTPS2PD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "cvtps2pd %xmm1, %xmm0");
+    CVTPS2PD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "cvtps2pd (%rax), %xmm0");
+
+    CVTSD2SS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "cvtsd2ss %xmm1, %xmm0");
+    CVTSD2SS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "cvtsd2ss (%rax), %xmm0");
+
+    MOVDDUP(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "movddup %xmm1, %xmm0");
+    MOVDDUP(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movddup (%rax), %xmm0");
+
+    PMOVSXBW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmovsxbw %xmm1, %xmm0");
+    PMOVSXBW(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pmovsxbw (%rax), %xmm0");
+
+    PMOVSXWD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmovsxwd %xmm1, %xmm0");
+    PMOVSXWD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pmovsxwd (%rax), %xmm0");
+
+    PMOVSXDQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmovsxdq %xmm1, %xmm0");
+    PMOVSXDQ(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pmovsxdq (%rax), %xmm0");
+
+    PMOVZXBW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmovzxbw %xmm1, %xmm0");
+    PMOVZXBW(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pmovzxbw (%rax), %xmm0");
+
+    PMOVZXWD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmovzxwd %xmm1, %xmm0");
+    PMOVZXWD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pmovzxwd (%rax), %xmm0");
+
+    PMOVZXDQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmovzxdq %xmm1, %xmm0");
+    PMOVZXDQ(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pmovzxdq (%rax), %xmm0");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type14(ADDSD);
-    gen_Instruction2_Type14(SUBSD);
-    gen_Instruction2_Type14(MULSD);
-    gen_Instruction2_Type14(DIVSD);
-    gen_Instruction2_Type14(SQRTSD);
-    gen_Instruction2_Type14(MAXSD);
-    gen_Instruction2_Type14(MINSD);
-    gen_Instruction2_Type14(COMISD);
-    gen_Instruction2_Type14(UCOMISD);
-    gen_Instruction2_Type14(CVTDQ2PD);
-    gen_Instruction2_Type14(CVTPS2PD);
-    gen_Instruction2_Type14(CVTSD2SS);
-    gen_Instruction2_Type14(MOVDDUP);
-    gen_Instruction2_Type14(PMOVSXBW);
-    gen_Instruction2_Type14(PMOVSXWD);
-    gen_Instruction2_Type14(PMOVSXDQ);
-    gen_Instruction2_Type14(PMOVZXBW);
-    gen_Instruction2_Type14(PMOVZXWD);
-    gen_Instruction2_Type14(PMOVZXDQ);
-
     gen_Instruction2_Type15(CMPSD_SSE2);
     gen_Instruction2_Type15(ROUNDSD);
 
