@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type21(Instruction2_Type21 &instr)
-{
-    m64 addr { RAX };
-    imm8 mask { 255 };
-    instr(MM0, MM1, mask);
-    instr(MM0, addr, mask);
-}
-
 static void gen_Instruction2_Type22(Instruction2_Type22 &instr)
 {
     m32 addr1 { RAX };
@@ -1248,24 +1240,49 @@ TEST(Instruction2, Type19)
 TEST(Instruction2, Type20)
 {
     FADDP();
+    EXPECT_EQ(asmstr(), "faddp");
     FADDP(ST(1), ST(0));
+    EXPECT_EQ(asmstr(), "faddp %st(0), %st(1)");
+
     FSUBP();
+    EXPECT_EQ(asmstr(), "fsubp");
     FSUBP(ST(1), ST(0));
+    EXPECT_EQ(asmstr(), "fsubp %st(0), %st(1)");
+
     FSUBRP();
+    EXPECT_EQ(asmstr(), "fsubrp");
     FSUBRP(ST(1), ST(0));
+    EXPECT_EQ(asmstr(), "fsubrp %st(0), %st(1)");
+
     FMULP();
+    EXPECT_EQ(asmstr(), "fmulp");
     FMULP(ST(1), ST(0));
+    EXPECT_EQ(asmstr(), "fmulp %st(0), %st(1)");
+
     FDIVP();
+    EXPECT_EQ(asmstr(), "fdivp");
     FDIVP(ST(1), ST(0));
+    EXPECT_EQ(asmstr(), "fdivp %st(0), %st(1)");
+
     FDIVRP();
+    EXPECT_EQ(asmstr(), "fdivrp");
     FDIVRP(ST(1), ST(0));
+    EXPECT_EQ(asmstr(), "fdivrp %st(0), %st(1)");
+}
+
+TEST(Instruction2, Type21)
+{
+    m64 addr { RAX };
+    imm8 mask { 255 };
+
+    PSHUFW(MM0, MM1, mask);
+    EXPECT_EQ(asmstr(), "pshufw $0xFF, %mm1, %mm0");
+    PSHUFW(MM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pshufw $0xFF, (%rax), %mm0");
 }
 
 TEST(Instruction2, AllTypes)
 {
-
-    gen_Instruction2_Type21(PSHUFW);
-
     gen_Instruction2_Type22(MOVNTI);
 
     gen_Instruction2_Type23(PINSRB);
