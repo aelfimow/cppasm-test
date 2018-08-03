@@ -3,18 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type42(Instruction2_Type42 &instr)
-{
-    m256 addr { RBX };
-    imm8 mask { 0x0F };
-    instr(ZMM0, ZMM1, YMM0, mask);
-    instr(ZMM0.k1, ZMM1, YMM0, mask);
-    instr(ZMM0.k1.z, ZMM1, YMM0, mask);
-    instr(ZMM0, ZMM1, addr, mask);
-    instr(ZMM0.k1, ZMM1, addr, mask);
-    instr(ZMM0.k1.z, ZMM1, addr, mask);
-}
-
 TEST(Instruction2, Type2)
 {
     imm16 value { 65535 };
@@ -1565,8 +1553,34 @@ TEST(Instruction2, Type41)
     EXPECT_EQ(asmstr(), "vbroadcasti64x2 (%rbx), %zmm0{%k1}{z}");
 }
 
-TEST(Instruction2, AllTypes)
+TEST(Instruction2, Type42)
 {
-    gen_Instruction2_Type42(VINSERTI32X8);
-    gen_Instruction2_Type42(VINSERTI64X4);
+    m256 addr { RBX };
+    imm8 mask { 0x0F };
+
+    VINSERTI32X8(ZMM0, ZMM1, YMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x8 $0x0F, %ymm0, %zmm1, %zmm0");
+    VINSERTI32X8(ZMM0.k1, ZMM1, YMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x8 $0x0F, %ymm0, %zmm1, %zmm0{%k1}");
+    VINSERTI32X8(ZMM0.k1.z, ZMM1, YMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x8 $0x0F, %ymm0, %zmm1, %zmm0{%k1}{z}");
+    VINSERTI32X8(ZMM0, ZMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x8 $0x0F, (%rbx), %zmm1, %zmm0");
+    VINSERTI32X8(ZMM0.k1, ZMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x8 $0x0F, (%rbx), %zmm1, %zmm0{%k1}");
+    VINSERTI32X8(ZMM0.k1.z, ZMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x8 $0x0F, (%rbx), %zmm1, %zmm0{%k1}{z}");
+
+    VINSERTI64X4(ZMM0, ZMM1, YMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x4 $0x0F, %ymm0, %zmm1, %zmm0");
+    VINSERTI64X4(ZMM0.k1, ZMM1, YMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x4 $0x0F, %ymm0, %zmm1, %zmm0{%k1}");
+    VINSERTI64X4(ZMM0.k1.z, ZMM1, YMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x4 $0x0F, %ymm0, %zmm1, %zmm0{%k1}{z}");
+    VINSERTI64X4(ZMM0, ZMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x4 $0x0F, (%rbx), %zmm1, %zmm0");
+    VINSERTI64X4(ZMM0.k1, ZMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x4 $0x0F, (%rbx), %zmm1, %zmm0{%k1}");
+    VINSERTI64X4(ZMM0.k1.z, ZMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x4 $0x0F, (%rbx), %zmm1, %zmm0{%k1}{z}");
 }
