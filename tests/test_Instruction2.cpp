@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type24(Instruction2_Type24 &instr)
-{
-    m32 addr { RBX };
-    imm8 mask { 255 };
-    instr(XMM0, EAX, mask);
-    instr(XMM0, addr, mask);
-}
-
 static void gen_Instruction2_Type25(Instruction2_Type25 &instr)
 {
     m64 addr { RBX };
@@ -1287,10 +1279,19 @@ TEST(Instruction2, Type23)
     EXPECT_EQ(asmstr(), "pinsrb $0xFF, (%rax), %xmm0");
 }
 
+TEST(Instruction2, Type24)
+{
+    m32 addr { RBX };
+    imm8 mask { 255 };
+
+    PINSRD(XMM0, EAX, mask);
+    EXPECT_EQ(asmstr(), "pinsrd $0xFF, %eax, %xmm0");
+    PINSRD(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pinsrd $0xFF, (%rbx), %xmm0");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type24(PINSRD);
-
     gen_Instruction2_Type25(PINSRQ);
 
     gen_Instruction2_Type26(PEXTRQ);
