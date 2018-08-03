@@ -3,13 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type29(Instruction2_Type29 &instr)
-{
-    m32 addr { RAX };
-    instr(XMM0, XMM1, XMM2);
-    instr(XMM0, XMM1, addr);
-}
-
 static void gen_Instruction2_Type30(Instruction2_Type30 &instr)
 {
     imm8 mask { 255 };
@@ -1362,22 +1355,78 @@ TEST(Instruction2, Type28)
     EXPECT_EQ(asmstr(), "vfnmsub231sd (%rax), %xmm1, %xmm0");
 }
 
+TEST(Instruction2, Type29)
+{
+    m32 addr { RAX };
+
+    VFMADD132SS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmadd132ss %xmm2, %xmm1, %xmm0");
+    VFMADD132SS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vfmadd132ss (%rax), %xmm1, %xmm0");
+
+    VFMADD213SS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmadd213ss %xmm2, %xmm1, %xmm0");
+    VFMADD213SS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vfmadd213ss (%rax), %xmm1, %xmm0");
+
+    VFMADD231SS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmadd231ss %xmm2, %xmm1, %xmm0");
+    VFMADD231SS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vfmadd231ss (%rax), %xmm1, %xmm0");
+
+    VFMSUB132SS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsub132ss %xmm2, %xmm1, %xmm0");
+    VFMSUB132SS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vfmsub132ss (%rax), %xmm1, %xmm0");
+
+    VFMSUB213SS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsub213ss %xmm2, %xmm1, %xmm0");
+    VFMSUB213SS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vfmsub213ss (%rax), %xmm1, %xmm0");
+
+    VFMSUB231SS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsub231ss %xmm2, %xmm1, %xmm0");
+    VFMSUB231SS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vfmsub231ss (%rax), %xmm1, %xmm0");
+
+    VFNMADD132SS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd132ss %xmm2, %xmm1, %xmm0");
+    VFNMADD132SS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vfnmadd132ss (%rax), %xmm1, %xmm0");
+
+    VFNMADD213SS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd213ss %xmm2, %xmm1, %xmm0");
+    VFNMADD213SS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vfnmadd213ss (%rax), %xmm1, %xmm0");
+
+    VFNMADD231SS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd231ss %xmm2, %xmm1, %xmm0");
+    VFNMADD231SS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vfnmadd231ss (%rax), %xmm1, %xmm0");
+
+    VFNMSUB132SS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub132ss %xmm2, %xmm1, %xmm0");
+    VFNMSUB132SS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vfnmsub132ss (%rax), %xmm1, %xmm0");
+
+    VFNMSUB213SS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub213ss %xmm2, %xmm1, %xmm0");
+    VFNMSUB213SS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vfnmsub213ss (%rax), %xmm1, %xmm0");
+
+    VFNMSUB231SS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub231ss %xmm2, %xmm1, %xmm0");
+    VFNMSUB231SS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vfnmsub231ss (%rax), %xmm1, %xmm0");
+
+    VRSQRTSS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vrsqrtss %xmm2, %xmm1, %xmm0");
+    VRSQRTSS(XMM0, XMM1, addr);
+    EXPECT_EQ(asmstr(), "vrsqrtss (%rax), %xmm1, %xmm0");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type29(VFMADD132SS);
-    gen_Instruction2_Type29(VFMADD213SS);
-    gen_Instruction2_Type29(VFMADD231SS);
-    gen_Instruction2_Type29(VFMSUB132SS);
-    gen_Instruction2_Type29(VFMSUB213SS);
-    gen_Instruction2_Type29(VFMSUB231SS);
-    gen_Instruction2_Type29(VFNMADD132SS);
-    gen_Instruction2_Type29(VFNMADD213SS);
-    gen_Instruction2_Type29(VFNMADD231SS);
-    gen_Instruction2_Type29(VFNMSUB132SS);
-    gen_Instruction2_Type29(VFNMSUB213SS);
-    gen_Instruction2_Type29(VFNMSUB231SS);
-    gen_Instruction2_Type29(VRSQRTSS);
-
     gen_Instruction2_Type30(VDPPD);
 
     gen_Instruction2_Type31(VLDDQU);
