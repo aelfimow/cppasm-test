@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type40(Instruction2_Type40 &instr)
-{
-    m32 addr1 { EBX };
-    m64 addr2 { RBX };
-    instr(addr1);
-    instr(addr2);
-}
-
 static void gen_Instruction2_Type41(Instruction2_Type41 &instr)
 {
     m128 addr { RBX };
@@ -1506,12 +1498,29 @@ TEST(Instruction2, Type39)
     EXPECT_EQ(asmstr(), "invvpid (%rbx), %rax");
 }
 
+TEST(Instruction2, Type40)
+{
+    m32 addr1 { EBX };
+    m64 addr2 { RBX };
+
+    VMCLEAR(addr1);
+    EXPECT_EQ(asmstr(), "vmclear (%ebx)");
+    VMCLEAR(addr2);
+    EXPECT_EQ(asmstr(), "vmclear (%rbx)");
+
+    VMPTRLD(addr1);
+    EXPECT_EQ(asmstr(), "vmptrld (%ebx)");
+    VMPTRLD(addr2);
+    EXPECT_EQ(asmstr(), "vmptrld (%rbx)");
+
+    VMPTRST(addr1);
+    EXPECT_EQ(asmstr(), "vmptrst (%ebx)");
+    VMPTRST(addr2);
+    EXPECT_EQ(asmstr(), "vmptrst (%rbx)");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type40(VMCLEAR);
-    gen_Instruction2_Type40(VMPTRLD);
-    gen_Instruction2_Type40(VMPTRST);
-
     gen_Instruction2_Type41(VBROADCASTF32X4);
     gen_Instruction2_Type41(VBROADCASTF64X2);
     gen_Instruction2_Type41(VBROADCASTI32X4);
