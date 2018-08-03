@@ -3,13 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type27(Instruction2_Type27 &instr)
-{
-    m16 addr { RAX };
-    instr(XMM0, XMM1);
-    instr(XMM0, addr);
-}
-
 static void gen_Instruction2_Type28(Instruction2_Type28 &instr)
 {
     m64 addr { RAX };
@@ -1296,11 +1289,23 @@ TEST(Instruction2, Type26)
     EXPECT_EQ(asmstr(), "pextrq $0xFF, %xmm1, (%rbx)");
 }
 
+TEST(Instruction2, Type27)
+{
+    m16 addr { RAX };
+
+    PMOVSXBQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmovsxbq %xmm1, %xmm0");
+    PMOVSXBQ(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pmovsxbq (%rax), %xmm0");
+
+    PMOVZXBQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmovzxbq %xmm1, %xmm0");
+    PMOVZXBQ(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pmovzxbq (%rax), %xmm0");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type27(PMOVSXBQ);
-    gen_Instruction2_Type27(PMOVZXBQ);
-
     gen_Instruction2_Type28(VFMADD132SD);
     gen_Instruction2_Type28(VFMADD213SD);
     gen_Instruction2_Type28(VFMADD231SD);
