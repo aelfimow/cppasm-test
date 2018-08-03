@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type33(Instruction2_Type33 &instr)
-{
-    imm8 mask { 255 };
-    m256 addr { RBX };
-    instr(YMM0, ZMM0, mask);
-    instr(YMM0.k1, ZMM0, mask);
-    instr(YMM0.k1.z, ZMM0, mask);
-    instr(addr, ZMM0, mask);
-}
-
 static void gen_Instruction2_Type34(Instruction2_Type34 &instr)
 {
     imm8 mask { 255 };
@@ -1444,13 +1434,50 @@ TEST(Instruction2, Test32)
     EXPECT_EQ(asmstr(), "vmovntdq %ymm0, (%rbx)");
 }
 
+TEST(Instruction2, Type33)
+{
+    imm8 mask { 255 };
+    m256 addr { RBX };
+
+    VEXTRACTF32X8(YMM0, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractf32x8 $0xFF, %zmm0, %ymm0");
+    VEXTRACTF32X8(YMM0.k1, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractf32x8 $0xFF, %zmm0, %ymm0{%k1}");
+    VEXTRACTF32X8(YMM0.k1.z, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractf32x8 $0xFF, %zmm0, %ymm0{%k1}{z}");
+    VEXTRACTF32X8(addr, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractf32x8 $0xFF, %zmm0, (%rbx)");
+
+    VEXTRACTF64X4(YMM0, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractf64x4 $0xFF, %zmm0, %ymm0");
+    VEXTRACTF64X4(YMM0.k1, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractf64x4 $0xFF, %zmm0, %ymm0{%k1}");
+    VEXTRACTF64X4(YMM0.k1.z, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractf64x4 $0xFF, %zmm0, %ymm0{%k1}{z}");
+    VEXTRACTF64X4(addr, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractf64x4 $0xFF, %zmm0, (%rbx)");
+
+    VEXTRACTI32X8(YMM0, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextracti32x8 $0xFF, %zmm0, %ymm0");
+    VEXTRACTI32X8(YMM0.k1, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextracti32x8 $0xFF, %zmm0, %ymm0{%k1}");
+    VEXTRACTI32X8(YMM0.k1.z, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextracti32x8 $0xFF, %zmm0, %ymm0{%k1}{z}");
+    VEXTRACTI32X8(addr, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextracti32x8 $0xFF, %zmm0, (%rbx)");
+
+    VEXTRACTI64X4(YMM0, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextracti64x4 $0xFF, %zmm0, %ymm0");
+    VEXTRACTI64X4(YMM0.k1, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextracti64x4 $0xFF, %zmm0, %ymm0{%k1}");
+    VEXTRACTI64X4(YMM0.k1.z, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextracti64x4 $0xFF, %zmm0, %ymm0{%k1}{z}");
+    VEXTRACTI64X4(addr, ZMM0, mask);
+    EXPECT_EQ(asmstr(), "vextracti64x4 $0xFF, %zmm0, (%rbx)");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type33(VEXTRACTF32X8);
-    gen_Instruction2_Type33(VEXTRACTF64X4);
-    gen_Instruction2_Type33(VEXTRACTI32X8);
-    gen_Instruction2_Type33(VEXTRACTI64X4);
-
     gen_Instruction2_Type34(VEXTRACTF128);
     gen_Instruction2_Type34(VEXTRACTI128);
 
