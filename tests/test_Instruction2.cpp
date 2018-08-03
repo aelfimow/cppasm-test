@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type32(Instruction2_Type32 &instr)
-{
-    m128 addr1 { RAX };
-    m256 addr2 { RBX };
-    instr(addr1, XMM0);
-    instr(addr2, YMM0);
-}
-
 static void gen_Instruction2_Type33(Instruction2_Type33 &instr)
 {
     imm8 mask { 255 };
@@ -1436,11 +1428,24 @@ TEST(Instruction2, Type31)
     EXPECT_EQ(asmstr(), "vmovntdqa (%rbx), %ymm0");
 }
 
+TEST(Instruction2, Test32)
+{
+    m128 addr1 { RAX };
+    m256 addr2 { RBX };
+
+    VMOVNTPS(addr1, XMM0);
+    EXPECT_EQ(asmstr(), "vmovntps %xmm0, (%rax)");
+    VMOVNTPS(addr2, YMM0);
+    EXPECT_EQ(asmstr(), "vmovntps %ymm0, (%rbx)");
+
+    VMOVNTDQ(addr1, XMM0);
+    EXPECT_EQ(asmstr(), "vmovntdq %xmm0, (%rax)");
+    VMOVNTDQ(addr2, YMM0);
+    EXPECT_EQ(asmstr(), "vmovntdq %ymm0, (%rbx)");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type32(VMOVNTPS);
-    gen_Instruction2_Type32(VMOVNTDQ);
-
     gen_Instruction2_Type33(VEXTRACTF32X8);
     gen_Instruction2_Type33(VEXTRACTF64X4);
     gen_Instruction2_Type33(VEXTRACTI32X8);
