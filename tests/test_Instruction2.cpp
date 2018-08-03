@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type37(Instruction2_Type37 &instr)
-{
-    m32 addr { RAX };
-    imm8 mask { 255 };
-    instr(EAX, XMM0, mask);
-    instr(addr, XMM0, mask);
-}
-
 static void gen_Instruction2_Type38(Instruction2_Type38 &instr)
 {
     m128 addr { RDX };
@@ -1495,10 +1487,19 @@ TEST(Instruction2, Type36)
     EXPECT_EQ(asmstr(), "vperm2f128 $0xFF, (%rax), %ymm1, %ymm0");
 }
 
+TEST(Instruction2, Type37)
+{
+    m32 addr { RAX };
+    imm8 mask { 255 };
+
+    PEXTRD(EAX, XMM0, mask);
+    EXPECT_EQ(asmstr(), "pextrd $0xFF, %xmm0, %eax");
+    PEXTRD(addr, XMM0, mask);
+    EXPECT_EQ(asmstr(), "pextrd $0xFF, %xmm0, (%rax)");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type37(PEXTRD);
-
     gen_Instruction2_Type38(SHA256RNDS2);
 
     gen_Instruction2_Type39(INVEPT);
