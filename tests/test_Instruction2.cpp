@@ -3,30 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction2_Type34(Instruction2_Type34 &instr)
-{
-    imm8 mask { 255 };
-    m128 addr { RAX };
-    instr(XMM0, YMM0, mask);
-    instr(addr, YMM0, mask);
-}
-
-static void gen_Instruction2_Type35(Instruction2_Type35 &instr)
-{
-    imm8 mask { 255 };
-    m128 addr { RAX };
-    instr(YMM0, YMM1, XMM0, mask);
-    instr(YMM0, YMM1, addr, mask);
-}
-
-static void gen_Instruction2_Type36(Instruction2_Type36 &instr)
-{
-    imm8 mask { 255 };
-    m256 addr { RAX };
-    instr(YMM0, YMM1, YMM2, mask);
-    instr(YMM0, YMM1, addr, mask);
-}
-
 static void gen_Instruction2_Type37(Instruction2_Type37 &instr)
 {
     m32 addr { RAX };
@@ -1476,16 +1452,51 @@ TEST(Instruction2, Type33)
     EXPECT_EQ(asmstr(), "vextracti64x4 $0xFF, %zmm0, (%rbx)");
 }
 
+TEST(Instruction2, Type34)
+{
+    imm8 mask { 255 };
+    m128 addr { RAX };
+
+    VEXTRACTF128(XMM0, YMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractf128 $0xFF, %ymm0, %xmm0");
+    VEXTRACTF128(addr, YMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractf128 $0xFF, %ymm0, (%rax)");
+
+    VEXTRACTI128(XMM0, YMM0, mask);
+    EXPECT_EQ(asmstr(), "vextracti128 $0xFF, %ymm0, %xmm0");
+    VEXTRACTI128(addr, YMM0, mask);
+    EXPECT_EQ(asmstr(), "vextracti128 $0xFF, %ymm0, (%rax)");
+}
+
+TEST(Instruction2, Type35)
+{
+    imm8 mask { 255 };
+    m128 addr { RAX };
+
+    VINSERTF128(YMM0, YMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinsertf128 $0xFF, %xmm0, %ymm1, %ymm0");
+    VINSERTF128(YMM0, YMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinsertf128 $0xFF, (%rax), %ymm1, %ymm0");
+
+    VINSERTI128(YMM0, YMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti128 $0xFF, %xmm0, %ymm1, %ymm0");
+    VINSERTI128(YMM0, YMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti128 $0xFF, (%rax), %ymm1, %ymm0");
+}
+
+TEST(Instruction2, Type36)
+{
+    imm8 mask { 255 };
+    m256 addr { RAX };
+
+    VPERM2F128(YMM0, YMM1, YMM2, mask);
+    EXPECT_EQ(asmstr(), "vperm2f128 $0xFF, %ymm2, %ymm1, %ymm0");
+    VPERM2F128(YMM0, YMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vperm2f128 $0xFF, (%rax), %ymm1, %ymm0");
+}
+
 TEST(Instruction2, AllTypes)
 {
-    gen_Instruction2_Type34(VEXTRACTF128);
-    gen_Instruction2_Type34(VEXTRACTI128);
-
-    gen_Instruction2_Type35(VINSERTF128);
-    gen_Instruction2_Type35(VINSERTI128);
-
-    gen_Instruction2_Type36(VPERM2F128);
-
     gen_Instruction2_Type37(PEXTRD);
 
     gen_Instruction2_Type38(SHA256RNDS2);
