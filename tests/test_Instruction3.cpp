@@ -3,15 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction3_Type10(Instruction3_Type10 &instr)
-{
-    imm8 mask { 255 };
-    m32 addr { RAX };
-    instr(EAX, XMM0, mask);
-    instr(RAX, XMM0, mask);
-    instr(addr, XMM0, mask);
-}
-
 TEST(Instruction3, Type1)
 {
     m64 addr { RAX };
@@ -235,8 +226,22 @@ TEST(Instruction3, Type9)
     EXPECT_EQ(asmstr(), "pextrb $0xFF, %xmm0, (%rax)");
 }
 
-TEST(Instruction3, AllTypes)
+TEST(Instruction3, Type10)
 {
-    gen_Instruction3_Type10(EXTRACTPS);
-    gen_Instruction3_Type10(VEXTRACTPS);
+    imm8 mask { 255 };
+    m32 addr { RAX };
+
+    EXTRACTPS(EAX, XMM0, mask);
+    EXPECT_EQ(asmstr(), "extractps $0xFF, %xmm0, %eax");
+    EXTRACTPS(RAX, XMM0, mask);
+    EXPECT_EQ(asmstr(), "extractps $0xFF, %xmm0, %rax");
+    EXTRACTPS(addr, XMM0, mask);
+    EXPECT_EQ(asmstr(), "extractps $0xFF, %xmm0, (%rax)");
+
+    VEXTRACTPS(EAX, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractps $0xFF, %xmm0, %eax");
+    VEXTRACTPS(RAX, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractps $0xFF, %xmm0, %rax");
+    VEXTRACTPS(addr, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vextractps $0xFF, %xmm0, (%rax)");
 }
