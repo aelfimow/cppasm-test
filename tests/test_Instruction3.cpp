@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction3_Type6(Instruction3_Type6 &instr)
-{
-    m16 addr1 { RAX };
-    m32 addr2 { RBX };
-    m64 addr3 { RCX };
-    instr(addr1);
-    instr(addr2);
-    instr(addr3);
-}
-
 static void gen_Instruction3_Type7(Instruction3_Type7 &instr)
 {
     m32fp addr1 { RAX };
@@ -170,12 +160,36 @@ TEST(Instruction3, Type5)
     EXPECT_EQ(asmstr(), "movdqu %xmm0, (%rax)");
 }
 
+TEST(Instruction3, Type6)
+{
+    m16 addr1 { RAX };
+    m32 addr2 { RBX };
+    m64 addr3 { RCX };
+
+    FILD(addr1);
+    EXPECT_EQ(asmstr(), "fild (%rax)");
+    FILD(addr2);
+    EXPECT_EQ(asmstr(), "fildl (%rbx)");
+    FILD(addr3);
+    EXPECT_EQ(asmstr(), "fildll (%rcx)");
+
+    FISTP(addr1);
+    EXPECT_EQ(asmstr(), "fistp (%rax)");
+    FISTP(addr2);
+    EXPECT_EQ(asmstr(), "fistpl (%rbx)");
+    FISTP(addr3);
+    EXPECT_EQ(asmstr(), "fistpll (%rcx)");
+
+    FISTTP(addr1);
+    EXPECT_EQ(asmstr(), "fisttp (%rax)");
+    FISTTP(addr2);
+    EXPECT_EQ(asmstr(), "fisttpl (%rbx)");
+    FISTTP(addr3);
+    EXPECT_EQ(asmstr(), "fisttpll (%rcx)");
+}
+
 TEST(Instruction3, AllTypes)
 {
-    gen_Instruction3_Type6(FILD);
-    gen_Instruction3_Type6(FISTP);
-    gen_Instruction3_Type6(FISTTP);
-
     gen_Instruction3_Type7(FST);
 
     gen_Instruction3_Type8(FADD);
