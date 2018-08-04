@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction3_Type1(Instruction3_Type1 &instr)
-{
-    m64 addr { RAX };
-    instr(AX, addr);
-    instr(EAX, addr);
-    instr(RAX, addr);
-}
-
 static void gen_Instruction3_Type2(Instruction3_Type2 &instr)
 {
     instr(AX);
@@ -88,15 +80,41 @@ static void gen_Instruction3_Type10(Instruction3_Type10 &instr)
     instr(addr, XMM0, mask);
 }
 
+TEST(Instruction3, Type1)
+{
+    m64 addr { RAX };
+
+    LFS(AX, addr);
+    EXPECT_EQ(asmstr(), "lfs (%rax), %ax");
+    LFS(EAX, addr);
+    EXPECT_EQ(asmstr(), "lfs (%rax), %eax");
+    LFS(RAX, addr);
+    EXPECT_EQ(asmstr(), "lfs (%rax), %rax");
+
+    LGS(AX, addr);
+    EXPECT_EQ(asmstr(), "lgs (%rax), %ax");
+    LGS(EAX, addr);
+    EXPECT_EQ(asmstr(), "lgs (%rax), %eax");
+    LGS(RAX, addr);
+    EXPECT_EQ(asmstr(), "lgs (%rax), %rax");
+
+    LSS(AX, addr);
+    EXPECT_EQ(asmstr(), "lss (%rax), %ax");
+    LSS(EAX, addr);
+    EXPECT_EQ(asmstr(), "lss (%rax), %eax");
+    LSS(RAX, addr);
+    EXPECT_EQ(asmstr(), "lss (%rax), %rax");
+
+    LEA(AX, addr);
+    EXPECT_EQ(asmstr(), "lea (%rax), %ax");
+    LEA(EAX, addr);
+    EXPECT_EQ(asmstr(), "lea (%rax), %eax");
+    LEA(RAX, addr);
+    EXPECT_EQ(asmstr(), "lea (%rax), %rax");
+}
+
 TEST(Instruction3, AllTypes)
 {
-    comment("gen_Instruction3");
-
-    gen_Instruction3_Type1(LFS);
-    gen_Instruction3_Type1(LGS);
-    gen_Instruction3_Type1(LSS);
-    gen_Instruction3_Type1(LEA);
-
     gen_Instruction3_Type2(RDRAND);
     gen_Instruction3_Type2(RDSEED);
 
