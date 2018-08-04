@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction3_Type5(Instruction3_Type5 &instr)
-{
-    m128 addr { RAX };
-    instr(XMM0, XMM1);
-    instr(XMM0, addr);
-    instr(addr, XMM0);
-}
-
 static void gen_Instruction3_Type6(Instruction3_Type6 &instr)
 {
     m16 addr1 { RAX };
@@ -131,15 +123,55 @@ TEST(Instruction3, Type4)
     EXPECT_EQ(asmstr(), "movsd %xmm0, (%rax)");
 }
 
+TEST(Instruction3, Type5)
+{
+    m128 addr { RAX };
+
+    MOVAPS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "movaps %xmm1, %xmm0");
+    MOVAPS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movaps (%rax), %xmm0");
+    MOVAPS(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movaps %xmm0, (%rax)");
+
+    MOVUPS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "movups %xmm1, %xmm0");
+    MOVUPS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movups (%rax), %xmm0");
+    MOVUPS(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movups %xmm0, (%rax)");
+
+    MOVAPD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "movapd %xmm1, %xmm0");
+    MOVAPD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movapd (%rax), %xmm0");
+    MOVAPD(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movapd %xmm0, (%rax)");
+
+    MOVUPD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "movupd %xmm1, %xmm0");
+    MOVUPD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movupd (%rax), %xmm0");
+    MOVUPD(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movupd %xmm0, (%rax)");
+
+    MOVDQA(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "movdqa %xmm1, %xmm0");
+    MOVDQA(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movdqa (%rax), %xmm0");
+    MOVDQA(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movdqa %xmm0, (%rax)");
+
+    MOVDQU(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "movdqu %xmm1, %xmm0");
+    MOVDQU(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movdqu (%rax), %xmm0");
+    MOVDQU(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movdqu %xmm0, (%rax)");
+}
+
 TEST(Instruction3, AllTypes)
 {
-    gen_Instruction3_Type5(MOVAPS);
-    gen_Instruction3_Type5(MOVUPS);
-    gen_Instruction3_Type5(MOVAPD);
-    gen_Instruction3_Type5(MOVUPD);
-    gen_Instruction3_Type5(MOVDQA);
-    gen_Instruction3_Type5(MOVDQU);
-
     gen_Instruction3_Type6(FILD);
     gen_Instruction3_Type6(FISTP);
     gen_Instruction3_Type6(FISTTP);
