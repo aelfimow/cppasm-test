@@ -3,13 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction3_Type2(Instruction3_Type2 &instr)
-{
-    instr(AX);
-    instr(EAX);
-    instr(RAX);
-}
-
 static void gen_Instruction3_Type3(Instruction3_Type3 &instr)
 {
     m32 addr { RAX };
@@ -113,11 +106,25 @@ TEST(Instruction3, Type1)
     EXPECT_EQ(asmstr(), "lea (%rax), %rax");
 }
 
+TEST(Instruction3, Type2)
+{
+    RDRAND(AX);
+    EXPECT_EQ(asmstr(), "rdrand %ax");
+    RDRAND(EAX);
+    EXPECT_EQ(asmstr(), "rdrand %eax");
+    RDRAND(RAX);
+    EXPECT_EQ(asmstr(), "rdrand %rax");
+
+    RDSEED(AX);
+    EXPECT_EQ(asmstr(), "rdseed %ax");
+    RDSEED(EAX);
+    EXPECT_EQ(asmstr(), "rdseed %eax");
+    RDSEED(RAX);
+    EXPECT_EQ(asmstr(), "rdseed %rax");
+}
+
 TEST(Instruction3, AllTypes)
 {
-    gen_Instruction3_Type2(RDRAND);
-    gen_Instruction3_Type2(RDSEED);
-
     gen_Instruction3_Type3(MOVSS);
 
     gen_Instruction3_Type4(MOVSD_SSE2);
