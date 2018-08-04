@@ -3,15 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction3_Type9(Instruction3_Type9 &instr)
-{
-    imm8 mask { 255 };
-    m8 addr { RAX };
-    instr(EAX, XMM0, mask);
-    instr(RAX, XMM0, mask);
-    instr(addr, XMM0, mask);
-}
-
 static void gen_Instruction3_Type10(Instruction3_Type10 &instr)
 {
     imm8 mask { 255 };
@@ -231,10 +222,21 @@ TEST(Instruction3, Type8)
     EXPECT_EQ(asmstr(), "fdivr %st(0), %st(1)");
 }
 
+TEST(Instruction3, Type9)
+{
+    imm8 mask { 255 };
+    m8 addr { RAX };
+
+    PEXTRB(EAX, XMM0, mask);
+    EXPECT_EQ(asmstr(), "pextrb $0xFF, %xmm0, %eax");
+    PEXTRB(RAX, XMM0, mask);
+    EXPECT_EQ(asmstr(), "pextrb $0xFF, %xmm0, %rax");
+    PEXTRB(addr, XMM0, mask);
+    EXPECT_EQ(asmstr(), "pextrb $0xFF, %xmm0, (%rax)");
+}
+
 TEST(Instruction3, AllTypes)
 {
-    gen_Instruction3_Type9(PEXTRB);
-
     gen_Instruction3_Type10(EXTRACTPS);
     gen_Instruction3_Type10(VEXTRACTPS);
 }
