@@ -3,15 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction3_Type7(Instruction3_Type7 &instr)
-{
-    m32fp addr1 { RAX };
-    m64fp addr2 { RBX };
-    instr(addr1);
-    instr(addr2);
-    instr(ST(0));
-}
-
 static void gen_Instruction3_Type8(Instruction3_Type8 &instr)
 {
     m32fp addr1 { RAX };
@@ -188,10 +179,21 @@ TEST(Instruction3, Type6)
     EXPECT_EQ(asmstr(), "fisttpll (%rcx)");
 }
 
+TEST(Instruction3, Type7)
+{
+    m32fp addr1 { RAX };
+    m64fp addr2 { RBX };
+
+    FST(addr1);
+    EXPECT_EQ(asmstr(), "fsts (%rax)");
+    FST(addr2);
+    EXPECT_EQ(asmstr(), "fstl (%rbx)");
+    FST(ST(0));
+    EXPECT_EQ(asmstr(), "fst %st(0)");
+}
+
 TEST(Instruction3, AllTypes)
 {
-    gen_Instruction3_Type7(FST);
-
     gen_Instruction3_Type8(FADD);
     gen_Instruction3_Type8(FSUB);
     gen_Instruction3_Type8(FSUBR);
