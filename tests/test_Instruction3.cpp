@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction3_Type3(Instruction3_Type3 &instr)
-{
-    m32 addr { RAX };
-    instr(XMM0, XMM1);
-    instr(XMM0, addr);
-    instr(addr, XMM0);
-}
-
 static void gen_Instruction3_Type4(Instruction3_Type4 &instr)
 {
     m64 addr { RAX };
@@ -123,10 +115,20 @@ TEST(Instruction3, Type2)
     EXPECT_EQ(asmstr(), "rdseed %rax");
 }
 
+TEST(Instruction3, Type3)
+{
+    m32 addr { RAX };
+
+    MOVSS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "movss %xmm1, %xmm0");
+    MOVSS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movss (%rax), %xmm0");
+    MOVSS(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movss %xmm0, (%rax)");
+}
+
 TEST(Instruction3, AllTypes)
 {
-    gen_Instruction3_Type3(MOVSS);
-
     gen_Instruction3_Type4(MOVSD_SSE2);
 
     gen_Instruction3_Type5(MOVAPS);
