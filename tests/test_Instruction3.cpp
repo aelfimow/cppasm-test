@@ -3,15 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction3_Type8(Instruction3_Type8 &instr)
-{
-    m32fp addr1 { RAX };
-    m64fp addr2 { RBX };
-    instr(addr1);
-    instr(addr2);
-    instr(ST(1), ST(0));
-}
-
 static void gen_Instruction3_Type9(Instruction3_Type9 &instr)
 {
     imm8 mask { 255 };
@@ -192,15 +183,56 @@ TEST(Instruction3, Type7)
     EXPECT_EQ(asmstr(), "fst %st(0)");
 }
 
+TEST(Instruction3, Type8)
+{
+    m32fp addr1 { RAX };
+    m64fp addr2 { RBX };
+
+    FADD(addr1);
+    EXPECT_EQ(asmstr(), "fadds (%rax)");
+    FADD(addr2);
+    EXPECT_EQ(asmstr(), "faddl (%rbx)");
+    FADD(ST(1), ST(0));
+    EXPECT_EQ(asmstr(), "fadd %st(0), %st(1)");
+
+    FSUB(addr1);
+    EXPECT_EQ(asmstr(), "fsubs (%rax)");
+    FSUB(addr2);
+    EXPECT_EQ(asmstr(), "fsubl (%rbx)");
+    FSUB(ST(1), ST(0));
+    EXPECT_EQ(asmstr(), "fsub %st(0), %st(1)");
+
+    FSUBR(addr1);
+    EXPECT_EQ(asmstr(), "fsubrs (%rax)");
+    FSUBR(addr2);
+    EXPECT_EQ(asmstr(), "fsubrl (%rbx)");
+    FSUBR(ST(1), ST(0));
+    EXPECT_EQ(asmstr(), "fsubr %st(0), %st(1)");
+
+    FMUL(addr1);
+    EXPECT_EQ(asmstr(), "fmuls (%rax)");
+    FMUL(addr2);
+    EXPECT_EQ(asmstr(), "fmull (%rbx)");
+    FMUL(ST(1), ST(0));
+    EXPECT_EQ(asmstr(), "fmul %st(0), %st(1)");
+
+    FDIV(addr1);
+    EXPECT_EQ(asmstr(), "fdivs (%rax)");
+    FDIV(addr2);
+    EXPECT_EQ(asmstr(), "fdivl (%rbx)");
+    FDIV(ST(1), ST(0));
+    EXPECT_EQ(asmstr(), "fdiv %st(0), %st(1)");
+
+    FDIVR(addr1);
+    EXPECT_EQ(asmstr(), "fdivrs (%rax)");
+    FDIVR(addr2);
+    EXPECT_EQ(asmstr(), "fdivrl (%rbx)");
+    FDIVR(ST(1), ST(0));
+    EXPECT_EQ(asmstr(), "fdivr %st(0), %st(1)");
+}
+
 TEST(Instruction3, AllTypes)
 {
-    gen_Instruction3_Type8(FADD);
-    gen_Instruction3_Type8(FSUB);
-    gen_Instruction3_Type8(FSUBR);
-    gen_Instruction3_Type8(FMUL);
-    gen_Instruction3_Type8(FDIV);
-    gen_Instruction3_Type8(FDIVR);
-
     gen_Instruction3_Type9(PEXTRB);
 
     gen_Instruction3_Type10(EXTRACTPS);
