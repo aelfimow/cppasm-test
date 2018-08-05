@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type18(Instruction4_Type18 &instr)
-{
-    m128 addr1 { RAX };
-    m256 addr2 { RBX };
-    instr(XMM0, XMM1);
-    instr(XMM0, addr1);
-    instr(YMM0, YMM1);
-    instr(YMM0, addr2);
-}
-
 static void gen_Instruction4_Type19(Instruction4_Type19 &instr)
 {
     instr(XMM0, XMM1);
@@ -1662,22 +1652,131 @@ TEST(Instruction4, Type17)
     EXPECT_EQ(asmstr(), "vandnpd (%rbx), %ymm1, %ymm0");
 }
 
+TEST(Instruction4, Type18)
+{
+    m128 addr1 { RAX };
+    m256 addr2 { RBX };
+
+    VSQRTPD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vsqrtpd %xmm1, %xmm0");
+    VSQRTPD(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vsqrtpd (%rax), %xmm0");
+    VSQRTPD(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vsqrtpd %ymm1, %ymm0");
+    VSQRTPD(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vsqrtpd (%rbx), %ymm0");
+
+    VSQRTPS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vsqrtps %xmm1, %xmm0");
+    VSQRTPS(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vsqrtps (%rax), %xmm0");
+    VSQRTPS(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vsqrtps %ymm1, %ymm0");
+    VSQRTPS(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vsqrtps (%rbx), %ymm0");
+
+    VRSQRTPS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vrsqrtps %xmm1, %xmm0");
+    VRSQRTPS(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vrsqrtps (%rax), %xmm0");
+    VRSQRTPS(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vrsqrtps %ymm1, %ymm0");
+    VRSQRTPS(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vrsqrtps (%rbx), %ymm0");
+
+    VRCPPS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vrcpps %xmm1, %xmm0");
+    VRCPPS(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vrcpps (%rax), %xmm0");
+    VRCPPS(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vrcpps %ymm1, %ymm0");
+    VRCPPS(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vrcpps (%rbx), %ymm0");
+
+    VCVTPS2DQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vcvtps2dq %xmm1, %xmm0");
+    VCVTPS2DQ(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vcvtps2dq (%rax), %xmm0");
+    VCVTPS2DQ(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vcvtps2dq %ymm1, %ymm0");
+    VCVTPS2DQ(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vcvtps2dq (%rbx), %ymm0");
+
+    VCVTDQ2PS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vcvtdq2ps %xmm1, %xmm0");
+    VCVTDQ2PS(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vcvtdq2ps (%rax), %xmm0");
+    VCVTDQ2PS(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vcvtdq2ps %ymm1, %ymm0");
+    VCVTDQ2PS(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vcvtdq2ps (%rbx), %ymm0");
+
+    VCVTTPS2DQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vcvttps2dq %xmm1, %xmm0");
+    VCVTTPS2DQ(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vcvttps2dq (%rax), %xmm0");
+    VCVTTPS2DQ(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vcvttps2dq %ymm1, %ymm0");
+    VCVTTPS2DQ(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vcvttps2dq (%rbx), %ymm0");
+
+    VPTEST(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vptest %xmm1, %xmm0");
+    VPTEST(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vptest (%rax), %xmm0");
+    VPTEST(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vptest %ymm1, %ymm0");
+    VPTEST(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vptest (%rbx), %ymm0");
+
+    VTESTPS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vtestps %xmm1, %xmm0");
+    VTESTPS(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vtestps (%rax), %xmm0");
+    VTESTPS(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vtestps %ymm1, %ymm0");
+    VTESTPS(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vtestps (%rbx), %ymm0");
+
+    VTESTPD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vtestpd %xmm1, %xmm0");
+    VTESTPD(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vtestpd (%rax), %xmm0");
+    VTESTPD(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vtestpd %ymm1, %ymm0");
+    VTESTPD(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vtestpd (%rbx), %ymm0");
+
+    VMOVSHDUP(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vmovshdup %xmm1, %xmm0");
+    VMOVSHDUP(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vmovshdup (%rax), %xmm0");
+    VMOVSHDUP(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vmovshdup %ymm1, %ymm0");
+    VMOVSHDUP(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vmovshdup (%rbx), %ymm0");
+
+    VMOVSLDUP(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vmovsldup %xmm1, %xmm0");
+    VMOVSLDUP(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vmovsldup (%rax), %xmm0");
+    VMOVSLDUP(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vmovsldup %ymm1, %ymm0");
+    VMOVSLDUP(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vmovsldup (%rbx), %ymm0");
+
+    VMOVDDUP(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vmovddup %xmm1, %xmm0");
+    VMOVDDUP(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vmovddup (%rax), %xmm0");
+    VMOVDDUP(YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vmovddup %ymm1, %ymm0");
+    VMOVDDUP(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vmovddup (%rbx), %ymm0");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type18(VSQRTPD);
-    gen_Instruction4_Type18(VSQRTPS);
-    gen_Instruction4_Type18(VRSQRTPS);
-    gen_Instruction4_Type18(VRCPPS);
-    gen_Instruction4_Type18(VCVTPS2DQ);
-    gen_Instruction4_Type18(VCVTDQ2PS);
-    gen_Instruction4_Type18(VCVTTPS2DQ);
-    gen_Instruction4_Type18(VPTEST);
-    gen_Instruction4_Type18(VTESTPS);
-    gen_Instruction4_Type18(VTESTPD);
-    gen_Instruction4_Type18(VMOVSHDUP);
-    gen_Instruction4_Type18(VMOVSLDUP);
-    gen_Instruction4_Type18(VMOVDDUP);
-
     gen_Instruction4_Type19(VCVTPD2PS);
     gen_Instruction4_Type19(VCVTTPD2DQ);
     gen_Instruction4_Type19(VCVTPD2DQ);
