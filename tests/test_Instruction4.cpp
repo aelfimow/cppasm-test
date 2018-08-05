@@ -3,15 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type5(Instruction4_Type5 &instr)
-{
-    m32 addr { RAX };
-    instr(XMM0, EAX);
-    instr(XMM0, addr);
-    instr(EAX, XMM0);
-    instr(addr, XMM0);
-}
-
 static void gen_Instruction4_Type6(Instruction4_Type6 &instr)
 {
     m64 addr { RAX };
@@ -896,10 +887,22 @@ TEST(Instruction4, Type4)
     EXPECT_EQ(asmstr(), "palignr $0xFF, (%ebx), %xmm0");
 }
 
+TEST(Instruction4, Type5)
+{
+    m32 addr { RAX };
+
+    VMOVD(XMM0, EAX);
+    EXPECT_EQ(asmstr(), "vmovd %eax, %xmm0");
+    VMOVD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "vmovd (%rax), %xmm0");
+    VMOVD(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "vmovd %xmm0, %eax");
+    VMOVD(addr, XMM0);
+    EXPECT_EQ(asmstr(), "vmovd %xmm0, (%rax)");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type5(VMOVD);
-
     gen_Instruction4_Type6(VMOVQ);
 
     gen_Instruction4_Type7(ADCX);
