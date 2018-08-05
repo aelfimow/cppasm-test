@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type25(Instruction4_Type25 &instr)
-{
-    m32 addr1 { RAX };
-    m64 addr2 { RBX };
-    instr(XMM0, XMM1, EAX);
-    instr(XMM0, XMM1, addr1);
-    instr(XMM0, XMM1, RBX);
-    instr(XMM0, XMM1, addr2);
-}
-
 static void gen_Instruction4_Type26(Instruction4_Type26 &instr)
 {
     m64 addr2 { RDX };
@@ -1917,11 +1907,32 @@ TEST(Instruction4, Type24)
     EXPECT_EQ(asmstr(), "vpmaskmovq %ymm1, %ymm0, (%rbx)");
 }
 
+TEST(Instruction4, Type25)
+{
+    m32 addr1 { RAX };
+    m64 addr2 { RBX };
+
+    VCVTSI2SS(XMM0, XMM1, EAX);
+    EXPECT_EQ(asmstr(), "vcvtsi2ss %eax, %xmm1, %xmm0");
+    VCVTSI2SS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vcvtsi2ss (%rax), %xmm1, %xmm0");
+    VCVTSI2SS(XMM0, XMM1, RBX);
+    EXPECT_EQ(asmstr(), "vcvtsi2ss %rbx, %xmm1, %xmm0");
+    VCVTSI2SS(XMM0, XMM1, addr2);
+    EXPECT_EQ(asmstr(), "vcvtsi2ss (%rbx), %xmm1, %xmm0");
+
+    VCVTSI2SD(XMM0, XMM1, EAX);
+    EXPECT_EQ(asmstr(), "vcvtsi2sd %eax, %xmm1, %xmm0");
+    VCVTSI2SD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vcvtsi2sd (%rax), %xmm1, %xmm0");
+    VCVTSI2SD(XMM0, XMM1, RBX);
+    EXPECT_EQ(asmstr(), "vcvtsi2sd %rbx, %xmm1, %xmm0");
+    VCVTSI2SD(XMM0, XMM1, addr2);
+    EXPECT_EQ(asmstr(), "vcvtsi2sd (%rbx), %xmm1, %xmm0");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type25(VCVTSI2SS);
-    gen_Instruction4_Type25(VCVTSI2SD);
-
     gen_Instruction4_Type26(VMREAD);
 
     gen_Instruction4_Type27(VMWRITE);
