@@ -3,17 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type16(Instruction4_Type16 &instr)
-{
-    m64 addr1 { RAX };
-    m128 addr2 { RBX };
-    imm8 mask { 255 };
-    instr(XMM0, XMM1, mask);
-    instr(addr1, XMM0, mask);
-    instr(XMM0, YMM0, mask);
-    instr(addr2, YMM0, mask);
-}
-
 static void gen_Instruction4_Type17(Instruction4_Type17 &instr)
 {
     m128 addr1 { RAX };
@@ -1067,10 +1056,24 @@ TEST(Instruction4, Type15)
     EXPECT_EQ(asmstr(), "vcvtdq2pd (%rbx), %ymm0");
 }
 
+TEST(Instruction4, Type16)
+{
+    m64 addr1 { RAX };
+    m128 addr2 { RBX };
+    imm8 mask { 255 };
+
+    VCVTPS2PH(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "vcvtps2ph $0xFF, %xmm1, %xmm0");
+    VCVTPS2PH(addr1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vcvtps2ph $0xFF, %xmm0, (%rax)");
+    VCVTPS2PH(XMM0, YMM0, mask);
+    EXPECT_EQ(asmstr(), "vcvtps2ph $0xFF, %ymm0, %xmm0");
+    VCVTPS2PH(addr2, YMM0, mask);
+    EXPECT_EQ(asmstr(), "vcvtps2ph $0xFF, %ymm0, (%rbx)");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type16(VCVTPS2PH);
-
     gen_Instruction4_Type17(VFMADD132PD);
     gen_Instruction4_Type17(VFMADD213PD);
     gen_Instruction4_Type17(VFMADD231PD);
