@@ -3,17 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type4(Instruction4_Type4 &instr)
-{
-    m64 addr1 { EAX };
-    m128 addr2 { EBX };
-    imm8 mask { 255 };
-    instr(MM0, MM1, mask);
-    instr(MM0, addr1, mask);
-    instr(XMM0, XMM1, mask);
-    instr(XMM0, addr2, mask);
-}
-
 static void gen_Instruction4_Type5(Instruction4_Type5 &instr)
 {
     m32 addr { RAX };
@@ -891,10 +880,24 @@ TEST(Instruction4, Type3)
     EXPECT_EQ(asmstr(), "vbroadcastf32x2 %xmm0, %zmm0{%k1}{z}");
 }
 
+TEST(Instruction4, Type4)
+{
+    m64 addr1 { EAX };
+    m128 addr2 { EBX };
+    imm8 mask { 255 };
+
+    PALIGNR(MM0, MM1, mask);
+    EXPECT_EQ(asmstr(), "palignr $0xFF, %mm1, %mm0");
+    PALIGNR(MM0, addr1, mask);
+    EXPECT_EQ(asmstr(), "palignr $0xFF, (%eax), %mm0");
+    PALIGNR(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "palignr $0xFF, %xmm1, %xmm0");
+    PALIGNR(XMM0, addr2, mask);
+    EXPECT_EQ(asmstr(), "palignr $0xFF, (%ebx), %xmm0");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type4(PALIGNR);
-
     gen_Instruction4_Type5(VMOVD);
 
     gen_Instruction4_Type6(VMOVQ);
