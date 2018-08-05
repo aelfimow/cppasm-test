@@ -3,24 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type28(Instruction4_Type28 &instr)
-{
-    imm8 mask { 0x0F };
-    m128 addr { RDX };
-    instr(YMM0, YMM1, XMM0, mask);
-    instr(YMM0.k1, YMM1, XMM0, mask);
-    instr(YMM0.k1.z, YMM1, XMM0, mask);
-    instr(YMM0, YMM1, addr, mask);
-    instr(YMM0.k1, YMM1, addr, mask);
-    instr(YMM0.k1.z, YMM1, addr, mask);
-    instr(ZMM0, ZMM1, XMM0, mask);
-    instr(ZMM0.k1, ZMM1, XMM0, mask);
-    instr(ZMM0.k1.z, ZMM1, XMM0, mask);
-    instr(ZMM0, ZMM1, addr, mask);
-    instr(ZMM0.k1, ZMM1, addr, mask);
-    instr(ZMM0.k1.z, ZMM1, addr, mask);
-}
-
 TEST(Instruction4, Type1)
 {
     m64 addr1 { RAX };
@@ -1937,8 +1919,58 @@ TEST(Instruction4, Type27)
     EXPECT_EQ(asmstr(), "vmwrite (%rdx), %rbx");
 }
 
-TEST(Instruction4, AllTypes)
+TEST(Instruction4, Type28)
 {
-    gen_Instruction4_Type28(VINSERTI32X4);
-    gen_Instruction4_Type28(VINSERTI64X2);
+    imm8 mask { 0x0F };
+    m128 addr { RDX };
+
+    VINSERTI32X4(YMM0, YMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x4 $0x0F, %xmm0, %ymm1, %ymm0");
+    VINSERTI32X4(YMM0.k1, YMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x4 $0x0F, %xmm0, %ymm1, %ymm0{%k1}");
+    VINSERTI32X4(YMM0.k1.z, YMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x4 $0x0F, %xmm0, %ymm1, %ymm0{%k1}{z}");
+    VINSERTI32X4(YMM0, YMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x4 $0x0F, (%rdx), %ymm1, %ymm0");
+    VINSERTI32X4(YMM0.k1, YMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x4 $0x0F, (%rdx), %ymm1, %ymm0{%k1}");
+    VINSERTI32X4(YMM0.k1.z, YMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x4 $0x0F, (%rdx), %ymm1, %ymm0{%k1}{z}");
+    VINSERTI32X4(ZMM0, ZMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x4 $0x0F, %xmm0, %zmm1, %zmm0");
+    VINSERTI32X4(ZMM0.k1, ZMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x4 $0x0F, %xmm0, %zmm1, %zmm0{%k1}");
+    VINSERTI32X4(ZMM0.k1.z, ZMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x4 $0x0F, %xmm0, %zmm1, %zmm0{%k1}{z}");
+    VINSERTI32X4(ZMM0, ZMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x4 $0x0F, (%rdx), %zmm1, %zmm0");
+    VINSERTI32X4(ZMM0.k1, ZMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x4 $0x0F, (%rdx), %zmm1, %zmm0{%k1}");
+    VINSERTI32X4(ZMM0.k1.z, ZMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti32x4 $0x0F, (%rdx), %zmm1, %zmm0{%k1}{z}");
+
+    VINSERTI64X2(YMM0, YMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x2 $0x0F, %xmm0, %ymm1, %ymm0");
+    VINSERTI64X2(YMM0.k1, YMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x2 $0x0F, %xmm0, %ymm1, %ymm0{%k1}");
+    VINSERTI64X2(YMM0.k1.z, YMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x2 $0x0F, %xmm0, %ymm1, %ymm0{%k1}{z}");
+    VINSERTI64X2(YMM0, YMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x2 $0x0F, (%rdx), %ymm1, %ymm0");
+    VINSERTI64X2(YMM0.k1, YMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x2 $0x0F, (%rdx), %ymm1, %ymm0{%k1}");
+    VINSERTI64X2(YMM0.k1.z, YMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x2 $0x0F, (%rdx), %ymm1, %ymm0{%k1}{z}");
+    VINSERTI64X2(ZMM0, ZMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x2 $0x0F, %xmm0, %zmm1, %zmm0");
+    VINSERTI64X2(ZMM0.k1, ZMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x2 $0x0F, %xmm0, %zmm1, %zmm0{%k1}");
+    VINSERTI64X2(ZMM0.k1.z, ZMM1, XMM0, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x2 $0x0F, %xmm0, %zmm1, %zmm0{%k1}{z}");
+    VINSERTI64X2(ZMM0, ZMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x2 $0x0F, (%rdx), %zmm1, %zmm0");
+    VINSERTI64X2(ZMM0.k1, ZMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x2 $0x0F, (%rdx), %zmm1, %zmm0{%k1}");
+    VINSERTI64X2(ZMM0.k1.z, ZMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vinserti64x2 $0x0F, (%rdx), %zmm1, %zmm0{%k1}{z}");
 }
