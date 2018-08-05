@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type10(Instruction4_Type10 &instr)
-{
-    m32fp addr1 { RAX };
-    m64fp addr2 { RBX };
-    instr();
-    instr(ST(1));
-    instr(addr1);
-    instr(addr2);
-}
-
 static void gen_Instruction4_Type11(Instruction4_Type11 &instr)
 {
     m16 addr { RAX };
@@ -966,11 +956,32 @@ TEST(Instruction4, Type9)
     EXPECT_EQ(asmstr(), "vcvtss2si (%eax), %rax");
 }
 
+TEST(Instruction4, Type10)
+{
+    m32fp addr1 { RAX };
+    m64fp addr2 { RBX };
+
+    FCOM();
+    EXPECT_EQ(asmstr(), "fcom");
+    FCOM(ST(1));
+    EXPECT_EQ(asmstr(), "fcom %st(1)");
+    FCOM(addr1);
+    EXPECT_EQ(asmstr(), "fcoms (%rax)");
+    FCOM(addr2);
+    EXPECT_EQ(asmstr(), "fcoml (%rbx)");
+
+    FCOMP();
+    EXPECT_EQ(asmstr(), "fcomp");
+    FCOMP(ST(1));
+    EXPECT_EQ(asmstr(), "fcomp %st(1)");
+    FCOMP(addr1);
+    EXPECT_EQ(asmstr(), "fcomps (%rax)");
+    FCOMP(addr2);
+    EXPECT_EQ(asmstr(), "fcompl (%rbx)");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type10(FCOM);
-    gen_Instruction4_Type10(FCOMP);
-
     gen_Instruction4_Type11(PINSRW);
 
     gen_Instruction4_Type12(PMOVMSKB);
