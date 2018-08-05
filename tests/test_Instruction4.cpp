@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type8(Instruction4_Type8 &instr)
-{
-    m32 addr1 { RAX };
-    m64 addr2 { RBX };
-    instr(XMM0, EAX);
-    instr(XMM0, addr1);
-    instr(XMM0, RAX);
-    instr(XMM0, addr2);
-}
-
 static void gen_Instruction4_Type9(Instruction4_Type9 &instr)
 {
     m32 addr { EAX };
@@ -920,10 +910,32 @@ TEST(Instruction4, Type7)
     EXPECT_EQ(asmstr(), "adox (%ebx), %rax");
 }
 
+TEST(Instruction4, Type8)
+{
+    m32 addr1 { RAX };
+    m64 addr2 { RBX };
+
+    CVTSI2SS(XMM0, EAX);
+    EXPECT_EQ(asmstr(), "cvtsi2ss %eax, %xmm0");
+    CVTSI2SS(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "cvtsi2ssl (%rax), %xmm0");
+    CVTSI2SS(XMM0, RAX);
+    EXPECT_EQ(asmstr(), "cvtsi2ss %rax, %xmm0");
+    CVTSI2SS(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "cvtsi2ssq (%rbx), %xmm0");
+
+    CVTSI2SD(XMM0, EAX);
+    EXPECT_EQ(asmstr(), "cvtsi2sd %eax, %xmm0");
+    CVTSI2SD(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "cvtsi2sdl (%rax), %xmm0");
+    CVTSI2SD(XMM0, RAX);
+    EXPECT_EQ(asmstr(), "cvtsi2sd %rax, %xmm0");
+    CVTSI2SD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "cvtsi2sdq (%rbx), %xmm0");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type8(CVTSI2SS);
-    gen_Instruction4_Type8(CVTSI2SD);
 
     gen_Instruction4_Type9(CVTSS2SI);
     gen_Instruction4_Type9(CVTTSS2SI);
