@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type1(Instruction4_Type1 &instr)
-{
-    m64 addr1 { RAX };
-    m128 addr2 { RBX };
-    instr(MM0, MM1);
-    instr(MM0, addr1);
-    instr(XMM0, XMM1);
-    instr(XMM0, addr2);
-}
-
 static void gen_Instruction4_Type2(Instruction4_Type2 &instr)
 {
     m32fp addr1 { EAX };
@@ -285,71 +275,572 @@ static void gen_Instruction4_Type28(Instruction4_Type28 &instr)
     instr(ZMM0.k1.z, ZMM1, addr, mask);
 }
 
+TEST(Instruction4, Type1)
+{
+    m64 addr1 { RAX };
+    m128 addr2 { RBX };
+
+    PACKSSWB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "packsswb %mm1, %mm0");
+    PACKSSWB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "packsswb (%rax), %mm0");
+    PACKSSWB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "packsswb %xmm1, %xmm0");
+    PACKSSWB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "packsswb (%rbx), %xmm0");
+
+    PACKUSWB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "packuswb %mm1, %mm0");
+    PACKUSWB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "packuswb (%rax), %mm0");
+    PACKUSWB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "packuswb %xmm1, %xmm0");
+    PACKUSWB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "packuswb (%rbx), %xmm0");
+
+    PACKSSDW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "packssdw %mm1, %mm0");
+    PACKSSDW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "packssdw (%rax), %mm0");
+    PACKSSDW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "packssdw %xmm1, %xmm0");
+    PACKSSDW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "packssdw (%rbx), %xmm0");
+
+    PUNPCKHBW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "punpckhbw %mm1, %mm0");
+    PUNPCKHBW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "punpckhbw (%rax), %mm0");
+    PUNPCKHBW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "punpckhbw %xmm1, %xmm0");
+    PUNPCKHBW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "punpckhbw (%rbx), %xmm0");
+
+    PUNPCKHWD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "punpckhwd %mm1, %mm0");
+    PUNPCKHWD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "punpckhwd (%rax), %mm0");
+    PUNPCKHWD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "punpckhwd %xmm1, %xmm0");
+    PUNPCKHWD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "punpckhwd (%rbx), %xmm0");
+
+    PUNPCKHDQ(MM0, MM1);
+    EXPECT_EQ(asmstr(), "punpckhdq %mm1, %mm0");
+    PUNPCKHDQ(MM0, addr1);
+    EXPECT_EQ(asmstr(), "punpckhdq (%rax), %mm0");
+    PUNPCKHDQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "punpckhdq %xmm1, %xmm0");
+    PUNPCKHDQ(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "punpckhdq (%rbx), %xmm0");
+
+    PUNPCKLBW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "punpcklbw %mm1, %mm0");
+    PUNPCKLBW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "punpcklbw (%rax), %mm0");
+    PUNPCKLBW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "punpcklbw %xmm1, %xmm0");
+    PUNPCKLBW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "punpcklbw (%rbx), %xmm0");
+
+    PUNPCKLWD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "punpcklwd %mm1, %mm0");
+    PUNPCKLWD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "punpcklwd (%rax), %mm0");
+    PUNPCKLWD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "punpcklwd %xmm1, %xmm0");
+    PUNPCKLWD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "punpcklwd (%rbx), %xmm0");
+
+    PUNPCKLDQ(MM0, MM1);
+    EXPECT_EQ(asmstr(), "punpckldq %mm1, %mm0");
+    PUNPCKLDQ(MM0, addr1);
+    EXPECT_EQ(asmstr(), "punpckldq (%rax), %mm0");
+    PUNPCKLDQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "punpckldq %xmm1, %xmm0");
+    PUNPCKLDQ(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "punpckldq (%rbx), %xmm0");
+
+    PADDB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "paddb %mm1, %mm0");
+    PADDB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "paddb (%rax), %mm0");
+    PADDB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "paddb %xmm1, %xmm0");
+    PADDB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "paddb (%rbx), %xmm0");
+
+    PADDW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "paddw %mm1, %mm0");
+    PADDW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "paddw (%rax), %mm0");
+    PADDW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "paddw %xmm1, %xmm0");
+    PADDW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "paddw (%rbx), %xmm0");
+
+    PADDD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "paddd %mm1, %mm0");
+    PADDD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "paddd (%rax), %mm0");
+    PADDD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "paddd %xmm1, %xmm0");
+    PADDD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "paddd (%rbx), %xmm0");
+
+    PADDSB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "paddsb %mm1, %mm0");
+    PADDSB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "paddsb (%rax), %mm0");
+    PADDSB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "paddsb %xmm1, %xmm0");
+    PADDSB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "paddsb (%rbx), %xmm0");
+
+    PADDSW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "paddsw %mm1, %mm0");
+    PADDSW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "paddsw (%rax), %mm0");
+    PADDSW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "paddsw %xmm1, %xmm0");
+    PADDSW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "paddsw (%rbx), %xmm0");
+
+    PADDUSB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "paddusb %mm1, %mm0");
+    PADDUSB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "paddusb (%rax), %mm0");
+    PADDUSB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "paddusb %xmm1, %xmm0");
+    PADDUSB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "paddusb (%rbx), %xmm0");
+
+    PADDUSW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "paddusw %mm1, %mm0");
+    PADDUSW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "paddusw (%rax), %mm0");
+    PADDUSW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "paddusw %xmm1, %xmm0");
+    PADDUSW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "paddusw (%rbx), %xmm0");
+
+    PSUBB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psubb %mm1, %mm0");
+    PSUBB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psubb (%rax), %mm0");
+    PSUBB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psubb %xmm1, %xmm0");
+    PSUBB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psubb (%rbx), %xmm0");
+
+    PSUBW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psubw %mm1, %mm0");
+    PSUBW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psubw (%rax), %mm0");
+    PSUBW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psubw %xmm1, %xmm0");
+    PSUBW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psubw (%rbx), %xmm0");
+
+    PSUBD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psubd %mm1, %mm0");
+    PSUBD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psubd (%rax), %mm0");
+    PSUBD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psubd %xmm1, %xmm0");
+    PSUBD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psubd (%rbx), %xmm0");
+
+    PSUBSB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psubsb %mm1, %mm0");
+    PSUBSB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psubsb (%rax), %mm0");
+    PSUBSB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psubsb %xmm1, %xmm0");
+    PSUBSB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psubsb (%rbx), %xmm0");
+
+    PSUBSW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psubsw %mm1, %mm0");
+    PSUBSW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psubsw (%rax), %mm0");
+    PSUBSW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psubsw %xmm1, %xmm0");
+    PSUBSW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psubsw (%rbx), %xmm0");
+
+    PSUBUSB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psubusb %mm1, %mm0");
+    PSUBUSB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psubusb (%rax), %mm0");
+    PSUBUSB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psubusb %xmm1, %xmm0");
+    PSUBUSB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psubusb (%rbx), %xmm0");
+
+    PSUBUSW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psubusw %mm1, %mm0");
+    PSUBUSW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psubusw (%rax), %mm0");
+    PSUBUSW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psubusw %xmm1, %xmm0");
+    PSUBUSW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psubusw (%rbx), %xmm0");
+
+    PMULHW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pmulhw %mm1, %mm0");
+    PMULHW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pmulhw (%rax), %mm0");
+    PMULHW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmulhw %xmm1, %xmm0");
+    PMULHW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pmulhw (%rbx), %xmm0");
+
+    PMULLW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pmullw %mm1, %mm0");
+    PMULLW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pmullw (%rax), %mm0");
+    PMULLW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmullw %xmm1, %xmm0");
+    PMULLW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pmullw (%rbx), %xmm0");
+
+    PMADDWD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pmaddwd %mm1, %mm0");
+    PMADDWD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pmaddwd (%rax), %mm0");
+    PMADDWD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmaddwd %xmm1, %xmm0");
+    PMADDWD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pmaddwd (%rbx), %xmm0");
+
+    PCMPEQB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pcmpeqb %mm1, %mm0");
+    PCMPEQB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pcmpeqb (%rax), %mm0");
+    PCMPEQB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pcmpeqb %xmm1, %xmm0");
+    PCMPEQB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pcmpeqb (%rbx), %xmm0");
+
+    PCMPEQW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pcmpeqw %mm1, %mm0");
+    PCMPEQW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pcmpeqw (%rax), %mm0");
+    PCMPEQW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pcmpeqw %xmm1, %xmm0");
+    PCMPEQW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pcmpeqw (%rbx), %xmm0");
+
+    PCMPEQD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pcmpeqd %mm1, %mm0");
+    PCMPEQD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pcmpeqd (%rax), %mm0");
+    PCMPEQD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pcmpeqd %xmm1, %xmm0");
+    PCMPEQD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pcmpeqd (%rbx), %xmm0");
+
+    PCMPGTB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pcmpgtb %mm1, %mm0");
+    PCMPGTB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pcmpgtb (%rax), %mm0");
+    PCMPGTB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pcmpgtb %xmm1, %xmm0");
+    PCMPGTB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pcmpgtb (%rbx), %xmm0");
+
+    PCMPGTW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pcmpgtw %mm1, %mm0");
+    PCMPGTW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pcmpgtw (%rax), %mm0");
+    PCMPGTW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pcmpgtw %xmm1, %xmm0");
+    PCMPGTW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pcmpgtw (%rbx), %xmm0");
+
+    PCMPGTD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pcmpgtd %mm1, %mm0");
+    PCMPGTD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pcmpgtd (%rax), %mm0");
+    PCMPGTD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pcmpgtd %xmm1, %xmm0");
+    PCMPGTD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pcmpgtd (%rbx), %xmm0");
+
+    PAND(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pand %mm1, %mm0");
+    PAND(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pand (%rax), %mm0");
+    PAND(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pand %xmm1, %xmm0");
+    PAND(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pand (%rbx), %xmm0");
+
+    PANDN(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pandn %mm1, %mm0");
+    PANDN(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pandn (%rax), %mm0");
+    PANDN(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pandn %xmm1, %xmm0");
+    PANDN(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pandn (%rbx), %xmm0");
+
+    POR(MM0, MM1);
+    EXPECT_EQ(asmstr(), "por %mm1, %mm0");
+    POR(MM0, addr1);
+    EXPECT_EQ(asmstr(), "por (%rax), %mm0");
+    POR(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "por %xmm1, %xmm0");
+    POR(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "por (%rbx), %xmm0");
+
+    PXOR(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pxor %mm1, %mm0");
+    PXOR(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pxor (%rax), %mm0");
+    PXOR(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pxor %xmm1, %xmm0");
+    PXOR(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pxor (%rbx), %xmm0");
+
+    PAVGB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pavgb %mm1, %mm0");
+    PAVGB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pavgb (%rax), %mm0");
+    PAVGB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pavgb %xmm1, %xmm0");
+    PAVGB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pavgb (%rbx), %xmm0");
+
+    PAVGW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pavgw %mm1, %mm0");
+    PAVGW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pavgw (%rax), %mm0");
+    PAVGW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pavgw %xmm1, %xmm0");
+    PAVGW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pavgw (%rbx), %xmm0");
+
+    PMAXUB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pmaxub %mm1, %mm0");
+    PMAXUB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pmaxub (%rax), %mm0");
+    PMAXUB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmaxub %xmm1, %xmm0");
+    PMAXUB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pmaxub (%rbx), %xmm0");
+
+    PMAXSW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pmaxsw %mm1, %mm0");
+    PMAXSW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pmaxsw (%rax), %mm0");
+    PMAXSW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmaxsw %xmm1, %xmm0");
+    PMAXSW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pmaxsw (%rbx), %xmm0");
+
+    PMINUB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pminub %mm1, %mm0");
+    PMINUB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pminub (%rax), %mm0");
+    PMINUB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pminub %xmm1, %xmm0");
+    PMINUB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pminub (%rbx), %xmm0");
+
+    PMINSW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pminsw %mm1, %mm0");
+    PMINSW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pminsw (%rax), %mm0");
+    PMINSW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pminsw %xmm1, %xmm0");
+    PMINSW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pminsw (%rbx), %xmm0");
+
+    PMULUDQ(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pmuludq %mm1, %mm0");
+    PMULUDQ(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pmuludq (%rax), %mm0");
+    PMULUDQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmuludq %xmm1, %xmm0");
+    PMULUDQ(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pmuludq (%rbx), %xmm0");
+
+    PADDQ(MM0, MM1);
+    EXPECT_EQ(asmstr(), "paddq %mm1, %mm0");
+    PADDQ(MM0, addr1);
+    EXPECT_EQ(asmstr(), "paddq (%rax), %mm0");
+    PADDQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "paddq %xmm1, %xmm0");
+    PADDQ(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "paddq (%rbx), %xmm0");
+
+    PSUBQ(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psubq %mm1, %mm0");
+    PSUBQ(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psubq (%rax), %mm0");
+    PSUBQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psubq %xmm1, %xmm0");
+    PSUBQ(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psubq (%rbx), %xmm0");
+
+    PHADDW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "phaddw %mm1, %mm0");
+    PHADDW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "phaddw (%rax), %mm0");
+    PHADDW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "phaddw %xmm1, %xmm0");
+    PHADDW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "phaddw (%rbx), %xmm0");
+
+    PHADDSW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "phaddsw %mm1, %mm0");
+    PHADDSW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "phaddsw (%rax), %mm0");
+    PHADDSW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "phaddsw %xmm1, %xmm0");
+    PHADDSW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "phaddsw (%rbx), %xmm0");
+
+    PHADDD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "phaddd %mm1, %mm0");
+    PHADDD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "phaddd (%rax), %mm0");
+    PHADDD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "phaddd %xmm1, %xmm0");
+    PHADDD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "phaddd (%rbx), %xmm0");
+
+    PHSUBW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "phsubw %mm1, %mm0");
+    PHSUBW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "phsubw (%rax), %mm0");
+    PHSUBW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "phsubw %xmm1, %xmm0");
+    PHSUBW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "phsubw (%rbx), %xmm0");
+
+    PHSUBSW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "phsubsw %mm1, %mm0");
+    PHSUBSW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "phsubsw (%rax), %mm0");
+    PHSUBSW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "phsubsw %xmm1, %xmm0");
+    PHSUBSW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "phsubsw (%rbx), %xmm0");
+
+    PHSUBD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "phsubd %mm1, %mm0");
+    PHSUBD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "phsubd (%rax), %mm0");
+    PHSUBD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "phsubd %xmm1, %xmm0");
+    PHSUBD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "phsubd (%rbx), %xmm0");
+
+    PABSB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pabsb %mm1, %mm0");
+    PABSB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pabsb (%rax), %mm0");
+    PABSB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pabsb %xmm1, %xmm0");
+    PABSB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pabsb (%rbx), %xmm0");
+
+    PABSW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pabsw %mm1, %mm0");
+    PABSW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pabsw (%rax), %mm0");
+    PABSW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pabsw %xmm1, %xmm0");
+    PABSW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pabsw (%rbx), %xmm0");
+
+    PABSD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pabsd %mm1, %mm0");
+    PABSD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pabsd (%rax), %mm0");
+    PABSD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pabsd %xmm1, %xmm0");
+    PABSD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pabsd (%rbx), %xmm0");
+
+    PMADDUBSW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pmaddubsw %mm1, %mm0");
+    PMADDUBSW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pmaddubsw (%rax), %mm0");
+    PMADDUBSW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmaddubsw %xmm1, %xmm0");
+    PMADDUBSW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pmaddubsw (%rbx), %xmm0");
+
+    PMULHRSW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pmulhrsw %mm1, %mm0");
+    PMULHRSW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pmulhrsw (%rax), %mm0");
+    PMULHRSW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmulhrsw %xmm1, %xmm0");
+    PMULHRSW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pmulhrsw (%rbx), %xmm0");
+
+    PSHUFB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pshufb %mm1, %mm0");
+    PSHUFB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pshufb (%rax), %mm0");
+    PSHUFB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pshufb %xmm1, %xmm0");
+    PSHUFB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pshufb (%rbx), %xmm0");
+
+    PSIGNB(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psignb %mm1, %mm0");
+    PSIGNB(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psignb (%rax), %mm0");
+    PSIGNB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psignb %xmm1, %xmm0");
+    PSIGNB(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psignb (%rbx), %xmm0");
+
+    PSIGNW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psignw %mm1, %mm0");
+    PSIGNW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psignw (%rax), %mm0");
+    PSIGNW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psignw %xmm1, %xmm0");
+    PSIGNW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psignw (%rbx), %xmm0");
+
+    PSIGND(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psignd %mm1, %mm0");
+    PSIGND(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psignd (%rax), %mm0");
+    PSIGND(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psignd %xmm1, %xmm0");
+    PSIGND(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psignd (%rbx), %xmm0");
+
+    PMULHUW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pmulhuw %mm1, %mm0");
+    PMULHUW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pmulhuw (%rax), %mm0");
+    PMULHUW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pmulhuw %xmm1, %xmm0");
+    PMULHUW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pmulhuw (%rbx), %xmm0");
+
+    PSADBW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psadbw %mm1, %mm0");
+    PSADBW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psadbw (%rax), %mm0");
+    PSADBW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psadbw %xmm1, %xmm0");
+    PSADBW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psadbw (%rbx), %xmm0");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type1(PACKSSWB);
-    gen_Instruction4_Type1(PACKUSWB);
-    gen_Instruction4_Type1(PACKSSDW);
-    gen_Instruction4_Type1(PUNPCKHBW);
-    gen_Instruction4_Type1(PUNPCKHWD);
-    gen_Instruction4_Type1(PUNPCKHDQ);
-    gen_Instruction4_Type1(PUNPCKLBW);
-    gen_Instruction4_Type1(PUNPCKLWD);
-    gen_Instruction4_Type1(PUNPCKLDQ);
-    gen_Instruction4_Type1(PADDB);
-    gen_Instruction4_Type1(PADDW);
-    gen_Instruction4_Type1(PADDD);
-    gen_Instruction4_Type1(PADDSB);
-    gen_Instruction4_Type1(PADDSW);
-    gen_Instruction4_Type1(PADDUSB);
-    gen_Instruction4_Type1(PADDUSW);
-    gen_Instruction4_Type1(PSUBB);
-    gen_Instruction4_Type1(PSUBW);
-    gen_Instruction4_Type1(PSUBD);
-    gen_Instruction4_Type1(PSUBSB);
-    gen_Instruction4_Type1(PSUBSW);
-    gen_Instruction4_Type1(PSUBUSB);
-    gen_Instruction4_Type1(PSUBUSW);
-    gen_Instruction4_Type1(PMULHW);
-    gen_Instruction4_Type1(PMULLW);
-    gen_Instruction4_Type1(PMADDWD);
-    gen_Instruction4_Type1(PCMPEQB);
-    gen_Instruction4_Type1(PCMPEQW);
-    gen_Instruction4_Type1(PCMPEQD);
-    gen_Instruction4_Type1(PCMPGTB);
-    gen_Instruction4_Type1(PCMPGTW);
-    gen_Instruction4_Type1(PCMPGTD);
-    gen_Instruction4_Type1(PAND);
-    gen_Instruction4_Type1(PANDN);
-    gen_Instruction4_Type1(POR);
-    gen_Instruction4_Type1(PXOR);
-    gen_Instruction4_Type1(PAVGB);
-    gen_Instruction4_Type1(PAVGW);
-    gen_Instruction4_Type1(PMAXUB);
-    gen_Instruction4_Type1(PMAXSW);
-    gen_Instruction4_Type1(PMINUB);
-    gen_Instruction4_Type1(PMINSW);
-    gen_Instruction4_Type1(PMULUDQ);
-    gen_Instruction4_Type1(PADDQ);
-    gen_Instruction4_Type1(PSUBQ);
-    gen_Instruction4_Type1(PHADDW);
-    gen_Instruction4_Type1(PHADDSW);
-    gen_Instruction4_Type1(PHADDD);
-    gen_Instruction4_Type1(PHSUBW);
-    gen_Instruction4_Type1(PHSUBSW);
-    gen_Instruction4_Type1(PHSUBD);
-    gen_Instruction4_Type1(PABSB);
-    gen_Instruction4_Type1(PABSW);
-    gen_Instruction4_Type1(PABSD);
-    gen_Instruction4_Type1(PMADDUBSW);
-    gen_Instruction4_Type1(PMULHRSW);
-    gen_Instruction4_Type1(PSHUFB);
-    gen_Instruction4_Type1(PSIGNB);
-    gen_Instruction4_Type1(PSIGNW);
-    gen_Instruction4_Type1(PSIGND);
-    gen_Instruction4_Type1(PMULHUW);
-    gen_Instruction4_Type1(PSADBW);
-
     gen_Instruction4_Type2(FLD);
     gen_Instruction4_Type2(FSTP);
 
