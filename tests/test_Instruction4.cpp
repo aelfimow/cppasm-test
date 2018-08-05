@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type17(Instruction4_Type17 &instr)
-{
-    m128 addr1 { RAX };
-    m256 addr2 { RBX };
-    instr(XMM0, XMM1, XMM2);
-    instr(XMM0, XMM1, addr1);
-    instr(YMM0, YMM1, YMM2);
-    instr(YMM0, YMM1, addr2);
-}
-
 static void gen_Instruction4_Type18(Instruction4_Type18 &instr)
 {
     m128 addr1 { RAX };
@@ -1072,75 +1062,608 @@ TEST(Instruction4, Type16)
     EXPECT_EQ(asmstr(), "vcvtps2ph $0xFF, %ymm0, (%rbx)");
 }
 
+TEST(Instruction4, Type17)
+{
+    m128 addr1 { RAX };
+    m256 addr2 { RBX };
+
+    VFMADD132PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmadd132pd %xmm2, %xmm1, %xmm0");
+    VFMADD132PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmadd132pd (%rax), %xmm1, %xmm0");
+    VFMADD132PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmadd132pd %ymm2, %ymm1, %ymm0");
+    VFMADD132PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmadd132pd (%rbx), %ymm1, %ymm0");
+
+    VFMADD213PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmadd213pd %xmm2, %xmm1, %xmm0");
+    VFMADD213PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmadd213pd (%rax), %xmm1, %xmm0");
+    VFMADD213PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmadd213pd %ymm2, %ymm1, %ymm0");
+    VFMADD213PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmadd213pd (%rbx), %ymm1, %ymm0");
+
+    VFMADD231PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmadd231pd %xmm2, %xmm1, %xmm0");
+    VFMADD231PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmadd231pd (%rax), %xmm1, %xmm0");
+    VFMADD231PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmadd231pd %ymm2, %ymm1, %ymm0");
+    VFMADD231PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmadd231pd (%rbx), %ymm1, %ymm0");
+
+    VFMADD132PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmadd132ps %xmm2, %xmm1, %xmm0");
+    VFMADD132PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmadd132ps (%rax), %xmm1, %xmm0");
+    VFMADD132PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmadd132ps %ymm2, %ymm1, %ymm0");
+    VFMADD132PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmadd132ps (%rbx), %ymm1, %ymm0");
+
+    VFMADD213PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmadd213ps %xmm2, %xmm1, %xmm0");
+    VFMADD213PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmadd213ps (%rax), %xmm1, %xmm0");
+    VFMADD213PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmadd213ps %ymm2, %ymm1, %ymm0");
+    VFMADD213PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmadd213ps (%rbx), %ymm1, %ymm0");
+
+    VFMADD231PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmadd231ps %xmm2, %xmm1, %xmm0");
+    VFMADD231PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmadd231ps (%rax), %xmm1, %xmm0");
+    VFMADD231PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmadd231ps %ymm2, %ymm1, %ymm0");
+    VFMADD231PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmadd231ps (%rbx), %ymm1, %ymm0");
+
+    VFMADDSUB132PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmaddsub132pd %xmm2, %xmm1, %xmm0");
+    VFMADDSUB132PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmaddsub132pd (%rax), %xmm1, %xmm0");
+    VFMADDSUB132PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmaddsub132pd %ymm2, %ymm1, %ymm0");
+    VFMADDSUB132PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmaddsub132pd (%rbx), %ymm1, %ymm0");
+
+    VFMADDSUB213PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmaddsub213pd %xmm2, %xmm1, %xmm0");
+    VFMADDSUB213PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmaddsub213pd (%rax), %xmm1, %xmm0");
+    VFMADDSUB213PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmaddsub213pd %ymm2, %ymm1, %ymm0");
+    VFMADDSUB213PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmaddsub213pd (%rbx), %ymm1, %ymm0");
+
+    VFMADDSUB231PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmaddsub231pd %xmm2, %xmm1, %xmm0");
+    VFMADDSUB231PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmaddsub231pd (%rax), %xmm1, %xmm0");
+    VFMADDSUB231PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmaddsub231pd %ymm2, %ymm1, %ymm0");
+    VFMADDSUB231PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmaddsub231pd (%rbx), %ymm1, %ymm0");
+
+    VFMADDSUB132PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmaddsub132ps %xmm2, %xmm1, %xmm0");
+    VFMADDSUB132PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmaddsub132ps (%rax), %xmm1, %xmm0");
+    VFMADDSUB132PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmaddsub132ps %ymm2, %ymm1, %ymm0");
+    VFMADDSUB132PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmaddsub132ps (%rbx), %ymm1, %ymm0");
+
+    VFMADDSUB213PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmaddsub213ps %xmm2, %xmm1, %xmm0");
+    VFMADDSUB213PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmaddsub213ps (%rax), %xmm1, %xmm0");
+    VFMADDSUB213PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmaddsub213ps %ymm2, %ymm1, %ymm0");
+    VFMADDSUB213PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmaddsub213ps (%rbx), %ymm1, %ymm0");
+
+    VFMADDSUB231PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmaddsub231ps %xmm2, %xmm1, %xmm0");
+    VFMADDSUB231PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmaddsub231ps (%rax), %xmm1, %xmm0");
+    VFMADDSUB231PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmaddsub231ps %ymm2, %ymm1, %ymm0");
+    VFMADDSUB231PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmaddsub231ps (%rbx), %ymm1, %ymm0");
+
+    VFMSUBADD132PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsubadd132pd %xmm2, %xmm1, %xmm0");
+    VFMSUBADD132PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmsubadd132pd (%rax), %xmm1, %xmm0");
+    VFMSUBADD132PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmsubadd132pd %ymm2, %ymm1, %ymm0");
+    VFMSUBADD132PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmsubadd132pd (%rbx), %ymm1, %ymm0");
+
+    VFMSUBADD213PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsubadd213pd %xmm2, %xmm1, %xmm0");
+    VFMSUBADD213PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmsubadd213pd (%rax), %xmm1, %xmm0");
+    VFMSUBADD213PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmsubadd213pd %ymm2, %ymm1, %ymm0");
+    VFMSUBADD213PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmsubadd213pd (%rbx), %ymm1, %ymm0");
+
+    VFMSUBADD231PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsubadd231pd %xmm2, %xmm1, %xmm0");
+    VFMSUBADD231PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmsubadd231pd (%rax), %xmm1, %xmm0");
+    VFMSUBADD231PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmsubadd231pd %ymm2, %ymm1, %ymm0");
+    VFMSUBADD231PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmsubadd231pd (%rbx), %ymm1, %ymm0");
+
+    VFMSUBADD132PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsubadd132ps %xmm2, %xmm1, %xmm0");
+    VFMSUBADD132PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmsubadd132ps (%rax), %xmm1, %xmm0");
+    VFMSUBADD132PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmsubadd132ps %ymm2, %ymm1, %ymm0");
+    VFMSUBADD132PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmsubadd132ps (%rbx), %ymm1, %ymm0");
+
+    VFMSUBADD213PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsubadd213ps %xmm2, %xmm1, %xmm0");
+    VFMSUBADD213PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmsubadd213ps (%rax), %xmm1, %xmm0");
+    VFMSUBADD213PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmsubadd213ps %ymm2, %ymm1, %ymm0");
+    VFMSUBADD213PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmsubadd213ps (%rbx), %ymm1, %ymm0");
+
+    VFMSUBADD231PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsubadd231ps %xmm2, %xmm1, %xmm0");
+    VFMSUBADD231PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmsubadd231ps (%rax), %xmm1, %xmm0");
+    VFMSUBADD231PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmsubadd231ps %ymm2, %ymm1, %ymm0");
+    VFMSUBADD231PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmsubadd231ps (%rbx), %ymm1, %ymm0");
+
+    VFMSUB132PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsub132pd %xmm2, %xmm1, %xmm0");
+    VFMSUB132PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmsub132pd (%rax), %xmm1, %xmm0");
+    VFMSUB132PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmsub132pd %ymm2, %ymm1, %ymm0");
+    VFMSUB132PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmsub132pd (%rbx), %ymm1, %ymm0");
+
+    VFMSUB213PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsub213pd %xmm2, %xmm1, %xmm0");
+    VFMSUB213PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmsub213pd (%rax), %xmm1, %xmm0");
+    VFMSUB213PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmsub213pd %ymm2, %ymm1, %ymm0");
+    VFMSUB213PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmsub213pd (%rbx), %ymm1, %ymm0");
+
+    VFMSUB231PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsub231pd %xmm2, %xmm1, %xmm0");
+    VFMSUB231PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmsub231pd (%rax), %xmm1, %xmm0");
+    VFMSUB231PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmsub231pd %ymm2, %ymm1, %ymm0");
+    VFMSUB231PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmsub231pd (%rbx), %ymm1, %ymm0");
+
+    VFMSUB132PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsub132ps %xmm2, %xmm1, %xmm0");
+    VFMSUB132PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmsub132ps (%rax), %xmm1, %xmm0");
+    VFMSUB132PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmsub132ps %ymm2, %ymm1, %ymm0");
+    VFMSUB132PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmsub132ps (%rbx), %ymm1, %ymm0");
+
+    VFMSUB213PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsub213ps %xmm2, %xmm1, %xmm0");
+    VFMSUB213PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmsub213ps (%rax), %xmm1, %xmm0");
+    VFMSUB213PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmsub213ps %ymm2, %ymm1, %ymm0");
+    VFMSUB213PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmsub213ps (%rbx), %ymm1, %ymm0");
+
+    VFMSUB231PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfmsub231ps %xmm2, %xmm1, %xmm0");
+    VFMSUB231PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfmsub231ps (%rax), %xmm1, %xmm0");
+    VFMSUB231PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfmsub231ps %ymm2, %ymm1, %ymm0");
+    VFMSUB231PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfmsub231ps (%rbx), %ymm1, %ymm0");
+
+    VFNMADD132PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd132pd %xmm2, %xmm1, %xmm0");
+    VFNMADD132PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfnmadd132pd (%rax), %xmm1, %xmm0");
+    VFNMADD132PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd132pd %ymm2, %ymm1, %ymm0");
+    VFNMADD132PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfnmadd132pd (%rbx), %ymm1, %ymm0");
+
+    VFNMADD213PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd213pd %xmm2, %xmm1, %xmm0");
+    VFNMADD213PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfnmadd213pd (%rax), %xmm1, %xmm0");
+    VFNMADD213PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd213pd %ymm2, %ymm1, %ymm0");
+    VFNMADD213PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfnmadd213pd (%rbx), %ymm1, %ymm0");
+
+    VFNMADD231PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd231pd %xmm2, %xmm1, %xmm0");
+    VFNMADD231PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfnmadd231pd (%rax), %xmm1, %xmm0");
+    VFNMADD231PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd231pd %ymm2, %ymm1, %ymm0");
+    VFNMADD231PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfnmadd231pd (%rbx), %ymm1, %ymm0");
+
+    VFNMADD132PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd132ps %xmm2, %xmm1, %xmm0");
+    VFNMADD132PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfnmadd132ps (%rax), %xmm1, %xmm0");
+    VFNMADD132PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd132ps %ymm2, %ymm1, %ymm0");
+    VFNMADD132PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfnmadd132ps (%rbx), %ymm1, %ymm0");
+
+    VFNMADD213PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd213ps %xmm2, %xmm1, %xmm0");
+    VFNMADD213PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfnmadd213ps (%rax), %xmm1, %xmm0");
+    VFNMADD213PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd213ps %ymm2, %ymm1, %ymm0");
+    VFNMADD213PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfnmadd213ps (%rbx), %ymm1, %ymm0");
+
+    VFNMADD231PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd231ps %xmm2, %xmm1, %xmm0");
+    VFNMADD231PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfnmadd231ps (%rax), %xmm1, %xmm0");
+    VFNMADD231PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfnmadd231ps %ymm2, %ymm1, %ymm0");
+    VFNMADD231PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfnmadd231ps (%rbx), %ymm1, %ymm0");
+
+    VFNMSUB132PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub132pd %xmm2, %xmm1, %xmm0");
+    VFNMSUB132PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfnmsub132pd (%rax), %xmm1, %xmm0");
+    VFNMSUB132PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub132pd %ymm2, %ymm1, %ymm0");
+    VFNMSUB132PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfnmsub132pd (%rbx), %ymm1, %ymm0");
+
+    VFNMSUB213PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub213pd %xmm2, %xmm1, %xmm0");
+    VFNMSUB213PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfnmsub213pd (%rax), %xmm1, %xmm0");
+    VFNMSUB213PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub213pd %ymm2, %ymm1, %ymm0");
+    VFNMSUB213PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfnmsub213pd (%rbx), %ymm1, %ymm0");
+
+    VFNMSUB231PD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub231pd %xmm2, %xmm1, %xmm0");
+    VFNMSUB231PD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfnmsub231pd (%rax), %xmm1, %xmm0");
+    VFNMSUB231PD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub231pd %ymm2, %ymm1, %ymm0");
+    VFNMSUB231PD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfnmsub231pd (%rbx), %ymm1, %ymm0");
+
+    VFNMSUB132PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub132ps %xmm2, %xmm1, %xmm0");
+    VFNMSUB132PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfnmsub132ps (%rax), %xmm1, %xmm0");
+    VFNMSUB132PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub132ps %ymm2, %ymm1, %ymm0");
+    VFNMSUB132PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfnmsub132ps (%rbx), %ymm1, %ymm0");
+
+    VFNMSUB213PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub213ps %xmm2, %xmm1, %xmm0");
+    VFNMSUB213PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfnmsub213ps (%rax), %xmm1, %xmm0");
+    VFNMSUB213PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub213ps %ymm2, %ymm1, %ymm0");
+    VFNMSUB213PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfnmsub213ps (%rbx), %ymm1, %ymm0");
+
+    VFNMSUB231PS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub231ps %xmm2, %xmm1, %xmm0");
+    VFNMSUB231PS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vfnmsub231ps (%rax), %xmm1, %xmm0");
+    VFNMSUB231PS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vfnmsub231ps %ymm2, %ymm1, %ymm0");
+    VFNMSUB231PS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vfnmsub231ps (%rbx), %ymm1, %ymm0");
+
+    VADDPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vaddpd %xmm2, %xmm1, %xmm0");
+    VADDPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vaddpd (%rax), %xmm1, %xmm0");
+    VADDPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vaddpd %ymm2, %ymm1, %ymm0");
+    VADDPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vaddpd (%rbx), %ymm1, %ymm0");
+
+    VADDPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vaddps %xmm2, %xmm1, %xmm0");
+    VADDPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vaddps (%rax), %xmm1, %xmm0");
+    VADDPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vaddps %ymm2, %ymm1, %ymm0");
+    VADDPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vaddps (%rbx), %ymm1, %ymm0");
+
+    VSUBPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vsubpd %xmm2, %xmm1, %xmm0");
+    VSUBPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vsubpd (%rax), %xmm1, %xmm0");
+    VSUBPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vsubpd %ymm2, %ymm1, %ymm0");
+    VSUBPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vsubpd (%rbx), %ymm1, %ymm0");
+
+    VSUBPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vsubps %xmm2, %xmm1, %xmm0");
+    VSUBPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vsubps (%rax), %xmm1, %xmm0");
+    VSUBPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vsubps %ymm2, %ymm1, %ymm0");
+    VSUBPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vsubps (%rbx), %ymm1, %ymm0");
+
+    VMULPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vmulpd %xmm2, %xmm1, %xmm0");
+    VMULPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vmulpd (%rax), %xmm1, %xmm0");
+    VMULPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vmulpd %ymm2, %ymm1, %ymm0");
+    VMULPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vmulpd (%rbx), %ymm1, %ymm0");
+
+    VMULPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vmulps %xmm2, %xmm1, %xmm0");
+    VMULPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vmulps (%rax), %xmm1, %xmm0");
+    VMULPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vmulps %ymm2, %ymm1, %ymm0");
+    VMULPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vmulps (%rbx), %ymm1, %ymm0");
+
+    VDIVPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vdivpd %xmm2, %xmm1, %xmm0");
+    VDIVPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vdivpd (%rax), %xmm1, %xmm0");
+    VDIVPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vdivpd %ymm2, %ymm1, %ymm0");
+    VDIVPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vdivpd (%rbx), %ymm1, %ymm0");
+
+    VDIVPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vdivps %xmm2, %xmm1, %xmm0");
+    VDIVPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vdivps (%rax), %xmm1, %xmm0");
+    VDIVPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vdivps %ymm2, %ymm1, %ymm0");
+    VDIVPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vdivps (%rbx), %ymm1, %ymm0");
+
+    VMINPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vminps %xmm2, %xmm1, %xmm0");
+    VMINPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vminps (%rax), %xmm1, %xmm0");
+    VMINPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vminps %ymm2, %ymm1, %ymm0");
+    VMINPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vminps (%rbx), %ymm1, %ymm0");
+
+    VMINPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vminpd %xmm2, %xmm1, %xmm0");
+    VMINPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vminpd (%rax), %xmm1, %xmm0");
+    VMINPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vminpd %ymm2, %ymm1, %ymm0");
+    VMINPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vminpd (%rbx), %ymm1, %ymm0");
+
+    VMAXPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vmaxps %xmm2, %xmm1, %xmm0");
+    VMAXPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vmaxps (%rax), %xmm1, %xmm0");
+    VMAXPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vmaxps %ymm2, %ymm1, %ymm0");
+    VMAXPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vmaxps (%rbx), %ymm1, %ymm0");
+
+    VMAXPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vmaxpd %xmm2, %xmm1, %xmm0");
+    VMAXPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vmaxpd (%rax), %xmm1, %xmm0");
+    VMAXPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vmaxpd %ymm2, %ymm1, %ymm0");
+    VMAXPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vmaxpd (%rbx), %ymm1, %ymm0");
+
+    VHADDPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vhaddps %xmm2, %xmm1, %xmm0");
+    VHADDPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vhaddps (%rax), %xmm1, %xmm0");
+    VHADDPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vhaddps %ymm2, %ymm1, %ymm0");
+    VHADDPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vhaddps (%rbx), %ymm1, %ymm0");
+
+    VHADDPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vhaddpd %xmm2, %xmm1, %xmm0");
+    VHADDPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vhaddpd (%rax), %xmm1, %xmm0");
+    VHADDPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vhaddpd %ymm2, %ymm1, %ymm0");
+    VHADDPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vhaddpd (%rbx), %ymm1, %ymm0");
+
+    VHSUBPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vhsubps %xmm2, %xmm1, %xmm0");
+    VHSUBPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vhsubps (%rax), %xmm1, %xmm0");
+    VHSUBPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vhsubps %ymm2, %ymm1, %ymm0");
+    VHSUBPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vhsubps (%rbx), %ymm1, %ymm0");
+
+    VHSUBPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vhsubpd %xmm2, %xmm1, %xmm0");
+    VHSUBPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vhsubpd (%rax), %xmm1, %xmm0");
+    VHSUBPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vhsubpd %ymm2, %ymm1, %ymm0");
+    VHSUBPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vhsubpd (%rbx), %ymm1, %ymm0");
+
+    VADDSUBPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vaddsubps %xmm2, %xmm1, %xmm0");
+    VADDSUBPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vaddsubps (%rax), %xmm1, %xmm0");
+    VADDSUBPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vaddsubps %ymm2, %ymm1, %ymm0");
+    VADDSUBPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vaddsubps (%rbx), %ymm1, %ymm0");
+
+    VADDSUBPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vaddsubpd %xmm2, %xmm1, %xmm0");
+    VADDSUBPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vaddsubpd (%rax), %xmm1, %xmm0");
+    VADDSUBPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vaddsubpd %ymm2, %ymm1, %ymm0");
+    VADDSUBPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vaddsubpd (%rbx), %ymm1, %ymm0");
+
+    VUNPCKHPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vunpckhpd %xmm2, %xmm1, %xmm0");
+    VUNPCKHPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vunpckhpd (%rax), %xmm1, %xmm0");
+    VUNPCKHPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vunpckhpd %ymm2, %ymm1, %ymm0");
+    VUNPCKHPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vunpckhpd (%rbx), %ymm1, %ymm0");
+
+    VUNPCKLPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vunpcklpd %xmm2, %xmm1, %xmm0");
+    VUNPCKLPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vunpcklpd (%rax), %xmm1, %xmm0");
+    VUNPCKLPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vunpcklpd %ymm2, %ymm1, %ymm0");
+    VUNPCKLPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vunpcklpd (%rbx), %ymm1, %ymm0");
+
+    VUNPCKHPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vunpckhps %xmm2, %xmm1, %xmm0");
+    VUNPCKHPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vunpckhps (%rax), %xmm1, %xmm0");
+    VUNPCKHPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vunpckhps %ymm2, %ymm1, %ymm0");
+    VUNPCKHPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vunpckhps (%rbx), %ymm1, %ymm0");
+
+    VUNPCKLPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vunpcklps %xmm2, %xmm1, %xmm0");
+    VUNPCKLPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vunpcklps (%rax), %xmm1, %xmm0");
+    VUNPCKLPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vunpcklps %ymm2, %ymm1, %ymm0");
+    VUNPCKLPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vunpcklps (%rbx), %ymm1, %ymm0");
+
+    VXORPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vxorps %xmm2, %xmm1, %xmm0");
+    VXORPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vxorps (%rax), %xmm1, %xmm0");
+    VXORPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vxorps %ymm2, %ymm1, %ymm0");
+    VXORPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vxorps (%rbx), %ymm1, %ymm0");
+
+    VXORPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vxorpd %xmm2, %xmm1, %xmm0");
+    VXORPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vxorpd (%rax), %xmm1, %xmm0");
+    VXORPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vxorpd %ymm2, %ymm1, %ymm0");
+    VXORPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vxorpd (%rbx), %ymm1, %ymm0");
+
+    VORPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vorps %xmm2, %xmm1, %xmm0");
+    VORPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vorps (%rax), %xmm1, %xmm0");
+    VORPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vorps %ymm2, %ymm1, %ymm0");
+    VORPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vorps (%rbx), %ymm1, %ymm0");
+
+    VORPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vorpd %xmm2, %xmm1, %xmm0");
+    VORPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vorpd (%rax), %xmm1, %xmm0");
+    VORPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vorpd %ymm2, %ymm1, %ymm0");
+    VORPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vorpd (%rbx), %ymm1, %ymm0");
+
+    VANDPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vandps %xmm2, %xmm1, %xmm0");
+    VANDPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vandps (%rax), %xmm1, %xmm0");
+    VANDPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vandps %ymm2, %ymm1, %ymm0");
+    VANDPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vandps (%rbx), %ymm1, %ymm0");
+
+    VANDPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vandpd %xmm2, %xmm1, %xmm0");
+    VANDPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vandpd (%rax), %xmm1, %xmm0");
+    VANDPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vandpd %ymm2, %ymm1, %ymm0");
+    VANDPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vandpd (%rbx), %ymm1, %ymm0");
+
+    VANDNPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vandnps %xmm2, %xmm1, %xmm0");
+    VANDNPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vandnps (%rax), %xmm1, %xmm0");
+    VANDNPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vandnps %ymm2, %ymm1, %ymm0");
+    VANDNPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vandnps (%rbx), %ymm1, %ymm0");
+
+    VANDNPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vandnpd %xmm2, %xmm1, %xmm0");
+    VANDNPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vandnpd (%rax), %xmm1, %xmm0");
+    VANDNPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vandnpd %ymm2, %ymm1, %ymm0");
+    VANDNPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vandnpd (%rbx), %ymm1, %ymm0");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type17(VFMADD132PD);
-    gen_Instruction4_Type17(VFMADD213PD);
-    gen_Instruction4_Type17(VFMADD231PD);
-    gen_Instruction4_Type17(VFMADD132PS);
-    gen_Instruction4_Type17(VFMADD213PS);
-    gen_Instruction4_Type17(VFMADD231PS);
-    gen_Instruction4_Type17(VFMADDSUB132PD);
-    gen_Instruction4_Type17(VFMADDSUB213PD);
-    gen_Instruction4_Type17(VFMADDSUB231PD);
-    gen_Instruction4_Type17(VFMADDSUB132PS);
-    gen_Instruction4_Type17(VFMADDSUB213PS);
-    gen_Instruction4_Type17(VFMADDSUB231PS);
-    gen_Instruction4_Type17(VFMSUBADD132PD);
-    gen_Instruction4_Type17(VFMSUBADD213PD);
-    gen_Instruction4_Type17(VFMSUBADD231PD);
-    gen_Instruction4_Type17(VFMSUBADD132PS);
-    gen_Instruction4_Type17(VFMSUBADD213PS);
-    gen_Instruction4_Type17(VFMSUBADD231PS);
-    gen_Instruction4_Type17(VFMSUB132PD);
-    gen_Instruction4_Type17(VFMSUB213PD);
-    gen_Instruction4_Type17(VFMSUB231PD);
-    gen_Instruction4_Type17(VFMSUB132PS);
-    gen_Instruction4_Type17(VFMSUB213PS);
-    gen_Instruction4_Type17(VFMSUB231PS);
-    gen_Instruction4_Type17(VFNMADD132PD);
-    gen_Instruction4_Type17(VFNMADD213PD);
-    gen_Instruction4_Type17(VFNMADD231PD);
-    gen_Instruction4_Type17(VFNMADD132PS);
-    gen_Instruction4_Type17(VFNMADD213PS);
-    gen_Instruction4_Type17(VFNMADD231PS);
-    gen_Instruction4_Type17(VFNMSUB132PD);
-    gen_Instruction4_Type17(VFNMSUB213PD);
-    gen_Instruction4_Type17(VFNMSUB231PD);
-    gen_Instruction4_Type17(VFNMSUB132PS);
-    gen_Instruction4_Type17(VFNMSUB213PS);
-    gen_Instruction4_Type17(VFNMSUB231PS);
-    gen_Instruction4_Type17(VADDPD);
-    gen_Instruction4_Type17(VADDPS);
-    gen_Instruction4_Type17(VSUBPD);
-    gen_Instruction4_Type17(VSUBPS);
-    gen_Instruction4_Type17(VMULPD);
-    gen_Instruction4_Type17(VMULPS);
-    gen_Instruction4_Type17(VDIVPD);
-    gen_Instruction4_Type17(VDIVPS);
-    gen_Instruction4_Type17(VMINPS);
-    gen_Instruction4_Type17(VMINPD);
-    gen_Instruction4_Type17(VMAXPS);
-    gen_Instruction4_Type17(VMAXPD);
-    gen_Instruction4_Type17(VHADDPS);
-    gen_Instruction4_Type17(VHADDPD);
-    gen_Instruction4_Type17(VHSUBPS);
-    gen_Instruction4_Type17(VHSUBPD);
-    gen_Instruction4_Type17(VADDSUBPS);
-    gen_Instruction4_Type17(VADDSUBPD);
-    gen_Instruction4_Type17(VUNPCKHPD);
-    gen_Instruction4_Type17(VUNPCKLPD);
-    gen_Instruction4_Type17(VUNPCKHPS);
-    gen_Instruction4_Type17(VUNPCKLPS);
-    gen_Instruction4_Type17(VXORPS);
-    gen_Instruction4_Type17(VXORPD);
-    gen_Instruction4_Type17(VORPS);
-    gen_Instruction4_Type17(VORPD);
-    gen_Instruction4_Type17(VANDPS);
-    gen_Instruction4_Type17(VANDPD);
-    gen_Instruction4_Type17(VANDNPS);
-    gen_Instruction4_Type17(VANDNPD);
-
     gen_Instruction4_Type18(VSQRTPD);
     gen_Instruction4_Type18(VSQRTPS);
     gen_Instruction4_Type18(VRSQRTPS);
