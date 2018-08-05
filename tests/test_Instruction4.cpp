@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type19(Instruction4_Type19 &instr)
-{
-    instr(XMM0, XMM1);
-    //instr(XMM0, addr1);
-    instr(XMM0, YMM1);
-    //instr(XMM0, addr2);
-}
-
 static void gen_Instruction4_Type20(Instruction4_Type20 &instr)
 {
     imm8 mask { 255 };
@@ -1775,12 +1767,26 @@ TEST(Instruction4, Type18)
     EXPECT_EQ(asmstr(), "vmovddup (%rbx), %ymm0");
 }
 
+TEST(Instruction4, Type19)
+{
+    VCVTPD2PS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vcvtpd2ps %xmm1, %xmm0");
+    VCVTPD2PS(XMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vcvtpd2ps %ymm1, %xmm0");
+
+    VCVTTPD2DQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vcvttpd2dq %xmm1, %xmm0");
+    VCVTTPD2DQ(XMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vcvttpd2dq %ymm1, %xmm0");
+
+    VCVTPD2DQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vcvtpd2dq %xmm1, %xmm0");
+    VCVTPD2DQ(XMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vcvtpd2dq %ymm1, %xmm0");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type19(VCVTPD2PS);
-    gen_Instruction4_Type19(VCVTTPD2DQ);
-    gen_Instruction4_Type19(VCVTPD2DQ);
-
     gen_Instruction4_Type20(VCMPPS);
     gen_Instruction4_Type20(VCMPPD);
     gen_Instruction4_Type20(VDPPS);
