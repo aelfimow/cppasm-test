@@ -3,15 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type9(Instruction4_Type9 &instr)
-{
-    m32 addr { EAX };
-    instr(EAX, XMM0);
-    instr(EAX, addr);
-    instr(RAX, XMM0);
-    instr(RAX, addr);
-}
-
 static void gen_Instruction4_Type10(Instruction4_Type10 &instr)
 {
     m32fp addr1 { RAX };
@@ -934,14 +925,49 @@ TEST(Instruction4, Type8)
     EXPECT_EQ(asmstr(), "cvtsi2sdq (%rbx), %xmm0");
 }
 
+TEST(Instruction4, Type9)
+{
+    m32 addr { EAX };
+
+    CVTSS2SI(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "cvtss2si %xmm0, %eax");
+    CVTSS2SI(EAX, addr);
+    EXPECT_EQ(asmstr(), "cvtss2si (%eax), %eax");
+    CVTSS2SI(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "cvtss2si %xmm0, %rax");
+    CVTSS2SI(RAX, addr);
+    EXPECT_EQ(asmstr(), "cvtss2si (%eax), %rax");
+
+    CVTTSS2SI(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "cvttss2si %xmm0, %eax");
+    CVTTSS2SI(EAX, addr);
+    EXPECT_EQ(asmstr(), "cvttss2si (%eax), %eax");
+    CVTTSS2SI(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "cvttss2si %xmm0, %rax");
+    CVTTSS2SI(RAX, addr);
+    EXPECT_EQ(asmstr(), "cvttss2si (%eax), %rax");
+
+    VCVTTSS2SI(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "vcvttss2si %xmm0, %eax");
+    VCVTTSS2SI(EAX, addr);
+    EXPECT_EQ(asmstr(), "vcvttss2si (%eax), %eax");
+    VCVTTSS2SI(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "vcvttss2si %xmm0, %rax");
+    VCVTTSS2SI(RAX, addr);
+    EXPECT_EQ(asmstr(), "vcvttss2si (%eax), %rax");
+
+    VCVTSS2SI(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "vcvtss2si %xmm0, %eax");
+    VCVTSS2SI(EAX, addr);
+    EXPECT_EQ(asmstr(), "vcvtss2si (%eax), %eax");
+    VCVTSS2SI(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "vcvtss2si %xmm0, %rax");
+    VCVTSS2SI(RAX, addr);
+    EXPECT_EQ(asmstr(), "vcvtss2si (%eax), %rax");
+}
+
 TEST(Instruction4, AllTypes)
 {
-
-    gen_Instruction4_Type9(CVTSS2SI);
-    gen_Instruction4_Type9(CVTTSS2SI);
-    gen_Instruction4_Type9(VCVTTSS2SI);
-    gen_Instruction4_Type9(VCVTSS2SI);
-
     gen_Instruction4_Type10(FCOM);
     gen_Instruction4_Type10(FCOMP);
 
