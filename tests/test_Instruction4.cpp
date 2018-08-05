@@ -3,15 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type13(Instruction4_Type13 &instr)
-{
-    m64 addr { RAX };
-    instr(EAX, XMM0);
-    instr(EAX, addr);
-    instr(RAX, XMM0);
-    instr(RAX, addr);
-}
-
 static void gen_Instruction4_Type14(Instruction4_Type14 &instr)
 {
     m128 addr { RAX };
@@ -989,13 +980,49 @@ TEST(Instruction4, Type12)
     EXPECT_EQ(asmstr(), "pmovmskb %xmm0, %rax");
 }
 
+TEST(Instruction4, Type13)
+{
+    m64 addr { RAX };
+
+    CVTSD2SI(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "cvtsd2si %xmm0, %eax");
+    CVTSD2SI(EAX, addr);
+    EXPECT_EQ(asmstr(), "cvtsd2si (%rax), %eax");
+    CVTSD2SI(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "cvtsd2si %xmm0, %rax");
+    CVTSD2SI(RAX, addr);
+    EXPECT_EQ(asmstr(), "cvtsd2si (%rax), %rax");
+
+    CVTTSD2SI(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "cvttsd2si %xmm0, %eax");
+    CVTTSD2SI(EAX, addr);
+    EXPECT_EQ(asmstr(), "cvttsd2si (%rax), %eax");
+    CVTTSD2SI(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "cvttsd2si %xmm0, %rax");
+    CVTTSD2SI(RAX, addr);
+    EXPECT_EQ(asmstr(), "cvttsd2si (%rax), %rax");
+
+    VCVTSD2SI(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "vcvtsd2si %xmm0, %eax");
+    VCVTSD2SI(EAX, addr);
+    EXPECT_EQ(asmstr(), "vcvtsd2si (%rax), %eax");
+    VCVTSD2SI(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "vcvtsd2si %xmm0, %rax");
+    VCVTSD2SI(RAX, addr);
+    EXPECT_EQ(asmstr(), "vcvtsd2si (%rax), %rax");
+
+    VCVTTSD2SI(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "vcvttsd2si %xmm0, %eax");
+    VCVTTSD2SI(EAX, addr);
+    EXPECT_EQ(asmstr(), "vcvttsd2si (%rax), %eax");
+    VCVTTSD2SI(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "vcvttsd2si %xmm0, %rax");
+    VCVTTSD2SI(RAX, addr);
+    EXPECT_EQ(asmstr(), "vcvttsd2si (%rax), %rax");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type13(CVTSD2SI);
-    gen_Instruction4_Type13(CVTTSD2SI);
-    gen_Instruction4_Type13(VCVTSD2SI);
-    gen_Instruction4_Type13(VCVTTSD2SI);
-
     gen_Instruction4_Type14(BLENDVPD);
     gen_Instruction4_Type14(BLENDVPS);
     gen_Instruction4_Type14(PBLENDVB);
