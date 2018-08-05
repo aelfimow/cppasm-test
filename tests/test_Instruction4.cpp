@@ -3,15 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type23(Instruction4_Type23 &instr)
-{
-    m128 addr { RAX };
-    instr(XMM0, XMM1, XMM2, XMM3);
-    instr(XMM0, XMM1, addr, XMM3);
-    instr(YMM0, YMM1, YMM2, YMM3);
-    instr(YMM0, YMM1, addr, YMM3);
-}
-
 static void gen_Instruction4_Type24(Instruction4_Type24 &instr)
 {
     m128 addr1 { RAX };
@@ -1871,11 +1862,31 @@ TEST(Instruction4, Type22)
     EXPECT_EQ(asmstr(), "vmovmskpd %ymm0, %rax");
 }
 
+TEST(Instruction4, Type23)
+{
+    m128 addr { RAX };
+
+    VBLENDVPD(XMM0, XMM1, XMM2, XMM3);
+    EXPECT_EQ(asmstr(), "vblendvpd %xmm3, %xmm2, %xmm1, %xmm0");
+    VBLENDVPD(XMM0, XMM1, addr, XMM3);
+    EXPECT_EQ(asmstr(), "vblendvpd %xmm3, (%rax), %xmm1, %xmm0");
+    VBLENDVPD(YMM0, YMM1, YMM2, YMM3);
+    EXPECT_EQ(asmstr(), "vblendvpd %ymm3, %ymm2, %ymm1, %ymm0");
+    VBLENDVPD(YMM0, YMM1, addr, YMM3);
+    EXPECT_EQ(asmstr(), "vblendvpd %ymm3, (%rax), %ymm1, %ymm0");
+
+    VBLENDVPS(XMM0, XMM1, XMM2, XMM3);
+    EXPECT_EQ(asmstr(), "vblendvps %xmm3, %xmm2, %xmm1, %xmm0");
+    VBLENDVPS(XMM0, XMM1, addr, XMM3);
+    EXPECT_EQ(asmstr(), "vblendvps %xmm3, (%rax), %xmm1, %xmm0");
+    VBLENDVPS(YMM0, YMM1, YMM2, YMM3);
+    EXPECT_EQ(asmstr(), "vblendvps %ymm3, %ymm2, %ymm1, %ymm0");
+    VBLENDVPS(YMM0, YMM1, addr, YMM3);
+    EXPECT_EQ(asmstr(), "vblendvps %ymm3, (%rax), %ymm1, %ymm0");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type23(VBLENDVPD);
-    gen_Instruction4_Type23(VBLENDVPS);
-
     gen_Instruction4_Type24(VMASKMOVPS);
     gen_Instruction4_Type24(VMASKMOVPD);
     gen_Instruction4_Type24(VPMASKMOVD);
