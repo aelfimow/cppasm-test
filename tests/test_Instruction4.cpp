@@ -3,14 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type22(Instruction4_Type22 &instr)
-{
-    instr(EAX, XMM0);
-    instr(RAX, XMM0);
-    instr(EAX, YMM0);
-    instr(RAX, YMM0);
-}
-
 static void gen_Instruction4_Type23(Instruction4_Type23 &instr)
 {
     m128 addr { RAX };
@@ -1858,11 +1850,29 @@ TEST(Instruction4, Type21)
     EXPECT_EQ(asmstr(), "vroundpd $0xFF, (%rbx), %ymm0");
 }
 
+TEST(Instruction4, Type22)
+{
+    VMOVMSKPS(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "vmovmskps %xmm0, %eax");
+    VMOVMSKPS(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "vmovmskps %xmm0, %rax");
+    VMOVMSKPS(EAX, YMM0);
+    EXPECT_EQ(asmstr(), "vmovmskps %ymm0, %eax");
+    VMOVMSKPS(RAX, YMM0);
+    EXPECT_EQ(asmstr(), "vmovmskps %ymm0, %rax");
+
+    VMOVMSKPD(EAX, XMM0);
+    EXPECT_EQ(asmstr(), "vmovmskpd %xmm0, %eax");
+    VMOVMSKPD(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "vmovmskpd %xmm0, %rax");
+    VMOVMSKPD(EAX, YMM0);
+    EXPECT_EQ(asmstr(), "vmovmskpd %ymm0, %eax");
+    VMOVMSKPD(RAX, YMM0);
+    EXPECT_EQ(asmstr(), "vmovmskpd %ymm0, %rax");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type22(VMOVMSKPS);
-    gen_Instruction4_Type22(VMOVMSKPD);
-
     gen_Instruction4_Type23(VBLENDVPD);
     gen_Instruction4_Type23(VBLENDVPS);
 
