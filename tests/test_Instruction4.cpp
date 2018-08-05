@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type7(Instruction4_Type7 &instr)
-{
-    m32 addr1 { EAX };
-    m64 addr2 { EBX };
-    instr(EAX, EBX);
-    instr(EAX, addr1);
-    instr(RAX, RBX);
-    instr(RAX, addr2);
-}
-
 static void gen_Instruction4_Type8(Instruction4_Type8 &instr)
 {
     m32 addr1 { RAX };
@@ -906,11 +896,32 @@ TEST(Instruction4, Type6)
     EXPECT_EQ(asmstr(), "vmovq %xmm0, (%rax)");
 }
 
+TEST(Instruction4, Type7)
+{
+    m32 addr1 { EAX };
+    m64 addr2 { EBX };
+
+    ADCX(EAX, EBX);
+    EXPECT_EQ(asmstr(), "adcx %ebx, %eax");
+    ADCX(EAX, addr1);
+    EXPECT_EQ(asmstr(), "adcx (%eax), %eax");
+    ADCX(RAX, RBX);
+    EXPECT_EQ(asmstr(), "adcx %rbx, %rax");
+    ADCX(RAX, addr2);
+    EXPECT_EQ(asmstr(), "adcx (%ebx), %rax");
+
+    ADOX(EAX, EBX);
+    EXPECT_EQ(asmstr(), "adox %ebx, %eax");
+    ADOX(EAX, addr1);
+    EXPECT_EQ(asmstr(), "adox (%eax), %eax");
+    ADOX(RAX, RBX);
+    EXPECT_EQ(asmstr(), "adox %rbx, %rax");
+    ADOX(RAX, addr2);
+    EXPECT_EQ(asmstr(), "adox (%ebx), %rax");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type7(ADCX);
-    gen_Instruction4_Type7(ADOX);
-
     gen_Instruction4_Type8(CVTSI2SS);
     gen_Instruction4_Type8(CVTSI2SD);
 
