@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type11(Instruction4_Type11 &instr)
-{
-    m16 addr { RAX };
-    imm8 mask { 255 };
-    instr(MM0, EAX, mask);
-    instr(MM0, addr, mask);
-    instr(XMM0, EAX, mask);
-    instr(XMM0, addr, mask);
-}
-
 static void gen_Instruction4_Type12(Instruction4_Type12 &instr)
 {
     instr(EAX, MM0);
@@ -980,10 +970,23 @@ TEST(Instruction4, Type10)
     EXPECT_EQ(asmstr(), "fcompl (%rbx)");
 }
 
+TEST(Instruction4, Type11)
+{
+    m16 addr { RAX };
+    imm8 mask { 255 };
+
+    PINSRW(MM0, EAX, mask);
+    EXPECT_EQ(asmstr(), "pinsrw $0xFF, %eax, %mm0");
+    PINSRW(MM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pinsrw $0xFF, (%rax), %mm0");
+    PINSRW(XMM0, EAX, mask);
+    EXPECT_EQ(asmstr(), "pinsrw $0xFF, %eax, %xmm0");
+    PINSRW(XMM0, addr, mask);
+    EXPECT_EQ(asmstr(), "pinsrw $0xFF, (%rax), %xmm0");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type11(PINSRW);
-
     gen_Instruction4_Type12(PMOVMSKB);
 
     gen_Instruction4_Type13(CVTSD2SI);
