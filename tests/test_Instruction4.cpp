@@ -3,13 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type26(Instruction4_Type26 &instr)
-{
-    m64 addr2 { RDX };
-    instr(RAX, RBX);
-    instr(addr2, RBX);
-}
-
 static void gen_Instruction4_Type27(Instruction4_Type27 &instr)
 {
     m64 addr2 { RDX };
@@ -1931,10 +1924,18 @@ TEST(Instruction4, Type25)
     EXPECT_EQ(asmstr(), "vcvtsi2sd (%rbx), %xmm1, %xmm0");
 }
 
+TEST(Instruction4, Type26)
+{
+    m64 addr2 { RDX };
+
+    VMREAD(RAX, RBX);
+    EXPECT_EQ(asmstr(), "vmread %rbx, %rax");
+    VMREAD(addr2, RBX);
+    EXPECT_EQ(asmstr(), "vmread %rbx, (%rdx)");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type26(VMREAD);
-
     gen_Instruction4_Type27(VMWRITE);
 
     gen_Instruction4_Type28(VINSERTI32X4);
