@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type15(Instruction4_Type15 &instr)
-{
-    m64 addr1 { RAX };
-    m128 addr2 { RBX };
-    instr(XMM0, XMM1);
-    instr(XMM0, addr1);
-    instr(YMM0, XMM0);
-    instr(YMM0, addr2);
-}
-
 static void gen_Instruction4_Type16(Instruction4_Type16 &instr)
 {
     m64 addr1 { RAX };
@@ -1044,12 +1034,41 @@ TEST(Instruction4, Type14)
     EXPECT_EQ(asmstr(), "pblendvb %xmm0, (%rax), %xmm1");
 }
 
+TEST(Instruction4, Type15)
+{
+    m64 addr1 { RAX };
+    m128 addr2 { RBX };
+
+    VCVTPH2PS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vcvtph2ps %xmm1, %xmm0");
+    VCVTPH2PS(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vcvtph2ps (%rax), %xmm0");
+    VCVTPH2PS(YMM0, XMM0);
+    EXPECT_EQ(asmstr(), "vcvtph2ps %xmm0, %ymm0");
+    VCVTPH2PS(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vcvtph2ps (%rbx), %ymm0");
+
+    VCVTPS2PD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vcvtps2pd %xmm1, %xmm0");
+    VCVTPS2PD(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vcvtps2pd (%rax), %xmm0");
+    VCVTPS2PD(YMM0, XMM0);
+    EXPECT_EQ(asmstr(), "vcvtps2pd %xmm0, %ymm0");
+    VCVTPS2PD(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vcvtps2pd (%rbx), %ymm0");
+
+    VCVTDQ2PD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vcvtdq2pd %xmm1, %xmm0");
+    VCVTDQ2PD(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vcvtdq2pd (%rax), %xmm0");
+    VCVTDQ2PD(YMM0, XMM0);
+    EXPECT_EQ(asmstr(), "vcvtdq2pd %xmm0, %ymm0");
+    VCVTDQ2PD(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vcvtdq2pd (%rbx), %ymm0");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type15(VCVTPH2PS);
-    gen_Instruction4_Type15(VCVTPS2PD);
-    gen_Instruction4_Type15(VCVTDQ2PD);
-
     gen_Instruction4_Type16(VCVTPS2PH);
 
     gen_Instruction4_Type17(VFMADD132PD);
