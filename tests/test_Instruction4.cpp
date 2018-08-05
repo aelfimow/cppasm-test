@@ -3,13 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type27(Instruction4_Type27 &instr)
-{
-    m64 addr2 { RDX };
-    instr(RAX, RBX);
-    instr(RBX, addr2);
-}
-
 static void gen_Instruction4_Type28(Instruction4_Type28 &instr)
 {
     imm8 mask { 0x0F };
@@ -1934,10 +1927,18 @@ TEST(Instruction4, Type26)
     EXPECT_EQ(asmstr(), "vmread %rbx, (%rdx)");
 }
 
+TEST(Instruction4, Type27)
+{
+    m64 addr2 { RDX };
+
+    VMWRITE(RAX, RBX);
+    EXPECT_EQ(asmstr(), "vmwrite %rbx, %rax");
+    VMWRITE(RBX, addr2);
+    EXPECT_EQ(asmstr(), "vmwrite (%rdx), %rbx");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type27(VMWRITE);
-
     gen_Instruction4_Type28(VINSERTI32X4);
     gen_Instruction4_Type28(VINSERTI64X2);
 }
