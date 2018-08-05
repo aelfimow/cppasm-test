@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type24(Instruction4_Type24 &instr)
-{
-    m128 addr1 { RAX };
-    m256 addr2 { RBX };
-    instr(XMM0, XMM1, addr1);
-    instr(YMM0, YMM1, addr2);
-    instr(addr1, XMM0, XMM1);
-    instr(addr2, YMM0, YMM1);
-}
-
 static void gen_Instruction4_Type25(Instruction4_Type25 &instr)
 {
     m32 addr1 { RAX };
@@ -1885,13 +1875,50 @@ TEST(Instruction4, Type23)
     EXPECT_EQ(asmstr(), "vblendvps %ymm3, (%rax), %ymm1, %ymm0");
 }
 
+TEST(Instruction4, Type24)
+{
+    m128 addr1 { RAX };
+    m256 addr2 { RBX };
+
+    VMASKMOVPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vmaskmovps (%rax), %xmm1, %xmm0");
+    VMASKMOVPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vmaskmovps (%rbx), %ymm1, %ymm0");
+    VMASKMOVPS(addr1, XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vmaskmovps %xmm1, %xmm0, (%rax)");
+    VMASKMOVPS(addr2, YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vmaskmovps %ymm1, %ymm0, (%rbx)");
+
+    VMASKMOVPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vmaskmovpd (%rax), %xmm1, %xmm0");
+    VMASKMOVPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vmaskmovpd (%rbx), %ymm1, %ymm0");
+    VMASKMOVPD(addr1, XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vmaskmovpd %xmm1, %xmm0, (%rax)");
+    VMASKMOVPD(addr2, YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vmaskmovpd %ymm1, %ymm0, (%rbx)");
+
+    VPMASKMOVD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vpmaskmovd (%rax), %xmm1, %xmm0");
+    VPMASKMOVD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vpmaskmovd (%rbx), %ymm1, %ymm0");
+    VPMASKMOVD(addr1, XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vpmaskmovd %xmm1, %xmm0, (%rax)");
+    VPMASKMOVD(addr2, YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vpmaskmovd %ymm1, %ymm0, (%rbx)");
+
+    VPMASKMOVQ(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vpmaskmovq (%rax), %xmm1, %xmm0");
+    VPMASKMOVQ(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vpmaskmovq (%rbx), %ymm1, %ymm0");
+    VPMASKMOVQ(addr1, XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vpmaskmovq %xmm1, %xmm0, (%rax)");
+    VPMASKMOVQ(addr2, YMM0, YMM1);
+    EXPECT_EQ(asmstr(), "vpmaskmovq %ymm1, %ymm0, (%rbx)");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type24(VMASKMOVPS);
-    gen_Instruction4_Type24(VMASKMOVPD);
-    gen_Instruction4_Type24(VPMASKMOVD);
-    gen_Instruction4_Type24(VPMASKMOVQ);
-
     gen_Instruction4_Type25(VCVTSI2SS);
     gen_Instruction4_Type25(VCVTSI2SD);
 
