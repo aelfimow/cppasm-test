@@ -3,17 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type2(Instruction4_Type2 &instr)
-{
-    m32fp addr1 { EAX };
-    m64fp addr2 { EBX };
-    m80fp addr3 { ECX };
-    instr(addr1);
-    instr(addr2);
-    instr(addr3);
-    instr(ST(0));
-}
-
 static void gen_Instruction4_Type3(Instruction4_Type3 &instr)
 {
     m64 addr { RBX };
@@ -839,11 +828,33 @@ TEST(Instruction4, Type1)
     EXPECT_EQ(asmstr(), "psadbw (%rbx), %xmm0");
 }
 
+TEST(Instruction4, Type2)
+{
+    m32fp addr1 { EAX };
+    m64fp addr2 { EBX };
+    m80fp addr3 { ECX };
+
+    FLD(addr1);
+    EXPECT_EQ(asmstr(), "flds (%eax)");
+    FLD(addr2);
+    EXPECT_EQ(asmstr(), "fldl (%ebx)");
+    FLD(addr3);
+    EXPECT_EQ(asmstr(), "fldt (%ecx)");
+    FLD(ST(0));
+    EXPECT_EQ(asmstr(), "fld %st(0)");
+
+    FSTP(addr1);
+    EXPECT_EQ(asmstr(), "fstps (%eax)");
+    FSTP(addr2);
+    EXPECT_EQ(asmstr(), "fstpl (%ebx)");
+    FSTP(addr3);
+    EXPECT_EQ(asmstr(), "fstpt (%ecx)");
+    FSTP(ST(0));
+    EXPECT_EQ(asmstr(), "fstp %st(0)");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type2(FLD);
-    gen_Instruction4_Type2(FSTP);
-
     gen_Instruction4_Type3(VBROADCASTSD);
     gen_Instruction4_Type3(VBROADCASTF32X2);
 
