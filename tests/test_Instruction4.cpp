@@ -3,17 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type20(Instruction4_Type20 &instr)
-{
-    imm8 mask { 255 };
-    m128 addr1 { RAX };
-    m256 addr2 { RBX };
-    instr(XMM0, XMM1, XMM2, mask);
-    instr(XMM0, XMM1, addr1, mask);
-    instr(YMM0, YMM1, YMM2, mask);
-    instr(YMM0, YMM1, addr2, mask);
-}
-
 static void gen_Instruction4_Type21(Instruction4_Type21 &instr)
 {
     imm8 mask { 255 };
@@ -1785,16 +1774,78 @@ TEST(Instruction4, Type19)
     EXPECT_EQ(asmstr(), "vcvtpd2dq %ymm1, %xmm0");
 }
 
+TEST(Instruction4, Type20)
+{
+    imm8 mask { 255 };
+    m128 addr1 { RAX };
+    m256 addr2 { RBX };
+
+    VCMPPS(XMM0, XMM1, XMM2, mask);
+    EXPECT_EQ(asmstr(), "vcmpps $0xFF, %xmm2, %xmm1, %xmm0");
+    VCMPPS(XMM0, XMM1, addr1, mask);
+    EXPECT_EQ(asmstr(), "vcmpps $0xFF, (%rax), %xmm1, %xmm0");
+    VCMPPS(YMM0, YMM1, YMM2, mask);
+    EXPECT_EQ(asmstr(), "vcmpps $0xFF, %ymm2, %ymm1, %ymm0");
+    VCMPPS(YMM0, YMM1, addr2, mask);
+    EXPECT_EQ(asmstr(), "vcmpps $0xFF, (%rbx), %ymm1, %ymm0");
+
+    VCMPPD(XMM0, XMM1, XMM2, mask);
+    EXPECT_EQ(asmstr(), "vcmppd $0xFF, %xmm2, %xmm1, %xmm0");
+    VCMPPD(XMM0, XMM1, addr1, mask);
+    EXPECT_EQ(asmstr(), "vcmppd $0xFF, (%rax), %xmm1, %xmm0");
+    VCMPPD(YMM0, YMM1, YMM2, mask);
+    EXPECT_EQ(asmstr(), "vcmppd $0xFF, %ymm2, %ymm1, %ymm0");
+    VCMPPD(YMM0, YMM1, addr2, mask);
+    EXPECT_EQ(asmstr(), "vcmppd $0xFF, (%rbx), %ymm1, %ymm0");
+
+    VDPPS(XMM0, XMM1, XMM2, mask);
+    EXPECT_EQ(asmstr(), "vdpps $0xFF, %xmm2, %xmm1, %xmm0");
+    VDPPS(XMM0, XMM1, addr1, mask);
+    EXPECT_EQ(asmstr(), "vdpps $0xFF, (%rax), %xmm1, %xmm0");
+    VDPPS(YMM0, YMM1, YMM2, mask);
+    EXPECT_EQ(asmstr(), "vdpps $0xFF, %ymm2, %ymm1, %ymm0");
+    VDPPS(YMM0, YMM1, addr2, mask);
+    EXPECT_EQ(asmstr(), "vdpps $0xFF, (%rbx), %ymm1, %ymm0");
+
+    VBLENDPS(XMM0, XMM1, XMM2, mask);
+    EXPECT_EQ(asmstr(), "vblendps $0xFF, %xmm2, %xmm1, %xmm0");
+    VBLENDPS(XMM0, XMM1, addr1, mask);
+    EXPECT_EQ(asmstr(), "vblendps $0xFF, (%rax), %xmm1, %xmm0");
+    VBLENDPS(YMM0, YMM1, YMM2, mask);
+    EXPECT_EQ(asmstr(), "vblendps $0xFF, %ymm2, %ymm1, %ymm0");
+    VBLENDPS(YMM0, YMM1, addr2, mask);
+    EXPECT_EQ(asmstr(), "vblendps $0xFF, (%rbx), %ymm1, %ymm0");
+
+    VBLENDPD(XMM0, XMM1, XMM2, mask);
+    EXPECT_EQ(asmstr(), "vblendpd $0xFF, %xmm2, %xmm1, %xmm0");
+    VBLENDPD(XMM0, XMM1, addr1, mask);
+    EXPECT_EQ(asmstr(), "vblendpd $0xFF, (%rax), %xmm1, %xmm0");
+    VBLENDPD(YMM0, YMM1, YMM2, mask);
+    EXPECT_EQ(asmstr(), "vblendpd $0xFF, %ymm2, %ymm1, %ymm0");
+    VBLENDPD(YMM0, YMM1, addr2, mask);
+    EXPECT_EQ(asmstr(), "vblendpd $0xFF, (%rbx), %ymm1, %ymm0");
+
+    VSHUFPS(XMM0, XMM1, XMM2, mask);
+    EXPECT_EQ(asmstr(), "vshufps $0xFF, %xmm2, %xmm1, %xmm0");
+    VSHUFPS(XMM0, XMM1, addr1, mask);
+    EXPECT_EQ(asmstr(), "vshufps $0xFF, (%rax), %xmm1, %xmm0");
+    VSHUFPS(YMM0, YMM1, YMM2, mask);
+    EXPECT_EQ(asmstr(), "vshufps $0xFF, %ymm2, %ymm1, %ymm0");
+    VSHUFPS(YMM0, YMM1, addr2, mask);
+    EXPECT_EQ(asmstr(), "vshufps $0xFF, (%rbx), %ymm1, %ymm0");
+
+    VSHUFPD(XMM0, XMM1, XMM2, mask);
+    EXPECT_EQ(asmstr(), "vshufpd $0xFF, %xmm2, %xmm1, %xmm0");
+    VSHUFPD(XMM0, XMM1, addr1, mask);
+    EXPECT_EQ(asmstr(), "vshufpd $0xFF, (%rax), %xmm1, %xmm0");
+    VSHUFPD(YMM0, YMM1, YMM2, mask);
+    EXPECT_EQ(asmstr(), "vshufpd $0xFF, %ymm2, %ymm1, %ymm0");
+    VSHUFPD(YMM0, YMM1, addr2, mask);
+    EXPECT_EQ(asmstr(), "vshufpd $0xFF, (%rbx), %ymm1, %ymm0");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type20(VCMPPS);
-    gen_Instruction4_Type20(VCMPPD);
-    gen_Instruction4_Type20(VDPPS);
-    gen_Instruction4_Type20(VBLENDPS);
-    gen_Instruction4_Type20(VBLENDPD);
-    gen_Instruction4_Type20(VSHUFPS);
-    gen_Instruction4_Type20(VSHUFPD);
-
     gen_Instruction4_Type21(VROUNDPS);
     gen_Instruction4_Type21(VROUNDPD);
 
