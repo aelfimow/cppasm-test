@@ -3,15 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type14(Instruction4_Type14 &instr)
-{
-    m128 addr { RAX };
-    instr(XMM0, XMM1);
-    instr(XMM0, addr);
-    instr(XMM0, XMM1, XMM2);
-    instr(XMM0, addr, XMM1);
-}
-
 static void gen_Instruction4_Type15(Instruction4_Type15 &instr)
 {
     m64 addr1 { RAX };
@@ -1021,12 +1012,40 @@ TEST(Instruction4, Type13)
     EXPECT_EQ(asmstr(), "vcvttsd2si (%rax), %rax");
 }
 
+TEST(Instruction4, Type14)
+{
+    m128 addr { RAX };
+
+    BLENDVPD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "blendvpd %xmm1, %xmm0");
+    BLENDVPD(XMM0, addr);
+    EXPECT_EQ(asmstr(), "blendvpd (%rax), %xmm0");
+    BLENDVPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "blendvpd %xmm0, %xmm1, %xmm2");
+    BLENDVPD(XMM0, addr, XMM1);
+    EXPECT_EQ(asmstr(), "blendvpd %xmm0, (%rax), %xmm1");
+
+    BLENDVPS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "blendvps %xmm1, %xmm0");
+    BLENDVPS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "blendvps (%rax), %xmm0");
+    BLENDVPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "blendvps %xmm0, %xmm1, %xmm2");
+    BLENDVPS(XMM0, addr, XMM1);
+    EXPECT_EQ(asmstr(), "blendvps %xmm0, (%rax), %xmm1");
+
+    PBLENDVB(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pblendvb %xmm1, %xmm0");
+    PBLENDVB(XMM0, addr);
+    EXPECT_EQ(asmstr(), "pblendvb (%rax), %xmm0");
+    PBLENDVB(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "pblendvb %xmm0, %xmm1, %xmm2");
+    PBLENDVB(XMM0, addr, XMM1);
+    EXPECT_EQ(asmstr(), "pblendvb %xmm0, (%rax), %xmm1");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type14(BLENDVPD);
-    gen_Instruction4_Type14(BLENDVPS);
-    gen_Instruction4_Type14(PBLENDVB);
-
     gen_Instruction4_Type15(VCVTPH2PS);
     gen_Instruction4_Type15(VCVTPS2PD);
     gen_Instruction4_Type15(VCVTDQ2PD);
