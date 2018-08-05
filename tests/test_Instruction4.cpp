@@ -3,17 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction4_Type21(Instruction4_Type21 &instr)
-{
-    imm8 mask { 255 };
-    m128 addr1 { RAX };
-    m256 addr2 { RBX };
-    instr(XMM0, XMM1, mask);
-    instr(XMM0, addr1, mask);
-    instr(YMM0, YMM1, mask);
-    instr(YMM0, addr2, mask);
-}
-
 static void gen_Instruction4_Type22(Instruction4_Type22 &instr)
 {
     instr(EAX, XMM0);
@@ -1844,11 +1833,33 @@ TEST(Instruction4, Type20)
     EXPECT_EQ(asmstr(), "vshufpd $0xFF, (%rbx), %ymm1, %ymm0");
 }
 
+TEST(Instruction4, Type21)
+{
+    imm8 mask { 255 };
+    m128 addr1 { RAX };
+    m256 addr2 { RBX };
+
+    VROUNDPS(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "vroundps $0xFF, %xmm1, %xmm0");
+    VROUNDPS(XMM0, addr1, mask);
+    EXPECT_EQ(asmstr(), "vroundps $0xFF, (%rax), %xmm0");
+    VROUNDPS(YMM0, YMM1, mask);
+    EXPECT_EQ(asmstr(), "vroundps $0xFF, %ymm1, %ymm0");
+    VROUNDPS(YMM0, addr2, mask);
+    EXPECT_EQ(asmstr(), "vroundps $0xFF, (%rbx), %ymm0");
+
+    VROUNDPD(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "vroundpd $0xFF, %xmm1, %xmm0");
+    VROUNDPD(XMM0, addr1, mask);
+    EXPECT_EQ(asmstr(), "vroundpd $0xFF, (%rax), %xmm0");
+    VROUNDPD(YMM0, YMM1, mask);
+    EXPECT_EQ(asmstr(), "vroundpd $0xFF, %ymm1, %ymm0");
+    VROUNDPD(YMM0, addr2, mask);
+    EXPECT_EQ(asmstr(), "vroundpd $0xFF, (%rbx), %ymm0");
+}
+
 TEST(Instruction4, AllTypes)
 {
-    gen_Instruction4_Type21(VROUNDPS);
-    gen_Instruction4_Type21(VROUNDPD);
-
     gen_Instruction4_Type22(VMOVMSKPS);
     gen_Instruction4_Type22(VMOVMSKPD);
 
