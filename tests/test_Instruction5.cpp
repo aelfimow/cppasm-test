@@ -3,16 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction5_Type5(Instruction5_Type5 &instr)
-{
-    m32 addr { RDX };
-    instr(k1, k2);
-    instr(k1, addr);
-    instr(addr, k1);
-    instr(k1, EAX);
-    instr(EAX, k2);
-}
-
 static void gen_Instruction5_Type6(Instruction5_Type6 &instr)
 {
     m64 addr { RDX };
@@ -89,8 +79,23 @@ TEST(Instruction5, Type4)
     EXPECT_EQ(asmstr(), "kmovw %k2, %eax");
 }
 
+TEST(Instruction5, Type5)
+{
+    m32 addr { RDX };
+
+    KMOVD(k1, k2);
+    EXPECT_EQ(asmstr(), "kmovd %k2, %k1");
+    KMOVD(k1, addr);
+    EXPECT_EQ(asmstr(), "kmovd (%rdx), %k1");
+    KMOVD(addr, k1);
+    EXPECT_EQ(asmstr(), "kmovd %k1, (%rdx)");
+    KMOVD(k1, EAX);
+    EXPECT_EQ(asmstr(), "kmovd %eax, %k1");
+    KMOVD(EAX, k2);
+    EXPECT_EQ(asmstr(), "kmovd %k2, %eax");
+}
+
 TEST(Instruction5, AllTypes)
 {
-    gen_Instruction5_Type5(KMOVD);
     gen_Instruction5_Type6(KMOVQ);
 }
