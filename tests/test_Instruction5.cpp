@@ -3,17 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction5_Type2(Instruction5_Type2 &instr)
-{
-    imm8 mask { 255 };
-    m16 addr { EAX };
-    instr(EAX, MM0, mask);
-    instr(RAX, MM0, mask);
-    instr(EAX, XMM0, mask);
-    instr(RAX, XMM0, mask);
-    instr(addr, XMM0, mask);
-}
-
 static void gen_Instruction5_Type3(Instruction5_Type3 &instr)
 {
     m8 addr { RDX };
@@ -71,10 +60,25 @@ TEST(Instruction5, Type1)
     EXPECT_EQ(asmstr(), "nopl (%rbx)");
 }
 
+TEST(Instruction5, Type2)
+{
+    imm8 mask { 255 };
+    m16 addr { EAX };
+
+    PEXTRW(EAX, MM0, mask);
+    EXPECT_EQ(asmstr(), "pextrw $0xFF, %mm0, %eax");
+    PEXTRW(RAX, MM0, mask);
+    EXPECT_EQ(asmstr(), "pextrw $0xFF, %mm0, %rax");
+    PEXTRW(EAX, XMM0, mask);
+    EXPECT_EQ(asmstr(), "pextrw $0xFF, %xmm0, %eax");
+    PEXTRW(RAX, XMM0, mask);
+    EXPECT_EQ(asmstr(), "pextrw $0xFF, %xmm0, %rax");
+    PEXTRW(addr, XMM0, mask);
+    EXPECT_EQ(asmstr(), "pextrw $0xFF, %xmm0, (%eax)");
+}
+
 TEST(Instruction5, AllTypes)
 {
-    gen_Instruction5_Type2(PEXTRW);
-
     gen_Instruction5_Type3(KMOVB);
     gen_Instruction5_Type4(KMOVW);
     gen_Instruction5_Type5(KMOVD);
