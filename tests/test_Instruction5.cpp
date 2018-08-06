@@ -3,17 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction5_Type1(Instruction5_Type1 &instr)
-{
-    m16 addr1 { RAX };
-    m32 addr2 { RBX };
-    instr();
-    instr(AX);
-    instr(addr1);
-    instr(EAX);
-    instr(addr2);
-}
-
 static void gen_Instruction5_Type2(Instruction5_Type2 &instr)
 {
     imm8 mask { 255 };
@@ -65,10 +54,25 @@ static void gen_Instruction5_Type6(Instruction5_Type6 &instr)
     instr(RAX, k2);
 }
 
+TEST(Instruction5, Type1)
+{
+    m16 addr1 { RAX };
+    m32 addr2 { RBX };
+
+    NOP();
+    EXPECT_EQ(asmstr(), "nop");
+    NOP(AX);
+    EXPECT_EQ(asmstr(), "nop %ax");
+    NOP(addr1);
+    EXPECT_EQ(asmstr(), "nopw (%rax)");
+    NOP(EAX);
+    EXPECT_EQ(asmstr(), "nop %eax");
+    NOP(addr2);
+    EXPECT_EQ(asmstr(), "nopl (%rbx)");
+}
+
 TEST(Instruction5, AllTypes)
 {
-    gen_Instruction5_Type1(NOP);
-
     gen_Instruction5_Type2(PEXTRW);
 
     gen_Instruction5_Type3(KMOVB);
