@@ -3,18 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction6_Type5(Instruction6_Type5 &instr)
-{
-    m128 addr1 { RAX };
-    m256 addr2 { RBX };
-    instr(XMM0, XMM1);
-    instr(XMM0, addr1);
-    instr(addr1, XMM0);
-    instr(YMM0, YMM2);
-    instr(YMM0, addr2);
-    instr(addr2, YMM0);
-}
-
 static void gen_Instruction6_Type6(Instruction6_Type6 &instr)
 {
     m32 addr { RBX };
@@ -631,15 +619,92 @@ TEST(Instruction6, Type4)
     EXPECT_EQ(asmstr(), "out %eax, %dx");
 }
 
+TEST(Instruction6, Type5)
+{
+    m128 addr1 { RAX };
+    m256 addr2 { RBX };
+
+    VMOVAPS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vmovaps %xmm1, %xmm0");
+    VMOVAPS(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vmovaps (%rax), %xmm0");
+    VMOVAPS(addr1, XMM0);
+    EXPECT_EQ(asmstr(), "vmovaps %xmm0, (%rax)");
+    VMOVAPS(YMM0, YMM2);
+    EXPECT_EQ(asmstr(), "vmovaps %ymm2, %ymm0");
+    VMOVAPS(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vmovaps (%rbx), %ymm0");
+    VMOVAPS(addr2, YMM0);
+    EXPECT_EQ(asmstr(), "vmovaps %ymm0, (%rbx)");
+
+    VMOVAPD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vmovapd %xmm1, %xmm0");
+    VMOVAPD(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vmovapd (%rax), %xmm0");
+    VMOVAPD(addr1, XMM0);
+    EXPECT_EQ(asmstr(), "vmovapd %xmm0, (%rax)");
+    VMOVAPD(YMM0, YMM2);
+    EXPECT_EQ(asmstr(), "vmovapd %ymm2, %ymm0");
+    VMOVAPD(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vmovapd (%rbx), %ymm0");
+    VMOVAPD(addr2, YMM0);
+    EXPECT_EQ(asmstr(), "vmovapd %ymm0, (%rbx)");
+
+    VMOVDQA(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vmovdqa %xmm1, %xmm0");
+    VMOVDQA(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vmovdqa (%rax), %xmm0");
+    VMOVDQA(addr1, XMM0);
+    EXPECT_EQ(asmstr(), "vmovdqa %xmm0, (%rax)");
+    VMOVDQA(YMM0, YMM2);
+    EXPECT_EQ(asmstr(), "vmovdqa %ymm2, %ymm0");
+    VMOVDQA(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vmovdqa (%rbx), %ymm0");
+    VMOVDQA(addr2, YMM0);
+    EXPECT_EQ(asmstr(), "vmovdqa %ymm0, (%rbx)");
+
+    VMOVUPS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vmovups %xmm1, %xmm0");
+    VMOVUPS(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vmovups (%rax), %xmm0");
+    VMOVUPS(addr1, XMM0);
+    EXPECT_EQ(asmstr(), "vmovups %xmm0, (%rax)");
+    VMOVUPS(YMM0, YMM2);
+    EXPECT_EQ(asmstr(), "vmovups %ymm2, %ymm0");
+    VMOVUPS(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vmovups (%rbx), %ymm0");
+    VMOVUPS(addr2, YMM0);
+    EXPECT_EQ(asmstr(), "vmovups %ymm0, (%rbx)");
+
+    VMOVUPD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vmovupd %xmm1, %xmm0");
+    VMOVUPD(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vmovupd (%rax), %xmm0");
+    VMOVUPD(addr1, XMM0);
+    EXPECT_EQ(asmstr(), "vmovupd %xmm0, (%rax)");
+    VMOVUPD(YMM0, YMM2);
+    EXPECT_EQ(asmstr(), "vmovupd %ymm2, %ymm0");
+    VMOVUPD(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vmovupd (%rbx), %ymm0");
+    VMOVUPD(addr2, YMM0);
+    EXPECT_EQ(asmstr(), "vmovupd %ymm0, (%rbx)");
+
+    VMOVDQU(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vmovdqu %xmm1, %xmm0");
+    VMOVDQU(XMM0, addr1);
+    EXPECT_EQ(asmstr(), "vmovdqu (%rax), %xmm0");
+    VMOVDQU(addr1, XMM0);
+    EXPECT_EQ(asmstr(), "vmovdqu %xmm0, (%rax)");
+    VMOVDQU(YMM0, YMM2);
+    EXPECT_EQ(asmstr(), "vmovdqu %ymm2, %ymm0");
+    VMOVDQU(YMM0, addr2);
+    EXPECT_EQ(asmstr(), "vmovdqu (%rbx), %ymm0");
+    VMOVDQU(addr2, YMM0);
+    EXPECT_EQ(asmstr(), "vmovdqu %ymm0, (%rbx)");
+}
+
 TEST(Instruction6, AllTypes)
 {
-    gen_Instruction6_Type5(VMOVAPS);
-    gen_Instruction6_Type5(VMOVAPD);
-    gen_Instruction6_Type5(VMOVDQA);
-    gen_Instruction6_Type5(VMOVUPS);
-    gen_Instruction6_Type5(VMOVUPD);
-    gen_Instruction6_Type5(VMOVDQU);
-
     gen_Instruction6_Type6(VBROADCASTSS);
 
     gen_Instruction6_Type7(VBROADCASTI32X2);
