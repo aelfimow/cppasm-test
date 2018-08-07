@@ -3,29 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction6_Type7(Instruction6_Type7 &instr)
-{
-    m64 addr { EBX };
-    instr(XMM0, addr);
-    instr(YMM0, addr);
-    instr(ZMM0, addr);
-    instr(XMM0, XMM1);
-    instr(YMM0, XMM1);
-    instr(ZMM0, XMM1);
-    instr(XMM0.k1, addr);
-    instr(YMM0.k1, addr);
-    instr(ZMM0.k1, addr);
-    instr(XMM0.k1, XMM1);
-    instr(YMM0.k1, XMM1);
-    instr(ZMM0.k1, XMM1);
-    instr(XMM0.k1.z, addr);
-    instr(YMM0.k1.z, addr);
-    instr(ZMM0.k1.z, addr);
-    instr(XMM0.k1.z, XMM1);
-    instr(YMM0.k1.z, XMM1);
-    instr(ZMM0.k1.z, XMM1);
-}
-
 TEST(Instruction6, Type1)
 {
     m64 addr1 { RAX };
@@ -722,7 +699,44 @@ TEST(Instruction6, Type6)
     EXPECT_EQ(asmstr(), "vbroadcastss %xmm1, %zmm0{%k1}{z}");
 }
 
-TEST(Instruction6, AllTypes)
+TEST(Instruction6, Type7)
 {
-    gen_Instruction6_Type7(VBROADCASTI32X2);
+    m64 addr { EBX };
+
+    VBROADCASTI32X2(XMM0, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 (%ebx), %xmm0");
+    VBROADCASTI32X2(YMM0, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 (%ebx), %ymm0");
+    VBROADCASTI32X2(ZMM0, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 (%ebx), %zmm0");
+    VBROADCASTI32X2(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 %xmm1, %xmm0");
+    VBROADCASTI32X2(YMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 %xmm1, %ymm0");
+    VBROADCASTI32X2(ZMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 %xmm1, %zmm0");
+    VBROADCASTI32X2(XMM0.k1, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 (%ebx), %xmm0{%k1}");
+    VBROADCASTI32X2(YMM0.k1, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 (%ebx), %ymm0{%k1}");
+    VBROADCASTI32X2(ZMM0.k1, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 (%ebx), %zmm0{%k1}");
+    VBROADCASTI32X2(XMM0.k1, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 %xmm1, %xmm0{%k1}");
+    VBROADCASTI32X2(YMM0.k1, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 %xmm1, %ymm0{%k1}");
+    VBROADCASTI32X2(ZMM0.k1, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 %xmm1, %zmm0{%k1}");
+    VBROADCASTI32X2(XMM0.k1.z, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 (%ebx), %xmm0{%k1}{z}");
+    VBROADCASTI32X2(YMM0.k1.z, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 (%ebx), %ymm0{%k1}{z}");
+    VBROADCASTI32X2(ZMM0.k1.z, addr);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 (%ebx), %zmm0{%k1}{z}");
+    VBROADCASTI32X2(XMM0.k1.z, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 %xmm1, %xmm0{%k1}{z}");
+    VBROADCASTI32X2(YMM0.k1.z, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 %xmm1, %ymm0{%k1}{z}");
+    VBROADCASTI32X2(ZMM0.k1.z, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcasti32x2 %xmm1, %zmm0{%k1}{z}");
 }
