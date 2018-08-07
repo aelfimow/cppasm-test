@@ -142,6 +142,7 @@
     <ClCompile Include="..\..\tests\test_Instruction3.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction4.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction5.cpp" />
+    <ClCompile Include="..\..\tests\test_Instruction6.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\cppasm\src\asmstream.h" />
