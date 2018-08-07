@@ -3,29 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction6_Type6(Instruction6_Type6 &instr)
-{
-    m32 addr { RBX };
-    instr(XMM0, addr);
-    instr(YMM0, addr);
-    instr(ZMM0, addr);
-    instr(XMM0, XMM1);
-    instr(YMM0, XMM1);
-    instr(ZMM0, XMM1);
-    instr(XMM0.k1, addr);
-    instr(YMM0.k1, addr);
-    instr(ZMM0.k1, addr);
-    instr(XMM0.k1, XMM1);
-    instr(YMM0.k1, XMM1);
-    instr(ZMM0.k1, XMM1);
-    instr(XMM0.k1.z, addr);
-    instr(YMM0.k1.z, addr);
-    instr(ZMM0.k1.z, addr);
-    instr(XMM0.k1.z, XMM1);
-    instr(YMM0.k1.z, XMM1);
-    instr(ZMM0.k1.z, XMM1);
-}
-
 static void gen_Instruction6_Type7(Instruction6_Type7 &instr)
 {
     m64 addr { EBX };
@@ -703,9 +680,49 @@ TEST(Instruction6, Type5)
     EXPECT_EQ(asmstr(), "vmovdqu %ymm0, (%rbx)");
 }
 
+TEST(Instruction6, Type6)
+{
+    m32 addr { RBX };
+
+    VBROADCASTSS(XMM0, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastss (%rbx), %xmm0");
+    VBROADCASTSS(YMM0, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastss (%rbx), %ymm0");
+    VBROADCASTSS(ZMM0, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastss (%rbx), %zmm0");
+    VBROADCASTSS(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcastss %xmm1, %xmm0");
+    VBROADCASTSS(YMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcastss %xmm1, %ymm0");
+    VBROADCASTSS(ZMM0, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcastss %xmm1, %zmm0");
+    VBROADCASTSS(XMM0.k1, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastss (%rbx), %xmm0{%k1}");
+    VBROADCASTSS(YMM0.k1, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastss (%rbx), %ymm0{%k1}");
+    VBROADCASTSS(ZMM0.k1, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastss (%rbx), %zmm0{%k1}");
+    VBROADCASTSS(XMM0.k1, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcastss %xmm1, %xmm0{%k1}");
+    VBROADCASTSS(YMM0.k1, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcastss %xmm1, %ymm0{%k1}");
+    VBROADCASTSS(ZMM0.k1, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcastss %xmm1, %zmm0{%k1}");
+    VBROADCASTSS(XMM0.k1.z, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastss (%rbx), %xmm0{%k1}{z}");
+    VBROADCASTSS(YMM0.k1.z, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastss (%rbx), %ymm0{%k1}{z}");
+    VBROADCASTSS(ZMM0.k1.z, addr);
+    EXPECT_EQ(asmstr(), "vbroadcastss (%rbx), %zmm0{%k1}{z}");
+    VBROADCASTSS(XMM0.k1.z, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcastss %xmm1, %xmm0{%k1}{z}");
+    VBROADCASTSS(YMM0.k1.z, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcastss %xmm1, %ymm0{%k1}{z}");
+    VBROADCASTSS(ZMM0.k1.z, XMM1);
+    EXPECT_EQ(asmstr(), "vbroadcastss %xmm1, %zmm0{%k1}{z}");
+}
+
 TEST(Instruction6, AllTypes)
 {
-    gen_Instruction6_Type6(VBROADCASTSS);
-
     gen_Instruction6_Type7(VBROADCASTI32X2);
 }
