@@ -3,17 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction6_Type4(Instruction6_Type4 &instr)
-{
-    imm8 addr { 0 };
-    instr(addr, AL);
-    instr(addr, AX);
-    instr(addr, EAX);
-    instr(DX, AL);
-    instr(DX, AX);
-    instr(DX, EAX);
-}
-
 static void gen_Instruction6_Type5(Instruction6_Type5 &instr)
 {
     m128 addr1 { RAX };
@@ -624,10 +613,26 @@ TEST(Instruction6, Type3)
     EXPECT_EQ(asmstr(), "in %dx, %eax");
 }
 
+TEST(Instruction6, Type4)
+{
+    imm8 addr { 0 };
+
+    OUT(addr, AL);
+    EXPECT_EQ(asmstr(), "out %al, $0x00");
+    OUT(addr, AX);
+    EXPECT_EQ(asmstr(), "out %ax, $0x00");
+    OUT(addr, EAX);
+    EXPECT_EQ(asmstr(), "out %eax, $0x00");
+    OUT(DX, AL);
+    EXPECT_EQ(asmstr(), "out %al, %dx");
+    OUT(DX, AX);
+    EXPECT_EQ(asmstr(), "out %ax, %dx");
+    OUT(DX, EAX);
+    EXPECT_EQ(asmstr(), "out %eax, %dx");
+}
+
 TEST(Instruction6, AllTypes)
 {
-    gen_Instruction6_Type4(OUT);
-
     gen_Instruction6_Type5(VMOVAPS);
     gen_Instruction6_Type5(VMOVAPD);
     gen_Instruction6_Type5(VMOVDQA);
