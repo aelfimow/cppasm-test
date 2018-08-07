@@ -3,19 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction6_Type1(Instruction6_Type1 &instr)
-{
-    m64 addr1 { RAX };
-    m128 addr2 { RBX };
-    imm8 mask { 255 };
-    instr(MM0, MM1);
-    instr(MM0, addr1);
-    instr(XMM0, XMM1);
-    instr(XMM0, addr2);
-    instr(MM0, mask);
-    instr(XMM0, mask);
-}
-
 static void gen_Instruction6_Type2(Instruction6_Type2 &instr)
 {
     m16 addr1 { RAX };
@@ -109,17 +96,119 @@ static void gen_Instruction6_Type7(Instruction6_Type7 &instr)
     instr(ZMM0.k1.z, XMM1);
 }
 
+TEST(Instruction6, Type1)
+{
+    m64 addr1 { RAX };
+    m128 addr2 { RBX };
+    imm8 mask { 255 };
+
+    PSLLW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psllw %mm1, %mm0");
+    PSLLW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psllw (%rax), %mm0");
+    PSLLW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psllw %xmm1, %xmm0");
+    PSLLW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psllw (%rbx), %xmm0");
+    PSLLW(MM0, mask);
+    EXPECT_EQ(asmstr(), "psllw $0xFF, %mm0");
+    PSLLW(XMM0, mask);
+    EXPECT_EQ(asmstr(), "psllw $0xFF, %xmm0");
+
+    PSLLD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "pslld %mm1, %mm0");
+    PSLLD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "pslld (%rax), %mm0");
+    PSLLD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "pslld %xmm1, %xmm0");
+    PSLLD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "pslld (%rbx), %xmm0");
+    PSLLD(MM0, mask);
+    EXPECT_EQ(asmstr(), "pslld $0xFF, %mm0");
+    PSLLD(XMM0, mask);
+    EXPECT_EQ(asmstr(), "pslld $0xFF, %xmm0");
+
+    PSLLQ(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psllq %mm1, %mm0");
+    PSLLQ(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psllq (%rax), %mm0");
+    PSLLQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psllq %xmm1, %xmm0");
+    PSLLQ(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psllq (%rbx), %xmm0");
+    PSLLQ(MM0, mask);
+    EXPECT_EQ(asmstr(), "psllq $0xFF, %mm0");
+    PSLLQ(XMM0, mask);
+    EXPECT_EQ(asmstr(), "psllq $0xFF, %xmm0");
+
+    PSRLW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psrlw %mm1, %mm0");
+    PSRLW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psrlw (%rax), %mm0");
+    PSRLW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psrlw %xmm1, %xmm0");
+    PSRLW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psrlw (%rbx), %xmm0");
+    PSRLW(MM0, mask);
+    EXPECT_EQ(asmstr(), "psrlw $0xFF, %mm0");
+    PSRLW(XMM0, mask);
+    EXPECT_EQ(asmstr(), "psrlw $0xFF, %xmm0");
+
+    PSRLD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psrld %mm1, %mm0");
+    PSRLD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psrld (%rax), %mm0");
+    PSRLD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psrld %xmm1, %xmm0");
+    PSRLD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psrld (%rbx), %xmm0");
+    PSRLD(MM0, mask);
+    EXPECT_EQ(asmstr(), "psrld $0xFF, %mm0");
+    PSRLD(XMM0, mask);
+    EXPECT_EQ(asmstr(), "psrld $0xFF, %xmm0");
+
+    PSRLQ(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psrlq %mm1, %mm0");
+    PSRLQ(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psrlq (%rax), %mm0");
+    PSRLQ(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psrlq %xmm1, %xmm0");
+    PSRLQ(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psrlq (%rbx), %xmm0");
+    PSRLQ(MM0, mask);
+    EXPECT_EQ(asmstr(), "psrlq $0xFF, %mm0");
+    PSRLQ(XMM0, mask);
+    EXPECT_EQ(asmstr(), "psrlq $0xFF, %xmm0");
+
+    PSRAW(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psraw %mm1, %mm0");
+    PSRAW(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psraw (%rax), %mm0");
+    PSRAW(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psraw %xmm1, %xmm0");
+    PSRAW(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psraw (%rbx), %xmm0");
+    PSRAW(MM0, mask);
+    EXPECT_EQ(asmstr(), "psraw $0xFF, %mm0");
+    PSRAW(XMM0, mask);
+    EXPECT_EQ(asmstr(), "psraw $0xFF, %xmm0");
+
+    PSRAD(MM0, MM1);
+    EXPECT_EQ(asmstr(), "psrad %mm1, %mm0");
+    PSRAD(MM0, addr1);
+    EXPECT_EQ(asmstr(), "psrad (%rax), %mm0");
+    PSRAD(XMM0, XMM1);
+    EXPECT_EQ(asmstr(), "psrad %xmm1, %xmm0");
+    PSRAD(XMM0, addr2);
+    EXPECT_EQ(asmstr(), "psrad (%rbx), %xmm0");
+    PSRAD(MM0, mask);
+    EXPECT_EQ(asmstr(), "psrad $0xFF, %mm0");
+    PSRAD(XMM0, mask);
+    EXPECT_EQ(asmstr(), "psrad $0xFF, %xmm0");
+}
+
 TEST(Instruction6, AllTypes)
 {
-    gen_Instruction6_Type1(PSLLW);
-    gen_Instruction6_Type1(PSLLD);
-    gen_Instruction6_Type1(PSLLQ);
-    gen_Instruction6_Type1(PSRLW);
-    gen_Instruction6_Type1(PSRLD);
-    gen_Instruction6_Type1(PSRLQ);
-    gen_Instruction6_Type1(PSRAW);
-    gen_Instruction6_Type1(PSRAD);
-
     gen_Instruction6_Type2(CMOVA);
     gen_Instruction6_Type2(CMOVAE);
     gen_Instruction6_Type2(CMOVB);
