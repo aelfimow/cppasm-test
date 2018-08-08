@@ -3,17 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction7_Type2(Instruction7_Type2 &instr)
-{
-    m16 addr1 { RAX };
-    m64 addr2 { RCX };
-    instr(AX);
-    instr(addr1);
-    instr(RCX);
-    instr(addr2);
-    instr(FS);
-}
-
 static void gen_Instruction7_Type3(Instruction7_Type3 &instr)
 {
     m16 addr1 { RAX };
@@ -74,10 +63,33 @@ TEST(Instruction7, Type1)
     EXPECT_EQ(asmstr(), "call *(%rbx)");
 }
 
+TEST(Instruction7, Type2)
+{
+    m16 addr1 { RAX };
+    m16 addr2 { EAX };
+    m32 addr3 { EBX };
+    m64 addr4 { RCX };
+
+    POP(AX);
+    EXPECT_EQ(asmstr(), "pop %ax");
+    POP(addr1);
+    EXPECT_EQ(asmstr(), "popw (%rax)");
+    POP(addr2);
+    EXPECT_EQ(asmstr(), "popw (%eax)");
+    POP(EBX);
+    EXPECT_EQ(asmstr(), "pop %ebx");
+    POP(RCX);
+    EXPECT_EQ(asmstr(), "pop %rcx");
+    POP(addr3);
+    EXPECT_EQ(asmstr(), "popl (%ebx)");
+    POP(addr4);
+    EXPECT_EQ(asmstr(), "popq (%rcx)");
+    POP(FS);
+    EXPECT_EQ(asmstr(), "pop %fs");
+}
+
 TEST(Instruction7, AllTypes)
 {
-    gen_Instruction7_Type2(POP);
-
     label("gen_Instruction7_Type3_label");
     gen_Instruction7_Type3(JMP_FAR);
     gen_Instruction7_Type3(CALL_FAR);
