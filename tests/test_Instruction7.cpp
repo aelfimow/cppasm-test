@@ -3,18 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction7_Type3(Instruction7_Type3 &instr)
-{
-    m16 addr1 { RAX };
-    m32 addr2 { RBX };
-    m64 addr3 { RBX };
-    std::string loc { "gen_Instruction7_Type3_label" };
-    instr(loc);
-    instr(addr1);
-    instr(addr2);
-    instr(addr3);
-}
-
 TEST(Instruction7, Type1)
 {
     m16 addr1 { EAX };
@@ -88,9 +76,38 @@ TEST(Instruction7, Type2)
     EXPECT_EQ(asmstr(), "pop %fs");
 }
 
-TEST(Instruction7, AllTypes)
+TEST(Instruction7, Type3)
 {
-    label("gen_Instruction7_Type3_label");
-    gen_Instruction7_Type3(JMP_FAR);
-    gen_Instruction7_Type3(CALL_FAR);
+    m16 addr1 { EAX };
+    m32 addr2 { EBX };
+    m16 addr3 { RAX };
+    m32 addr4 { RBX };
+    m64 addr5 { RBX };
+    std::string loc { "label" };
+
+    JMP_FAR(loc);
+    EXPECT_EQ(asmstr(), "ljmp *label");
+    JMP_FAR(addr1);
+    EXPECT_EQ(asmstr(), "ljmp *(%eax)");
+    JMP_FAR(addr2);
+    EXPECT_EQ(asmstr(), "ljmp *(%ebx)");
+    JMP_FAR(addr3);
+    EXPECT_EQ(asmstr(), "ljmp *(%rax)");
+    JMP_FAR(addr4);
+    EXPECT_EQ(asmstr(), "ljmp *(%rbx)");
+    JMP_FAR(addr5);
+    EXPECT_EQ(asmstr(), "ljmp *(%rbx)");
+
+    CALL_FAR(loc);
+    EXPECT_EQ(asmstr(), "lcall *label");
+    CALL_FAR(addr1);
+    EXPECT_EQ(asmstr(), "lcall *(%eax)");
+    CALL_FAR(addr2);
+    EXPECT_EQ(asmstr(), "lcall *(%ebx)");
+    CALL_FAR(addr3);
+    EXPECT_EQ(asmstr(), "lcall *(%rax)");
+    CALL_FAR(addr4);
+    EXPECT_EQ(asmstr(), "lcall *(%rbx)");
+    CALL_FAR(addr5);
+    EXPECT_EQ(asmstr(), "lcall *(%rbx)");
 }
