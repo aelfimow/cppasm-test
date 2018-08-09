@@ -3,19 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction8_Type2(Instruction8_Type2 &instr)
-{
-    m64 addr { RDX };
-    instr(MM0, RAX);
-    instr(MM0, addr);
-    instr(RAX, MM0);
-    instr(addr, MM0);
-    instr(XMM0, RAX);
-    instr(XMM0, addr);
-    instr(RAX, XMM0);
-    instr(addr, XMM0);
-}
-
 static void gen_Instruction8_Type3(Instruction8_Type3 &instr)
 {
     instr(AL);
@@ -86,10 +73,30 @@ TEST(Instruction8, Type1)
     EXPECT_EQ(asmstr(), "movd %xmm0, (%edx)");
 }
 
+TEST(Instruction8, Type2)
+{
+    m64 addr { RDX };
+
+    MOVQ(MM0, RAX);
+    EXPECT_EQ(asmstr(), "movq %rax, %mm0");
+    MOVQ(MM0, addr);
+    EXPECT_EQ(asmstr(), "movq (%rdx), %mm0");
+    MOVQ(RAX, MM0);
+    EXPECT_EQ(asmstr(), "movq %mm0, %rax");
+    MOVQ(addr, MM0);
+    EXPECT_EQ(asmstr(), "movq %mm0, (%rdx)");
+    MOVQ(XMM0, RAX);
+    EXPECT_EQ(asmstr(), "movq %rax, %xmm0");
+    MOVQ(XMM0, addr);
+    EXPECT_EQ(asmstr(), "movq (%rdx), %xmm0");
+    MOVQ(RAX, XMM0);
+    EXPECT_EQ(asmstr(), "movq %xmm0, %rax");
+    MOVQ(addr, XMM0);
+    EXPECT_EQ(asmstr(), "movq %xmm0, (%rdx)");
+}
+
 TEST(Instruction8, TypeX)
 {
-    gen_Instruction8_Type2(MOVQ);
-
     gen_Instruction8_Type3(MUL);
     gen_Instruction8_Type3(IMUL);
     gen_Instruction8_Type3(DIV);
