@@ -3,21 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction8_Type5(Instruction8_Type5 &instr)
-{
-    m128 addr1 { RDX };
-    m256 addr2 { RDX };
-    imm8 mask { 255 };
-    instr(XMM0, XMM1, XMM2);
-    instr(XMM0, XMM1, addr1);
-    instr(YMM0, YMM1, YMM2);
-    instr(YMM0, YMM1, addr2);
-    instr(XMM0, XMM1, mask);
-    instr(XMM0, addr1, mask);
-    instr(YMM0, YMM1, mask);
-    instr(YMM0, addr2, mask);
-}
-
 TEST(Instruction8, Type1)
 {
     m32 addr { EDX };
@@ -248,8 +233,43 @@ TEST(Instruction8, Type4)
     EXPECT_EQ(asmstr(), "cmpxchg %rcx, (%rdx)");
 }
 
-TEST(Instruction8, TypeX)
+TEST(Instruction8, Type5)
 {
-    gen_Instruction8_Type5(VPERMILPD);
-    gen_Instruction8_Type5(VPERMILPS);
+    m128 addr1 { RDX };
+    m256 addr2 { RDX };
+    imm8 mask { 255 };
+
+    VPERMILPD(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vpermilpd %xmm2, %xmm1, %xmm0");
+    VPERMILPD(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vpermilpd (%rdx), %xmm1, %xmm0");
+    VPERMILPD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vpermilpd %ymm2, %ymm1, %ymm0");
+    VPERMILPD(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vpermilpd (%rdx), %ymm1, %ymm0");
+    VPERMILPD(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "vpermilpd $0xFF, %xmm1, %xmm0");
+    VPERMILPD(XMM0, addr1, mask);
+    EXPECT_EQ(asmstr(), "vpermilpd $0xFF, (%rdx), %xmm0");
+    VPERMILPD(YMM0, YMM1, mask);
+    EXPECT_EQ(asmstr(), "vpermilpd $0xFF, %ymm1, %ymm0");
+    VPERMILPD(YMM0, addr2, mask);
+    EXPECT_EQ(asmstr(), "vpermilpd $0xFF, (%rdx), %ymm0");
+
+    VPERMILPS(XMM0, XMM1, XMM2);
+    EXPECT_EQ(asmstr(), "vpermilps %xmm2, %xmm1, %xmm0");
+    VPERMILPS(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vpermilps (%rdx), %xmm1, %xmm0");
+    VPERMILPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vpermilps %ymm2, %ymm1, %ymm0");
+    VPERMILPS(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vpermilps (%rdx), %ymm1, %ymm0");
+    VPERMILPS(XMM0, XMM1, mask);
+    EXPECT_EQ(asmstr(), "vpermilps $0xFF, %xmm1, %xmm0");
+    VPERMILPS(XMM0, addr1, mask);
+    EXPECT_EQ(asmstr(), "vpermilps $0xFF, (%rdx), %xmm0");
+    VPERMILPS(YMM0, YMM1, mask);
+    EXPECT_EQ(asmstr(), "vpermilps $0xFF, %ymm1, %ymm0");
+    VPERMILPS(YMM0, addr2, mask);
+    EXPECT_EQ(asmstr(), "vpermilps $0xFF, (%rdx), %ymm0");
 }
