@@ -3,22 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction8_Type4(Instruction8_Type4 &instr)
-{
-    m8  addr1 { RDX };
-    m16 addr2 { RDX };
-    m32 addr3 { RDX };
-    m64 addr4 { RDX };
-    instr(AL, BL);
-    instr(addr1, CL);
-    instr(AX, BX);
-    instr(addr2, CX);
-    instr(EAX, EBX);
-    instr(addr3, ECX);
-    instr(RAX, RBX);
-    instr(addr4, RCX);
-}
-
 static void gen_Instruction8_Type5(Instruction8_Type5 &instr)
 {
     m128 addr1 { RDX };
@@ -222,11 +206,50 @@ TEST(Instruction8, Type3)
     EXPECT_EQ(asmstr(), "notq (%rdx)");
 }
 
+TEST(Instruction8, Type4)
+{
+    m8  addr1 { RDX };
+    m16 addr2 { RDX };
+    m32 addr3 { RDX };
+    m64 addr4 { RDX };
+
+    XADD(AL, BL);
+    EXPECT_EQ(asmstr(), "xadd %bl, %al");
+    XADD(addr1, CL);
+    EXPECT_EQ(asmstr(), "xadd %cl, (%rdx)");
+    XADD(AX, BX);
+    EXPECT_EQ(asmstr(), "xadd %bx, %ax");
+    XADD(addr2, CX);
+    EXPECT_EQ(asmstr(), "xadd %cx, (%rdx)");
+    XADD(EAX, EBX);
+    EXPECT_EQ(asmstr(), "xadd %ebx, %eax");
+    XADD(addr3, ECX);
+    EXPECT_EQ(asmstr(), "xadd %ecx, (%rdx)");
+    XADD(RAX, RBX);
+    EXPECT_EQ(asmstr(), "xadd %rbx, %rax");
+    XADD(addr4, RCX);
+    EXPECT_EQ(asmstr(), "xadd %rcx, (%rdx)");
+
+    CMPXCHG(AL, BL);
+    EXPECT_EQ(asmstr(), "cmpxchg %bl, %al");
+    CMPXCHG(addr1, CL);
+    EXPECT_EQ(asmstr(), "cmpxchg %cl, (%rdx)");
+    CMPXCHG(AX, BX);
+    EXPECT_EQ(asmstr(), "cmpxchg %bx, %ax");
+    CMPXCHG(addr2, CX);
+    EXPECT_EQ(asmstr(), "cmpxchg %cx, (%rdx)");
+    CMPXCHG(EAX, EBX);
+    EXPECT_EQ(asmstr(), "cmpxchg %ebx, %eax");
+    CMPXCHG(addr3, ECX);
+    EXPECT_EQ(asmstr(), "cmpxchg %ecx, (%rdx)");
+    CMPXCHG(RAX, RBX);
+    EXPECT_EQ(asmstr(), "cmpxchg %rbx, %rax");
+    CMPXCHG(addr4, RCX);
+    EXPECT_EQ(asmstr(), "cmpxchg %rcx, (%rdx)");
+}
+
 TEST(Instruction8, TypeX)
 {
-    gen_Instruction8_Type4(XADD);
-    gen_Instruction8_Type4(CMPXCHG);
-
     gen_Instruction8_Type5(VPERMILPD);
     gen_Instruction8_Type5(VPERMILPS);
 }
