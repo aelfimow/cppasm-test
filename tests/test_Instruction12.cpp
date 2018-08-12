@@ -3,26 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction12_Type4(Instruction12_Type4 &instr)
-{
-    imm8 value { 1 };
-    m16 addr1 { RDX };
-    m32 addr2 { RDX };
-    m64 addr3 { RDX };
-    instr(AX, BX, value);
-    instr(addr1, BX, value);
-    instr(AX, BX, CL);
-    instr(addr1, BX, CL);
-    instr(EAX, EBX, value);
-    instr(addr2, EBX, value);
-    instr(RAX, RBX, value);
-    instr(addr3, RBX, value);
-    instr(EAX, EBX, CL);
-    instr(addr2, EBX, CL);
-    instr(RAX, RBX, CL);
-    instr(addr3, RBX, CL);
-}
-
 TEST(Instruction12, Type1)
 {
     m16 addr1 { RDX };
@@ -212,8 +192,60 @@ TEST(Instruction12, Type3)
     EXPECT_EQ(asmstr(), "movzwq (%rdx), %rax");
 }
 
-TEST(Instruction12, TypeX)
+TEST(Instruction12, Type4)
 {
-    gen_Instruction12_Type4(SHLD);
-    gen_Instruction12_Type4(SHRD);
+    imm8 value { 1 };
+    m16 addr1 { RDX };
+    m32 addr2 { RDX };
+    m64 addr3 { RDX };
+
+    SHLD(AX, BX, value);
+    EXPECT_EQ(asmstr(), "shld $0x01, %bx, %ax");
+    SHLD(addr1, BX, value);
+    EXPECT_EQ(asmstr(), "shld $0x01, %bx, (%rdx)");
+    SHLD(AX, BX, CL);
+    EXPECT_EQ(asmstr(), "shld %cl, %bx, %ax");
+    SHLD(addr1, BX, CL);
+    EXPECT_EQ(asmstr(), "shld %cl, %bx, (%rdx)");
+    SHLD(EAX, EBX, value);
+    EXPECT_EQ(asmstr(), "shld $0x01, %ebx, %eax");
+    SHLD(addr2, EBX, value);
+    EXPECT_EQ(asmstr(), "shld $0x01, %ebx, (%rdx)");
+    SHLD(RAX, RBX, value);
+    EXPECT_EQ(asmstr(), "shld $0x01, %rbx, %rax");
+    SHLD(addr3, RBX, value);
+    EXPECT_EQ(asmstr(), "shld $0x01, %rbx, (%rdx)");
+    SHLD(EAX, EBX, CL);
+    EXPECT_EQ(asmstr(), "shld %cl, %ebx, %eax");
+    SHLD(addr2, EBX, CL);
+    EXPECT_EQ(asmstr(), "shld %cl, %ebx, (%rdx)");
+    SHLD(RAX, RBX, CL);
+    EXPECT_EQ(asmstr(), "shld %cl, %rbx, %rax");
+    SHLD(addr3, RBX, CL);
+    EXPECT_EQ(asmstr(), "shld %cl, %rbx, (%rdx)");
+
+    SHRD(AX, BX, value);
+    EXPECT_EQ(asmstr(), "shrd $0x01, %bx, %ax");
+    SHRD(addr1, BX, value);
+    EXPECT_EQ(asmstr(), "shrd $0x01, %bx, (%rdx)");
+    SHRD(AX, BX, CL);
+    EXPECT_EQ(asmstr(), "shrd %cl, %bx, %ax");
+    SHRD(addr1, BX, CL);
+    EXPECT_EQ(asmstr(), "shrd %cl, %bx, (%rdx)");
+    SHRD(EAX, EBX, value);
+    EXPECT_EQ(asmstr(), "shrd $0x01, %ebx, %eax");
+    SHRD(addr2, EBX, value);
+    EXPECT_EQ(asmstr(), "shrd $0x01, %ebx, (%rdx)");
+    SHRD(RAX, RBX, value);
+    EXPECT_EQ(asmstr(), "shrd $0x01, %rbx, %rax");
+    SHRD(addr3, RBX, value);
+    EXPECT_EQ(asmstr(), "shrd $0x01, %rbx, (%rdx)");
+    SHRD(EAX, EBX, CL);
+    EXPECT_EQ(asmstr(), "shrd %cl, %ebx, %eax");
+    SHRD(addr2, EBX, CL);
+    EXPECT_EQ(asmstr(), "shrd %cl, %ebx, (%rdx)");
+    SHRD(RAX, RBX, CL);
+    EXPECT_EQ(asmstr(), "shrd %cl, %rbx, %rax");
+    SHRD(addr3, RBX, CL);
+    EXPECT_EQ(asmstr(), "shrd %cl, %rbx, (%rdx)");
 }
