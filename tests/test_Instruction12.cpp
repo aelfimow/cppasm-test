@@ -3,26 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction12_Type2(Instruction12_Type2 &instr)
-{
-    m8 addr1 { RDX };
-    m16 addr2 { RDX };
-    m32 addr3 { RDX };
-    m64 addr4 { RDX };
-    instr(AL, BL);
-    instr(addr1, CL);
-    instr(CL, addr1);
-    instr(AX, BX);
-    instr(addr2, CX);
-    instr(CX, addr2);
-    instr(EAX, EBX);
-    instr(addr3, ECX);
-    instr(ECX, addr3);
-    instr(RAX, RBX);
-    instr(addr4, RCX);
-    instr(RCX, addr4);
-}
-
 static void gen_Instruction12_Type3(Instruction12_Type3 &instr)
 {
     m8 addr1 { RDX };
@@ -167,10 +147,41 @@ TEST(Instruction12, Type1)
     EXPECT_EQ(asmstr(), "btsq $0x01, (%rdx)");
 }
 
+TEST(Instruction12, Type2)
+{
+    m8 addr1 { RDX };
+    m16 addr2 { RDX };
+    m32 addr3 { RDX };
+    m64 addr4 { RDX };
+
+    XCHG(AL, BL);
+    EXPECT_EQ(asmstr(), "xchg %bl, %al");
+    XCHG(addr1, CL);
+    EXPECT_EQ(asmstr(), "xchg %cl, (%rdx)");
+    XCHG(CL, addr1);
+    EXPECT_EQ(asmstr(), "xchg (%rdx), %cl");
+    XCHG(AX, BX);
+    EXPECT_EQ(asmstr(), "xchg %bx, %ax");
+    XCHG(addr2, CX);
+    EXPECT_EQ(asmstr(), "xchg %cx, (%rdx)");
+    XCHG(CX, addr2);
+    EXPECT_EQ(asmstr(), "xchg (%rdx), %cx");
+    XCHG(EAX, EBX);
+    EXPECT_EQ(asmstr(), "xchg %ebx, %eax");
+    XCHG(addr3, ECX);
+    EXPECT_EQ(asmstr(), "xchg %ecx, (%rdx)");
+    XCHG(ECX, addr3);
+    EXPECT_EQ(asmstr(), "xchg (%rdx), %ecx");
+    XCHG(RAX, RBX);
+    EXPECT_EQ(asmstr(), "xchg %rbx, %rax");
+    XCHG(addr4, RCX);
+    EXPECT_EQ(asmstr(), "xchg %rcx, (%rdx)");
+    XCHG(RCX, addr4);
+    EXPECT_EQ(asmstr(), "xchg (%rdx), %rcx");
+}
+
 TEST(Instruction12, TypeX)
 {
-    gen_Instruction12_Type2(XCHG);
-
     gen_Instruction12_Type3(MOVSX);
     gen_Instruction12_Type3(MOVZX);
 
