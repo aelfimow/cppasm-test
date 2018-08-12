@@ -138,6 +138,7 @@
     <ClCompile Include="..\..\tests\main.cpp" />
     <ClCompile Include="..\..\tests\streamdest_buf.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction1.cpp" />
+    <ClCompile Include="..\..\tests\test_Instruction10.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction2.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction3.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction4.cpp" />
