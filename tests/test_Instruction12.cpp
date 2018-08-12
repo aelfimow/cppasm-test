@@ -3,22 +3,6 @@
 
 extern std::string asmstr();
 
-static void gen_Instruction12_Type3(Instruction12_Type3 &instr)
-{
-    m8 addr1 { RDX };
-    m16 addr2 { RDX };
-    instr(AX, BL);
-    instr(AX, addr1);
-    instr(EAX, BL);
-    instr(EAX, addr1);
-    instr(RAX, BL);
-    instr(RAX, addr1);
-    instr(EAX, AX);
-    instr(EAX, addr2);
-    instr(RAX, BX);
-    instr(RAX, addr2);
-}
-
 static void gen_Instruction12_Type4(Instruction12_Type4 &instr)
 {
     imm8 value { 1 };
@@ -180,11 +164,56 @@ TEST(Instruction12, Type2)
     EXPECT_EQ(asmstr(), "xchg (%rdx), %rcx");
 }
 
+TEST(Instruction12, Type3)
+{
+    m8 addr1 { RDX };
+    m16 addr2 { RDX };
+
+    MOVSX(AX, BL);
+    EXPECT_EQ(asmstr(), "movsbw %bl, %ax");
+    MOVSX(AX, addr1);
+    EXPECT_EQ(asmstr(), "movsbw (%rdx), %ax");
+    MOVSX(EAX, BL);
+    EXPECT_EQ(asmstr(), "movsbl %bl, %eax");
+    MOVSX(EAX, addr1);
+    EXPECT_EQ(asmstr(), "movsbl (%rdx), %eax");
+    MOVSX(RAX, BL);
+    EXPECT_EQ(asmstr(), "movsbq %bl, %rax");
+    MOVSX(RAX, addr1);
+    EXPECT_EQ(asmstr(), "movsbq (%rdx), %rax");
+    MOVSX(EAX, AX);
+    EXPECT_EQ(asmstr(), "movswl %ax, %eax");
+    MOVSX(EAX, addr2);
+    EXPECT_EQ(asmstr(), "movswl (%rdx), %eax");
+    MOVSX(RAX, BX);
+    EXPECT_EQ(asmstr(), "movswq %bx, %rax");
+    MOVSX(RAX, addr2);
+    EXPECT_EQ(asmstr(), "movswq (%rdx), %rax");
+
+    MOVZX(AX, BL);
+    EXPECT_EQ(asmstr(), "movzbw %bl, %ax");
+    MOVZX(AX, addr1);
+    EXPECT_EQ(asmstr(), "movzbw (%rdx), %ax");
+    MOVZX(EAX, BL);
+    EXPECT_EQ(asmstr(), "movzbl %bl, %eax");
+    MOVZX(EAX, addr1);
+    EXPECT_EQ(asmstr(), "movzbl (%rdx), %eax");
+    MOVZX(RAX, BL);
+    EXPECT_EQ(asmstr(), "movzbq %bl, %rax");
+    MOVZX(RAX, addr1);
+    EXPECT_EQ(asmstr(), "movzbq (%rdx), %rax");
+    MOVZX(EAX, AX);
+    EXPECT_EQ(asmstr(), "movzwl %ax, %eax");
+    MOVZX(EAX, addr2);
+    EXPECT_EQ(asmstr(), "movzwl (%rdx), %eax");
+    MOVZX(RAX, BX);
+    EXPECT_EQ(asmstr(), "movzwq %bx, %rax");
+    MOVZX(RAX, addr2);
+    EXPECT_EQ(asmstr(), "movzwq (%rdx), %rax");
+}
+
 TEST(Instruction12, TypeX)
 {
-    gen_Instruction12_Type3(MOVSX);
-    gen_Instruction12_Type3(MOVZX);
-
     gen_Instruction12_Type4(SHLD);
     gen_Instruction12_Type4(SHRD);
 }
