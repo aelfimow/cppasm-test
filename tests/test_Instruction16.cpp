@@ -40,21 +40,35 @@ TEST(Instruction16, Type1)
     m64 addr4 { RDX };
 
     TEST(AL, value1);
+    EXPECT_EQ(asmstr(), "test $0xAA, %al");
     TEST(addr1, value1);
+    EXPECT_EQ(asmstr(), "testb $0xAA, (%rdx)");
     TEST(AX, value2);
+    EXPECT_EQ(asmstr(), "test $0xAABB, %ax");
     TEST(addr2, value2);
+    EXPECT_EQ(asmstr(), "testw $0xAABB, (%rdx)");
     TEST(EAX, value3);
+    EXPECT_EQ(asmstr(), "test $0xAABBCCDD, %eax");
     TEST(addr3, value3);
+    EXPECT_EQ(asmstr(), "testl $0xAABBCCDD, (%rdx)");
     //instr(RAX, value3);
     //instr(addr4, value3);
     TEST(AL, AH);
+    EXPECT_EQ(asmstr(), "test %ah, %al");
     TEST(addr1, AL);
+    EXPECT_EQ(asmstr(), "test %al, (%rdx)");
     TEST(AX, BX);
+    EXPECT_EQ(asmstr(), "test %bx, %ax");
     TEST(addr2, AX);
+    EXPECT_EQ(asmstr(), "test %ax, (%rdx)");
     TEST(EAX, EBX);
+    EXPECT_EQ(asmstr(), "test %ebx, %eax");
     TEST(addr3, EAX);
+    EXPECT_EQ(asmstr(), "test %eax, (%rdx)");
     TEST(RAX, RBX);
+    EXPECT_EQ(asmstr(), "test %rbx, %rax");
     TEST(addr4, RAX);
+    EXPECT_EQ(asmstr(), "test %rax, (%rdx)");
 #endif
 }
 
