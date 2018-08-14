@@ -1,8 +1,7 @@
 #include <gtest/gtest.h>
 #include <cppasm.h>
+#include "asmstr.h"
 
-
-extern std::string asmstr();
 
 TEST(Instruction1, Type1)
 {

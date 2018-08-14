@@ -2,6 +2,8 @@
 #include <cppasm.h>
 #include <streamdest.h>
 #include "streamdest_buf.h"
+#include "asmstr.h"
+
 
 static streamdest_buf *test_buf = nullptr;
 
