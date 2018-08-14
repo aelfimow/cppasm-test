@@ -144,6 +144,7 @@
     <ClCompile Include="..\..\tests\test_Instruction2.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction26.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction3.cpp" />
+    <ClCompile Include="..\..\tests\test_Instruction36.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction4.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction5.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction6.cpp" />
