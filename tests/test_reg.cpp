@@ -1348,3 +1348,15 @@ TEST(CpuRegister, cr)
     EXPECT_EQ(CR7.name(), "%cr7");
     EXPECT_EQ(CR8.name(), "%cr8");
 }
+
+TEST(CpuRegister, dr)
+{
+    EXPECT_EQ(DR0.name(), "%dr0");
+    EXPECT_EQ(DR1.name(), "%dr1");
+    EXPECT_EQ(DR2.name(), "%dr2");
+    EXPECT_EQ(DR3.name(), "%dr3");
+    EXPECT_EQ(DR4.name(), "%dr4");
+    EXPECT_EQ(DR5.name(), "%dr5");
+    EXPECT_EQ(DR6.name(), "%dr6");
+    EXPECT_EQ(DR7.name(), "%dr7");
+}
