@@ -1335,3 +1335,16 @@ TEST(CpuRegister, Sreg)
     EXPECT_EQ(FS.name(), "%fs");
     EXPECT_EQ(GS.name(), "%gs");
 }
+
+TEST(CpuRegister, cr)
+{
+    EXPECT_EQ(CR0.name(), "%cr0");
+    EXPECT_EQ(CR1.name(), "%cr1");
+    EXPECT_EQ(CR2.name(), "%cr2");
+    EXPECT_EQ(CR3.name(), "%cr3");
+    EXPECT_EQ(CR4.name(), "%cr4");
+    EXPECT_EQ(CR5.name(), "%cr5");
+    EXPECT_EQ(CR6.name(), "%cr6");
+    EXPECT_EQ(CR7.name(), "%cr7");
+    EXPECT_EQ(CR8.name(), "%cr8");
+}
