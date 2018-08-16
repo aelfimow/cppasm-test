@@ -1313,3 +1313,15 @@ TEST(CpuRegister, zmm)
     EXPECT_EQ(ZMM31.k6.z.name(), "%zmm31{%k6}{z}");
     EXPECT_EQ(ZMM31.k7.z.name(), "%zmm31{%k7}{z}");
 }
+
+TEST(CpuRegister, mm)
+{
+    EXPECT_EQ(MM0.name(), "%mm0");
+    EXPECT_EQ(MM1.name(), "%mm1");
+    EXPECT_EQ(MM2.name(), "%mm2");
+    EXPECT_EQ(MM3.name(), "%mm3");
+    EXPECT_EQ(MM4.name(), "%mm4");
+    EXPECT_EQ(MM5.name(), "%mm5");
+    EXPECT_EQ(MM6.name(), "%mm6");
+    EXPECT_EQ(MM7.name(), "%mm7");
+}
