@@ -65,3 +65,23 @@ TEST(CpuRegister, r32)
     EXPECT_EQ(R14D.name(), "%r14d");
     EXPECT_EQ(R15D.name(), "%r15d");
 }
+
+TEST(CpuRegister, r64)
+{
+    EXPECT_EQ(RAX.name(), "%rax");
+    EXPECT_EQ(RBX.name(), "%rbx");
+    EXPECT_EQ(RCX.name(), "%rcx");
+    EXPECT_EQ(RDX.name(), "%rdx");
+    EXPECT_EQ(RBP.name(), "%rbp");
+    EXPECT_EQ(RSI.name(), "%rsi");
+    EXPECT_EQ(RDI.name(), "%rdi");
+    EXPECT_EQ(RSP.name(), "%rsp");
+    EXPECT_EQ(R8.name(), "%r8");
+    EXPECT_EQ(R9.name(), "%r9");
+    EXPECT_EQ(R10.name(), "%r10");
+    EXPECT_EQ(R11.name(), "%r11");
+    EXPECT_EQ(R12.name(), "%r12");
+    EXPECT_EQ(R13.name(), "%r13");
+    EXPECT_EQ(R14.name(), "%r14");
+    EXPECT_EQ(R15.name(), "%r15");
+}
