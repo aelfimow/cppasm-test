@@ -1360,3 +1360,15 @@ TEST(CpuRegister, dr)
     EXPECT_EQ(DR6.name(), "%dr6");
     EXPECT_EQ(DR7.name(), "%dr7");
 }
+
+TEST(CpuRegister, st)
+{
+    EXPECT_EQ(ST(0).name(), "%st(0)");
+    EXPECT_EQ(ST(1).name(), "%st(1)");
+    EXPECT_EQ(ST(2).name(), "%st(2)");
+    EXPECT_EQ(ST(3).name(), "%st(3)");
+    EXPECT_EQ(ST(4).name(), "%st(4)");
+    EXPECT_EQ(ST(5).name(), "%st(5)");
+    EXPECT_EQ(ST(6).name(), "%st(6)");
+    EXPECT_EQ(ST(7).name(), "%st(7)");
+}
