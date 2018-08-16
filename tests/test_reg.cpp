@@ -106,13 +106,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM15.name(), "%xmm15");
 
     EXPECT_EQ(XMM0.z.name(), "%xmm0{z}");
-    EXPECT_EQ(XMM0.z.name(), "%xmm0{z}");
-    EXPECT_EQ(XMM0.z.name(), "%xmm0{z}");
-    EXPECT_EQ(XMM0.z.name(), "%xmm0{z}");
-    EXPECT_EQ(XMM0.z.name(), "%xmm0{z}");
-    EXPECT_EQ(XMM0.z.name(), "%xmm0{z}");
-    EXPECT_EQ(XMM0.z.name(), "%xmm0{z}");
-    EXPECT_EQ(XMM0.z.name(), "%xmm0{z}");
     EXPECT_EQ(XMM0.k0.name(), "%xmm0{%k0}");
     EXPECT_EQ(XMM0.k1.name(), "%xmm0{%k1}");
     EXPECT_EQ(XMM0.k2.name(), "%xmm0{%k2}");
@@ -130,13 +123,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM0.k6.z.name(), "%xmm0{%k6}{z}");
     EXPECT_EQ(XMM0.k7.z.name(), "%xmm0{%k7}{z}");
 
-    EXPECT_EQ(XMM1.z.name(), "%xmm1{z}");
-    EXPECT_EQ(XMM1.z.name(), "%xmm1{z}");
-    EXPECT_EQ(XMM1.z.name(), "%xmm1{z}");
-    EXPECT_EQ(XMM1.z.name(), "%xmm1{z}");
-    EXPECT_EQ(XMM1.z.name(), "%xmm1{z}");
-    EXPECT_EQ(XMM1.z.name(), "%xmm1{z}");
-    EXPECT_EQ(XMM1.z.name(), "%xmm1{z}");
     EXPECT_EQ(XMM1.z.name(), "%xmm1{z}");
     EXPECT_EQ(XMM1.k0.name(), "%xmm1{%k0}");
     EXPECT_EQ(XMM1.k1.name(), "%xmm1{%k1}");
@@ -156,13 +142,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM1.k7.z.name(), "%xmm1{%k7}{z}");
 
     EXPECT_EQ(XMM2.z.name(), "%xmm2{z}");
-    EXPECT_EQ(XMM2.z.name(), "%xmm2{z}");
-    EXPECT_EQ(XMM2.z.name(), "%xmm2{z}");
-    EXPECT_EQ(XMM2.z.name(), "%xmm2{z}");
-    EXPECT_EQ(XMM2.z.name(), "%xmm2{z}");
-    EXPECT_EQ(XMM2.z.name(), "%xmm2{z}");
-    EXPECT_EQ(XMM2.z.name(), "%xmm2{z}");
-    EXPECT_EQ(XMM2.z.name(), "%xmm2{z}");
     EXPECT_EQ(XMM2.k0.name(), "%xmm2{%k0}");
     EXPECT_EQ(XMM2.k1.name(), "%xmm2{%k1}");
     EXPECT_EQ(XMM2.k2.name(), "%xmm2{%k2}");
@@ -180,13 +159,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM2.k6.z.name(), "%xmm2{%k6}{z}");
     EXPECT_EQ(XMM2.k7.z.name(), "%xmm2{%k7}{z}");
 
-    EXPECT_EQ(XMM3.z.name(), "%xmm3{z}");
-    EXPECT_EQ(XMM3.z.name(), "%xmm3{z}");
-    EXPECT_EQ(XMM3.z.name(), "%xmm3{z}");
-    EXPECT_EQ(XMM3.z.name(), "%xmm3{z}");
-    EXPECT_EQ(XMM3.z.name(), "%xmm3{z}");
-    EXPECT_EQ(XMM3.z.name(), "%xmm3{z}");
-    EXPECT_EQ(XMM3.z.name(), "%xmm3{z}");
     EXPECT_EQ(XMM3.z.name(), "%xmm3{z}");
     EXPECT_EQ(XMM3.k0.name(), "%xmm3{%k0}");
     EXPECT_EQ(XMM3.k1.name(), "%xmm3{%k1}");
@@ -206,13 +178,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM3.k7.z.name(), "%xmm3{%k7}{z}");
 
     EXPECT_EQ(XMM4.z.name(), "%xmm4{z}");
-    EXPECT_EQ(XMM4.z.name(), "%xmm4{z}");
-    EXPECT_EQ(XMM4.z.name(), "%xmm4{z}");
-    EXPECT_EQ(XMM4.z.name(), "%xmm4{z}");
-    EXPECT_EQ(XMM4.z.name(), "%xmm4{z}");
-    EXPECT_EQ(XMM4.z.name(), "%xmm4{z}");
-    EXPECT_EQ(XMM4.z.name(), "%xmm4{z}");
-    EXPECT_EQ(XMM4.z.name(), "%xmm4{z}");
     EXPECT_EQ(XMM4.k0.name(), "%xmm4{%k0}");
     EXPECT_EQ(XMM4.k1.name(), "%xmm4{%k1}");
     EXPECT_EQ(XMM4.k2.name(), "%xmm4{%k2}");
@@ -230,13 +195,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM4.k6.z.name(), "%xmm4{%k6}{z}");
     EXPECT_EQ(XMM4.k7.z.name(), "%xmm4{%k7}{z}");
 
-    EXPECT_EQ(XMM5.z.name(), "%xmm5{z}");
-    EXPECT_EQ(XMM5.z.name(), "%xmm5{z}");
-    EXPECT_EQ(XMM5.z.name(), "%xmm5{z}");
-    EXPECT_EQ(XMM5.z.name(), "%xmm5{z}");
-    EXPECT_EQ(XMM5.z.name(), "%xmm5{z}");
-    EXPECT_EQ(XMM5.z.name(), "%xmm5{z}");
-    EXPECT_EQ(XMM5.z.name(), "%xmm5{z}");
     EXPECT_EQ(XMM5.z.name(), "%xmm5{z}");
     EXPECT_EQ(XMM5.k0.name(), "%xmm5{%k0}");
     EXPECT_EQ(XMM5.k1.name(), "%xmm5{%k1}");
@@ -256,13 +214,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM5.k7.z.name(), "%xmm5{%k7}{z}");
 
     EXPECT_EQ(XMM6.z.name(), "%xmm6{z}");
-    EXPECT_EQ(XMM6.z.name(), "%xmm6{z}");
-    EXPECT_EQ(XMM6.z.name(), "%xmm6{z}");
-    EXPECT_EQ(XMM6.z.name(), "%xmm6{z}");
-    EXPECT_EQ(XMM6.z.name(), "%xmm6{z}");
-    EXPECT_EQ(XMM6.z.name(), "%xmm6{z}");
-    EXPECT_EQ(XMM6.z.name(), "%xmm6{z}");
-    EXPECT_EQ(XMM6.z.name(), "%xmm6{z}");
     EXPECT_EQ(XMM6.k0.name(), "%xmm6{%k0}");
     EXPECT_EQ(XMM6.k1.name(), "%xmm6{%k1}");
     EXPECT_EQ(XMM6.k2.name(), "%xmm6{%k2}");
@@ -280,13 +231,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM6.k6.z.name(), "%xmm6{%k6}{z}");
     EXPECT_EQ(XMM6.k7.z.name(), "%xmm6{%k7}{z}");
 
-    EXPECT_EQ(XMM7.z.name(), "%xmm7{z}");
-    EXPECT_EQ(XMM7.z.name(), "%xmm7{z}");
-    EXPECT_EQ(XMM7.z.name(), "%xmm7{z}");
-    EXPECT_EQ(XMM7.z.name(), "%xmm7{z}");
-    EXPECT_EQ(XMM7.z.name(), "%xmm7{z}");
-    EXPECT_EQ(XMM7.z.name(), "%xmm7{z}");
-    EXPECT_EQ(XMM7.z.name(), "%xmm7{z}");
     EXPECT_EQ(XMM7.z.name(), "%xmm7{z}");
     EXPECT_EQ(XMM7.k0.name(), "%xmm7{%k0}");
     EXPECT_EQ(XMM7.k1.name(), "%xmm7{%k1}");
@@ -306,13 +250,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM7.k7.z.name(), "%xmm7{%k7}{z}");
 
     EXPECT_EQ(XMM8.z.name(), "%xmm8{z}");
-    EXPECT_EQ(XMM8.z.name(), "%xmm8{z}");
-    EXPECT_EQ(XMM8.z.name(), "%xmm8{z}");
-    EXPECT_EQ(XMM8.z.name(), "%xmm8{z}");
-    EXPECT_EQ(XMM8.z.name(), "%xmm8{z}");
-    EXPECT_EQ(XMM8.z.name(), "%xmm8{z}");
-    EXPECT_EQ(XMM8.z.name(), "%xmm8{z}");
-    EXPECT_EQ(XMM8.z.name(), "%xmm8{z}");
     EXPECT_EQ(XMM8.k0.name(), "%xmm8{%k0}");
     EXPECT_EQ(XMM8.k1.name(), "%xmm8{%k1}");
     EXPECT_EQ(XMM8.k2.name(), "%xmm8{%k2}");
@@ -330,13 +267,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM8.k6.z.name(), "%xmm8{%k6}{z}");
     EXPECT_EQ(XMM8.k7.z.name(), "%xmm8{%k7}{z}");
 
-    EXPECT_EQ(XMM9.z.name(), "%xmm9{z}");
-    EXPECT_EQ(XMM9.z.name(), "%xmm9{z}");
-    EXPECT_EQ(XMM9.z.name(), "%xmm9{z}");
-    EXPECT_EQ(XMM9.z.name(), "%xmm9{z}");
-    EXPECT_EQ(XMM9.z.name(), "%xmm9{z}");
-    EXPECT_EQ(XMM9.z.name(), "%xmm9{z}");
-    EXPECT_EQ(XMM9.z.name(), "%xmm9{z}");
     EXPECT_EQ(XMM9.z.name(), "%xmm9{z}");
     EXPECT_EQ(XMM9.k0.name(), "%xmm9{%k0}");
     EXPECT_EQ(XMM9.k1.name(), "%xmm9{%k1}");
@@ -356,13 +286,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM9.k7.z.name(), "%xmm9{%k7}{z}");
 
     EXPECT_EQ(XMM10.z.name(), "%xmm10{z}");
-    EXPECT_EQ(XMM10.z.name(), "%xmm10{z}");
-    EXPECT_EQ(XMM10.z.name(), "%xmm10{z}");
-    EXPECT_EQ(XMM10.z.name(), "%xmm10{z}");
-    EXPECT_EQ(XMM10.z.name(), "%xmm10{z}");
-    EXPECT_EQ(XMM10.z.name(), "%xmm10{z}");
-    EXPECT_EQ(XMM10.z.name(), "%xmm10{z}");
-    EXPECT_EQ(XMM10.z.name(), "%xmm10{z}");
     EXPECT_EQ(XMM10.k0.name(), "%xmm10{%k0}");
     EXPECT_EQ(XMM10.k1.name(), "%xmm10{%k1}");
     EXPECT_EQ(XMM10.k2.name(), "%xmm10{%k2}");
@@ -380,13 +303,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM10.k6.z.name(), "%xmm10{%k6}{z}");
     EXPECT_EQ(XMM10.k7.z.name(), "%xmm10{%k7}{z}");
 
-    EXPECT_EQ(XMM11.z.name(), "%xmm11{z}");
-    EXPECT_EQ(XMM11.z.name(), "%xmm11{z}");
-    EXPECT_EQ(XMM11.z.name(), "%xmm11{z}");
-    EXPECT_EQ(XMM11.z.name(), "%xmm11{z}");
-    EXPECT_EQ(XMM11.z.name(), "%xmm11{z}");
-    EXPECT_EQ(XMM11.z.name(), "%xmm11{z}");
-    EXPECT_EQ(XMM11.z.name(), "%xmm11{z}");
     EXPECT_EQ(XMM11.z.name(), "%xmm11{z}");
     EXPECT_EQ(XMM11.k0.name(), "%xmm11{%k0}");
     EXPECT_EQ(XMM11.k1.name(), "%xmm11{%k1}");
@@ -406,13 +322,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM11.k7.z.name(), "%xmm11{%k7}{z}");
 
     EXPECT_EQ(XMM12.z.name(), "%xmm12{z}");
-    EXPECT_EQ(XMM12.z.name(), "%xmm12{z}");
-    EXPECT_EQ(XMM12.z.name(), "%xmm12{z}");
-    EXPECT_EQ(XMM12.z.name(), "%xmm12{z}");
-    EXPECT_EQ(XMM12.z.name(), "%xmm12{z}");
-    EXPECT_EQ(XMM12.z.name(), "%xmm12{z}");
-    EXPECT_EQ(XMM12.z.name(), "%xmm12{z}");
-    EXPECT_EQ(XMM12.z.name(), "%xmm12{z}");
     EXPECT_EQ(XMM12.k0.name(), "%xmm12{%k0}");
     EXPECT_EQ(XMM12.k1.name(), "%xmm12{%k1}");
     EXPECT_EQ(XMM12.k2.name(), "%xmm12{%k2}");
@@ -430,13 +339,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM12.k6.z.name(), "%xmm12{%k6}{z}");
     EXPECT_EQ(XMM12.k7.z.name(), "%xmm12{%k7}{z}");
 
-    EXPECT_EQ(XMM13.z.name(), "%xmm13{z}");
-    EXPECT_EQ(XMM13.z.name(), "%xmm13{z}");
-    EXPECT_EQ(XMM13.z.name(), "%xmm13{z}");
-    EXPECT_EQ(XMM13.z.name(), "%xmm13{z}");
-    EXPECT_EQ(XMM13.z.name(), "%xmm13{z}");
-    EXPECT_EQ(XMM13.z.name(), "%xmm13{z}");
-    EXPECT_EQ(XMM13.z.name(), "%xmm13{z}");
     EXPECT_EQ(XMM13.z.name(), "%xmm13{z}");
     EXPECT_EQ(XMM13.k0.name(), "%xmm13{%k0}");
     EXPECT_EQ(XMM13.k1.name(), "%xmm13{%k1}");
@@ -456,13 +358,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM13.k7.z.name(), "%xmm13{%k7}{z}");
 
     EXPECT_EQ(XMM14.z.name(), "%xmm14{z}");
-    EXPECT_EQ(XMM14.z.name(), "%xmm14{z}");
-    EXPECT_EQ(XMM14.z.name(), "%xmm14{z}");
-    EXPECT_EQ(XMM14.z.name(), "%xmm14{z}");
-    EXPECT_EQ(XMM14.z.name(), "%xmm14{z}");
-    EXPECT_EQ(XMM14.z.name(), "%xmm14{z}");
-    EXPECT_EQ(XMM14.z.name(), "%xmm14{z}");
-    EXPECT_EQ(XMM14.z.name(), "%xmm14{z}");
     EXPECT_EQ(XMM14.k0.name(), "%xmm14{%k0}");
     EXPECT_EQ(XMM14.k1.name(), "%xmm14{%k1}");
     EXPECT_EQ(XMM14.k2.name(), "%xmm14{%k2}");
@@ -480,13 +375,6 @@ TEST(CpuRegister, xmm)
     EXPECT_EQ(XMM14.k6.z.name(), "%xmm14{%k6}{z}");
     EXPECT_EQ(XMM14.k7.z.name(), "%xmm14{%k7}{z}");
 
-    EXPECT_EQ(XMM15.z.name(), "%xmm15{z}");
-    EXPECT_EQ(XMM15.z.name(), "%xmm15{z}");
-    EXPECT_EQ(XMM15.z.name(), "%xmm15{z}");
-    EXPECT_EQ(XMM15.z.name(), "%xmm15{z}");
-    EXPECT_EQ(XMM15.z.name(), "%xmm15{z}");
-    EXPECT_EQ(XMM15.z.name(), "%xmm15{z}");
-    EXPECT_EQ(XMM15.z.name(), "%xmm15{z}");
     EXPECT_EQ(XMM15.z.name(), "%xmm15{z}");
     EXPECT_EQ(XMM15.k0.name(), "%xmm15{%k0}");
     EXPECT_EQ(XMM15.k1.name(), "%xmm15{%k1}");
@@ -526,13 +414,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM15.name(), "%ymm15");
 
     EXPECT_EQ(YMM0.z.name(), "%ymm0{z}");
-    EXPECT_EQ(YMM0.z.name(), "%ymm0{z}");
-    EXPECT_EQ(YMM0.z.name(), "%ymm0{z}");
-    EXPECT_EQ(YMM0.z.name(), "%ymm0{z}");
-    EXPECT_EQ(YMM0.z.name(), "%ymm0{z}");
-    EXPECT_EQ(YMM0.z.name(), "%ymm0{z}");
-    EXPECT_EQ(YMM0.z.name(), "%ymm0{z}");
-    EXPECT_EQ(YMM0.z.name(), "%ymm0{z}");
     EXPECT_EQ(YMM0.k0.name(), "%ymm0{%k0}");
     EXPECT_EQ(YMM0.k1.name(), "%ymm0{%k1}");
     EXPECT_EQ(YMM0.k2.name(), "%ymm0{%k2}");
@@ -550,13 +431,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM0.k6.z.name(), "%ymm0{%k6}{z}");
     EXPECT_EQ(YMM0.k7.z.name(), "%ymm0{%k7}{z}");
 
-    EXPECT_EQ(YMM1.z.name(), "%ymm1{z}");
-    EXPECT_EQ(YMM1.z.name(), "%ymm1{z}");
-    EXPECT_EQ(YMM1.z.name(), "%ymm1{z}");
-    EXPECT_EQ(YMM1.z.name(), "%ymm1{z}");
-    EXPECT_EQ(YMM1.z.name(), "%ymm1{z}");
-    EXPECT_EQ(YMM1.z.name(), "%ymm1{z}");
-    EXPECT_EQ(YMM1.z.name(), "%ymm1{z}");
     EXPECT_EQ(YMM1.z.name(), "%ymm1{z}");
     EXPECT_EQ(YMM1.k0.name(), "%ymm1{%k0}");
     EXPECT_EQ(YMM1.k1.name(), "%ymm1{%k1}");
@@ -576,13 +450,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM1.k7.z.name(), "%ymm1{%k7}{z}");
 
     EXPECT_EQ(YMM2.z.name(), "%ymm2{z}");
-    EXPECT_EQ(YMM2.z.name(), "%ymm2{z}");
-    EXPECT_EQ(YMM2.z.name(), "%ymm2{z}");
-    EXPECT_EQ(YMM2.z.name(), "%ymm2{z}");
-    EXPECT_EQ(YMM2.z.name(), "%ymm2{z}");
-    EXPECT_EQ(YMM2.z.name(), "%ymm2{z}");
-    EXPECT_EQ(YMM2.z.name(), "%ymm2{z}");
-    EXPECT_EQ(YMM2.z.name(), "%ymm2{z}");
     EXPECT_EQ(YMM2.k0.name(), "%ymm2{%k0}");
     EXPECT_EQ(YMM2.k1.name(), "%ymm2{%k1}");
     EXPECT_EQ(YMM2.k2.name(), "%ymm2{%k2}");
@@ -600,13 +467,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM2.k6.z.name(), "%ymm2{%k6}{z}");
     EXPECT_EQ(YMM2.k7.z.name(), "%ymm2{%k7}{z}");
 
-    EXPECT_EQ(YMM3.z.name(), "%ymm3{z}");
-    EXPECT_EQ(YMM3.z.name(), "%ymm3{z}");
-    EXPECT_EQ(YMM3.z.name(), "%ymm3{z}");
-    EXPECT_EQ(YMM3.z.name(), "%ymm3{z}");
-    EXPECT_EQ(YMM3.z.name(), "%ymm3{z}");
-    EXPECT_EQ(YMM3.z.name(), "%ymm3{z}");
-    EXPECT_EQ(YMM3.z.name(), "%ymm3{z}");
     EXPECT_EQ(YMM3.z.name(), "%ymm3{z}");
     EXPECT_EQ(YMM3.k0.name(), "%ymm3{%k0}");
     EXPECT_EQ(YMM3.k1.name(), "%ymm3{%k1}");
@@ -626,13 +486,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM3.k7.z.name(), "%ymm3{%k7}{z}");
 
     EXPECT_EQ(YMM4.z.name(), "%ymm4{z}");
-    EXPECT_EQ(YMM4.z.name(), "%ymm4{z}");
-    EXPECT_EQ(YMM4.z.name(), "%ymm4{z}");
-    EXPECT_EQ(YMM4.z.name(), "%ymm4{z}");
-    EXPECT_EQ(YMM4.z.name(), "%ymm4{z}");
-    EXPECT_EQ(YMM4.z.name(), "%ymm4{z}");
-    EXPECT_EQ(YMM4.z.name(), "%ymm4{z}");
-    EXPECT_EQ(YMM4.z.name(), "%ymm4{z}");
     EXPECT_EQ(YMM4.k0.name(), "%ymm4{%k0}");
     EXPECT_EQ(YMM4.k1.name(), "%ymm4{%k1}");
     EXPECT_EQ(YMM4.k2.name(), "%ymm4{%k2}");
@@ -650,13 +503,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM4.k6.z.name(), "%ymm4{%k6}{z}");
     EXPECT_EQ(YMM4.k7.z.name(), "%ymm4{%k7}{z}");
 
-    EXPECT_EQ(YMM5.z.name(), "%ymm5{z}");
-    EXPECT_EQ(YMM5.z.name(), "%ymm5{z}");
-    EXPECT_EQ(YMM5.z.name(), "%ymm5{z}");
-    EXPECT_EQ(YMM5.z.name(), "%ymm5{z}");
-    EXPECT_EQ(YMM5.z.name(), "%ymm5{z}");
-    EXPECT_EQ(YMM5.z.name(), "%ymm5{z}");
-    EXPECT_EQ(YMM5.z.name(), "%ymm5{z}");
     EXPECT_EQ(YMM5.z.name(), "%ymm5{z}");
     EXPECT_EQ(YMM5.k0.name(), "%ymm5{%k0}");
     EXPECT_EQ(YMM5.k1.name(), "%ymm5{%k1}");
@@ -676,13 +522,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM5.k7.z.name(), "%ymm5{%k7}{z}");
 
     EXPECT_EQ(YMM6.z.name(), "%ymm6{z}");
-    EXPECT_EQ(YMM6.z.name(), "%ymm6{z}");
-    EXPECT_EQ(YMM6.z.name(), "%ymm6{z}");
-    EXPECT_EQ(YMM6.z.name(), "%ymm6{z}");
-    EXPECT_EQ(YMM6.z.name(), "%ymm6{z}");
-    EXPECT_EQ(YMM6.z.name(), "%ymm6{z}");
-    EXPECT_EQ(YMM6.z.name(), "%ymm6{z}");
-    EXPECT_EQ(YMM6.z.name(), "%ymm6{z}");
     EXPECT_EQ(YMM6.k0.name(), "%ymm6{%k0}");
     EXPECT_EQ(YMM6.k1.name(), "%ymm6{%k1}");
     EXPECT_EQ(YMM6.k2.name(), "%ymm6{%k2}");
@@ -700,13 +539,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM6.k6.z.name(), "%ymm6{%k6}{z}");
     EXPECT_EQ(YMM6.k7.z.name(), "%ymm6{%k7}{z}");
 
-    EXPECT_EQ(YMM7.z.name(), "%ymm7{z}");
-    EXPECT_EQ(YMM7.z.name(), "%ymm7{z}");
-    EXPECT_EQ(YMM7.z.name(), "%ymm7{z}");
-    EXPECT_EQ(YMM7.z.name(), "%ymm7{z}");
-    EXPECT_EQ(YMM7.z.name(), "%ymm7{z}");
-    EXPECT_EQ(YMM7.z.name(), "%ymm7{z}");
-    EXPECT_EQ(YMM7.z.name(), "%ymm7{z}");
     EXPECT_EQ(YMM7.z.name(), "%ymm7{z}");
     EXPECT_EQ(YMM7.k0.name(), "%ymm7{%k0}");
     EXPECT_EQ(YMM7.k1.name(), "%ymm7{%k1}");
@@ -726,13 +558,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM7.k7.z.name(), "%ymm7{%k7}{z}");
 
     EXPECT_EQ(YMM8.z.name(), "%ymm8{z}");
-    EXPECT_EQ(YMM8.z.name(), "%ymm8{z}");
-    EXPECT_EQ(YMM8.z.name(), "%ymm8{z}");
-    EXPECT_EQ(YMM8.z.name(), "%ymm8{z}");
-    EXPECT_EQ(YMM8.z.name(), "%ymm8{z}");
-    EXPECT_EQ(YMM8.z.name(), "%ymm8{z}");
-    EXPECT_EQ(YMM8.z.name(), "%ymm8{z}");
-    EXPECT_EQ(YMM8.z.name(), "%ymm8{z}");
     EXPECT_EQ(YMM8.k0.name(), "%ymm8{%k0}");
     EXPECT_EQ(YMM8.k1.name(), "%ymm8{%k1}");
     EXPECT_EQ(YMM8.k2.name(), "%ymm8{%k2}");
@@ -750,13 +575,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM8.k6.z.name(), "%ymm8{%k6}{z}");
     EXPECT_EQ(YMM8.k7.z.name(), "%ymm8{%k7}{z}");
 
-    EXPECT_EQ(YMM9.z.name(), "%ymm9{z}");
-    EXPECT_EQ(YMM9.z.name(), "%ymm9{z}");
-    EXPECT_EQ(YMM9.z.name(), "%ymm9{z}");
-    EXPECT_EQ(YMM9.z.name(), "%ymm9{z}");
-    EXPECT_EQ(YMM9.z.name(), "%ymm9{z}");
-    EXPECT_EQ(YMM9.z.name(), "%ymm9{z}");
-    EXPECT_EQ(YMM9.z.name(), "%ymm9{z}");
     EXPECT_EQ(YMM9.z.name(), "%ymm9{z}");
     EXPECT_EQ(YMM9.k0.name(), "%ymm9{%k0}");
     EXPECT_EQ(YMM9.k1.name(), "%ymm9{%k1}");
@@ -776,13 +594,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM9.k7.z.name(), "%ymm9{%k7}{z}");
 
     EXPECT_EQ(YMM10.z.name(), "%ymm10{z}");
-    EXPECT_EQ(YMM10.z.name(), "%ymm10{z}");
-    EXPECT_EQ(YMM10.z.name(), "%ymm10{z}");
-    EXPECT_EQ(YMM10.z.name(), "%ymm10{z}");
-    EXPECT_EQ(YMM10.z.name(), "%ymm10{z}");
-    EXPECT_EQ(YMM10.z.name(), "%ymm10{z}");
-    EXPECT_EQ(YMM10.z.name(), "%ymm10{z}");
-    EXPECT_EQ(YMM10.z.name(), "%ymm10{z}");
     EXPECT_EQ(YMM10.k0.name(), "%ymm10{%k0}");
     EXPECT_EQ(YMM10.k1.name(), "%ymm10{%k1}");
     EXPECT_EQ(YMM10.k2.name(), "%ymm10{%k2}");
@@ -800,13 +611,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM10.k6.z.name(), "%ymm10{%k6}{z}");
     EXPECT_EQ(YMM10.k7.z.name(), "%ymm10{%k7}{z}");
 
-    EXPECT_EQ(YMM11.z.name(), "%ymm11{z}");
-    EXPECT_EQ(YMM11.z.name(), "%ymm11{z}");
-    EXPECT_EQ(YMM11.z.name(), "%ymm11{z}");
-    EXPECT_EQ(YMM11.z.name(), "%ymm11{z}");
-    EXPECT_EQ(YMM11.z.name(), "%ymm11{z}");
-    EXPECT_EQ(YMM11.z.name(), "%ymm11{z}");
-    EXPECT_EQ(YMM11.z.name(), "%ymm11{z}");
     EXPECT_EQ(YMM11.z.name(), "%ymm11{z}");
     EXPECT_EQ(YMM11.k0.name(), "%ymm11{%k0}");
     EXPECT_EQ(YMM11.k1.name(), "%ymm11{%k1}");
@@ -826,13 +630,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM11.k7.z.name(), "%ymm11{%k7}{z}");
 
     EXPECT_EQ(YMM12.z.name(), "%ymm12{z}");
-    EXPECT_EQ(YMM12.z.name(), "%ymm12{z}");
-    EXPECT_EQ(YMM12.z.name(), "%ymm12{z}");
-    EXPECT_EQ(YMM12.z.name(), "%ymm12{z}");
-    EXPECT_EQ(YMM12.z.name(), "%ymm12{z}");
-    EXPECT_EQ(YMM12.z.name(), "%ymm12{z}");
-    EXPECT_EQ(YMM12.z.name(), "%ymm12{z}");
-    EXPECT_EQ(YMM12.z.name(), "%ymm12{z}");
     EXPECT_EQ(YMM12.k0.name(), "%ymm12{%k0}");
     EXPECT_EQ(YMM12.k1.name(), "%ymm12{%k1}");
     EXPECT_EQ(YMM12.k2.name(), "%ymm12{%k2}");
@@ -850,13 +647,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM12.k6.z.name(), "%ymm12{%k6}{z}");
     EXPECT_EQ(YMM12.k7.z.name(), "%ymm12{%k7}{z}");
 
-    EXPECT_EQ(YMM13.z.name(), "%ymm13{z}");
-    EXPECT_EQ(YMM13.z.name(), "%ymm13{z}");
-    EXPECT_EQ(YMM13.z.name(), "%ymm13{z}");
-    EXPECT_EQ(YMM13.z.name(), "%ymm13{z}");
-    EXPECT_EQ(YMM13.z.name(), "%ymm13{z}");
-    EXPECT_EQ(YMM13.z.name(), "%ymm13{z}");
-    EXPECT_EQ(YMM13.z.name(), "%ymm13{z}");
     EXPECT_EQ(YMM13.z.name(), "%ymm13{z}");
     EXPECT_EQ(YMM13.k0.name(), "%ymm13{%k0}");
     EXPECT_EQ(YMM13.k1.name(), "%ymm13{%k1}");
@@ -876,13 +666,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM13.k7.z.name(), "%ymm13{%k7}{z}");
 
     EXPECT_EQ(YMM14.z.name(), "%ymm14{z}");
-    EXPECT_EQ(YMM14.z.name(), "%ymm14{z}");
-    EXPECT_EQ(YMM14.z.name(), "%ymm14{z}");
-    EXPECT_EQ(YMM14.z.name(), "%ymm14{z}");
-    EXPECT_EQ(YMM14.z.name(), "%ymm14{z}");
-    EXPECT_EQ(YMM14.z.name(), "%ymm14{z}");
-    EXPECT_EQ(YMM14.z.name(), "%ymm14{z}");
-    EXPECT_EQ(YMM14.z.name(), "%ymm14{z}");
     EXPECT_EQ(YMM14.k0.name(), "%ymm14{%k0}");
     EXPECT_EQ(YMM14.k1.name(), "%ymm14{%k1}");
     EXPECT_EQ(YMM14.k2.name(), "%ymm14{%k2}");
@@ -900,13 +683,6 @@ TEST(CpuRegister, ymm)
     EXPECT_EQ(YMM14.k6.z.name(), "%ymm14{%k6}{z}");
     EXPECT_EQ(YMM14.k7.z.name(), "%ymm14{%k7}{z}");
 
-    EXPECT_EQ(YMM15.z.name(), "%ymm15{z}");
-    EXPECT_EQ(YMM15.z.name(), "%ymm15{z}");
-    EXPECT_EQ(YMM15.z.name(), "%ymm15{z}");
-    EXPECT_EQ(YMM15.z.name(), "%ymm15{z}");
-    EXPECT_EQ(YMM15.z.name(), "%ymm15{z}");
-    EXPECT_EQ(YMM15.z.name(), "%ymm15{z}");
-    EXPECT_EQ(YMM15.z.name(), "%ymm15{z}");
     EXPECT_EQ(YMM15.z.name(), "%ymm15{z}");
     EXPECT_EQ(YMM15.k0.name(), "%ymm15{%k0}");
     EXPECT_EQ(YMM15.k1.name(), "%ymm15{%k1}");
