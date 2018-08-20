@@ -29,3 +29,12 @@ TEST(Immediate, imm32)
     imm32 v1 { 0xFFFFFFFF };
     EXPECT_EQ(v1.to_str(), "$0xFFFFFFFF");
 }
+
+TEST(Immediate, imm64)
+{
+    imm64 v0 { 0 };
+    EXPECT_EQ(v0.to_str(), "$0x0000000000000000");
+
+    imm64 v1 { 0xFFFFFFFFFFFFFFFF };
+    EXPECT_EQ(v1.to_str(), "$0xFFFFFFFFFFFFFFFF");
+}
