@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include <cppasm.h>
-#include "asmstr.h"
 
 
 TEST(Immediate, imm8)
