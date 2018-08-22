@@ -154,6 +154,7 @@
     <ClCompile Include="..\..\tests\test_Instruction9.cpp" />
     <ClCompile Include="..\..\tests\test_m16.cpp" />
     <ClCompile Include="..\..\tests\test_m32.cpp" />
+    <ClCompile Include="..\..\tests\test_m64.cpp" />
     <ClCompile Include="..\..\tests\test_reg.cpp" />
   </ItemGroup>
   <ItemGroup>
