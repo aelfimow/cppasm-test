@@ -152,7 +152,6 @@
     <ClCompile Include="..\..\tests\test_Instruction7.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction8.cpp" />
     <ClCompile Include="..\..\tests\test_Instruction9.cpp" />
-    <ClCompile Include="..\..\tests\test_m.cpp" />
     <ClCompile Include="..\..\tests\test_m16.cpp" />
     <ClCompile Include="..\..\tests\test_reg.cpp" />
   </ItemGroup>
