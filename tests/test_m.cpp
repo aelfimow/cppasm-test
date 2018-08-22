@@ -2,11 +2,16 @@
 #include <cppasm.h>
 
 
-TEST(Memory, m8)
+TEST(Memory, m8_empty)
 {
     m8 addr;
 
     EXPECT_EQ(addr.to_str(), "()");
+}
+
+TEST(Memory, m8_base)
+{
+    m8 addr;
 
     EXPECT_EQ(addr.base(EAX).to_str(), "(%eax)");
     EXPECT_EQ(addr.base(EBX).to_str(), "(%ebx)");
@@ -24,6 +29,11 @@ TEST(Memory, m8)
     EXPECT_EQ(addr.base(R13D).to_str(), "(%r13d)");
     EXPECT_EQ(addr.base(R14D).to_str(), "(%r14d)");
     EXPECT_EQ(addr.base(R15D).to_str(), "(%r15d)");
+}
+
+TEST(Memory, m8_base_index)
+{
+    m8 addr;
 
     EXPECT_EQ(addr.base(EAX).index(EAX).to_str(), "(%eax, %eax)");
     EXPECT_EQ(addr.base(EAX).index(EBX).to_str(), "(%eax, %ebx)");
@@ -296,6 +306,11 @@ TEST(Memory, m8)
     EXPECT_EQ(addr.base(R15D).index(R13D).to_str(), "(%r15d, %r13d)");
     EXPECT_EQ(addr.base(R15D).index(R14D).to_str(), "(%r15d, %r14d)");
     EXPECT_EQ(addr.base(R15D).index(R15D).to_str(), "(%r15d, %r15d)");
+}
+
+TEST(Memory, m8_base_index_scale)
+{
+    m8 addr;
 
     EXPECT_EQ(addr.base(EAX).index(EAX).scale(1).to_str(), "(%eax, %eax, 1)");
     EXPECT_EQ(addr.base(EAX).index(EBX).scale(2).to_str(), "(%eax, %ebx, 2)");
