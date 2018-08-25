@@ -4,6 +4,6 @@ generator using [googletest](https://github.com/google/googletest) framework.
 
 # Results
 ```
-[==========] 170 tests from 17 test cases ran. (1869 ms total)
-[  PASSED  ] 170 tests.
+[==========] 172 tests from 17 test cases ran. (1632 ms total)
+[  PASSED  ] 172 tests.
 ```
