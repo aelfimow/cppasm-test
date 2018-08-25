@@ -1584,3 +1584,14 @@ TEST(Instruction2, Type42)
     VINSERTI64X4(ZMM0.k1.z, ZMM1, addr, mask);
     EXPECT_EQ(asmstr(), "vinserti64x4 $0x0F, (%rbx), %zmm1, %zmm0{%k1}{z}");
 }
+
+TEST(Instruction2, Type43)
+{
+    m32 addr { EDX };
+
+    UD1(EAX, EAX);
+    EXPECT_EQ(asmstr(), "ud1 %eax, %eax");
+
+    UD1(EAX, addr);
+    EXPECT_EQ(asmstr(), "ud1 (%edx), %eax");
+}

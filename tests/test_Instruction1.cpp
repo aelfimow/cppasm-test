@@ -143,9 +143,6 @@ TEST(Instruction1, Type1)
     UD();
     EXPECT_EQ(asmstr(), ".byte 0x0F, 0xFF");
 
-    UD1();
-    EXPECT_EQ(asmstr(), "ud1");
-
     UD2();
     EXPECT_EQ(asmstr(), "ud2");
 
