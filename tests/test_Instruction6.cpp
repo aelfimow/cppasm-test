@@ -740,3 +740,22 @@ TEST(Instruction6, Type7)
     VBROADCASTI32X2(ZMM0.k1.z, XMM1);
     EXPECT_EQ(asmstr(), "vbroadcasti32x2 %xmm1, %zmm0{%k1}{z}");
 }
+
+TEST(Instruction6, Type8)
+{
+    m256 addr1 { EBX };
+    m32 addr2 { EDX };
+
+    VPERMD(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vpermd %ymm2, %ymm1, %ymm0");
+    VPERMD(YMM0, YMM1, addr1);
+    EXPECT_EQ(asmstr(), "vpermd (%ebx), %ymm1, %ymm0");
+    VPERMD(YMM0, YMM1, addr2.broadcast(1, 8));
+    EXPECT_EQ(asmstr(), "vpermd (%edx){1to8}, %ymm1, %ymm0");
+    VPERMD(ZMM0, ZMM1, ZMM2);
+    EXPECT_EQ(asmstr(), "vpermd %zmm2, %zmm1, %zmm0");
+    VPERMD(ZMM0, ZMM1, addr1);
+    EXPECT_EQ(asmstr(), "vpermd (%ebx), %zmm1, %zmm0");
+    VPERMD(ZMM0, ZMM1, addr2.broadcast(1, 16));
+    EXPECT_EQ(asmstr(), "vpermd (%edx){1to16}, %zmm1, %zmm0");
+}
