@@ -759,3 +759,52 @@ TEST(Instruction6, Type8)
     VPERMD(ZMM0, ZMM1, addr2.broadcast(1, 16));
     EXPECT_EQ(asmstr(), "vpermd (%edx){1to16}, %zmm1, %zmm0");
 }
+
+TEST(Instruction6, Type9)
+{
+    m128 addr1 { RBX };
+    m256 addr2 { RCX };
+    m512 addr3 { RDX };
+
+    VPERMW(XMM0, XMM1, XMM1);
+    EXPECT_EQ(asmstr(), "vpermw %xmm1, %xmm1, %xmm0");
+    VPERMW(XMM0.k1, XMM1, XMM1);
+    EXPECT_EQ(asmstr(), "vpermw %xmm1, %xmm1, %xmm0{%k1}");
+    VPERMW(XMM0.k1.z, XMM1, XMM1);
+    EXPECT_EQ(asmstr(), "vpermw %xmm1, %xmm1, %xmm0{%k1}{z}");
+
+    VPERMW(XMM0, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vpermw (%rbx), %xmm1, %xmm0");
+    VPERMW(XMM0.k1, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vpermw (%rbx), %xmm1, %xmm0{%k1}");
+    VPERMW(XMM0.k1.z, XMM1, addr1);
+    EXPECT_EQ(asmstr(), "vpermw (%rbx), %xmm1, %xmm0{%k1}{z}");
+
+    VPERMW(YMM0, YMM1, YMM1);
+    EXPECT_EQ(asmstr(), "vpermw %ymm1, %ymm1, %ymm0");
+    VPERMW(YMM0.k1, YMM1, YMM1);
+    EXPECT_EQ(asmstr(), "vpermw %ymm1, %ymm1, %ymm0{%k1}");
+    VPERMW(YMM0.k1.z, YMM1, YMM1);
+    EXPECT_EQ(asmstr(), "vpermw %ymm1, %ymm1, %ymm0{%k1}{z}");
+
+    VPERMW(YMM0, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vpermw (%rcx), %ymm1, %ymm0");
+    VPERMW(YMM0.k1, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vpermw (%rcx), %ymm1, %ymm0{%k1}");
+    VPERMW(YMM0.k1.z, YMM1, addr2);
+    EXPECT_EQ(asmstr(), "vpermw (%rcx), %ymm1, %ymm0{%k1}{z}");
+
+    VPERMW(ZMM0, ZMM1, ZMM1);
+    EXPECT_EQ(asmstr(), "vpermw %zmm1, %zmm1, %zmm0");
+    VPERMW(ZMM0.k1, ZMM1, ZMM1);
+    EXPECT_EQ(asmstr(), "vpermw %zmm1, %zmm1, %zmm0{%k1}");
+    VPERMW(ZMM0.k1.z, ZMM1, ZMM1);
+    EXPECT_EQ(asmstr(), "vpermw %zmm1, %zmm1, %zmm0{%k1}{z}");
+
+    VPERMW(ZMM0, ZMM1, addr3);
+    EXPECT_EQ(asmstr(), "vpermw (%rdx), %zmm1, %zmm0");
+    VPERMW(ZMM0.k1, ZMM1, addr3);
+    EXPECT_EQ(asmstr(), "vpermw (%rdx), %zmm1, %zmm0{%k1}");
+    VPERMW(ZMM0.k1.z, ZMM1, addr3);
+    EXPECT_EQ(asmstr(), "vpermw (%rdx), %zmm1, %zmm0{%k1}{z}");
+}
