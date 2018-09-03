@@ -1,9 +1,15 @@
 CXXFLAGS += -O2
-CXXFLAGS += -Wall
-CXXFLAGS += -Wextra
-CXXFLAGS += -pedantic
-CXXFLAGS += -Weffc++
+# CXXFLAGS += -Wall
+# CXXFLAGS += -Wextra
+# CXXFLAGS += -pedantic
+# CXXFLAGS += -Weffc++
 CXXFLAGS += -std=c++17
+
+CXXFLAGS += -I../googletest/include
+CXXFLAGS += -I../../cppasm/src
+
+GTEST_OBJ = ../googletest/gtest-all.o
+CPPASM_OBJ = ../../cppasm/src/obj/*.o
 
 OBJDIR = ./obj
 
@@ -15,6 +21,7 @@ OBJDIR = ./obj
 .PHONY: t4
 
 all: a t1 t2 t3 t4
+	${CXX} ${GTEST_OBJ} ${CPPASM_OBJ} ${OBJDIR}/*.o -o cppasm-test.exe
 	@echo No errors
 
 a:
