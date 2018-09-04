@@ -758,6 +758,19 @@ TEST(Instruction6, Type8)
     EXPECT_EQ(asmstr(), "vpermd (%ebx), %zmm1, %zmm0");
     VPERMD(ZMM0, ZMM1, addr2.broadcast(1, 16));
     EXPECT_EQ(asmstr(), "vpermd (%edx){1to16}, %zmm1, %zmm0");
+
+    VPERMPS(YMM0, YMM1, YMM2);
+    EXPECT_EQ(asmstr(), "vpermps %ymm2, %ymm1, %ymm0");
+    VPERMPS(YMM0, YMM1, addr1);
+    EXPECT_EQ(asmstr(), "vpermps (%ebx), %ymm1, %ymm0");
+    VPERMPS(YMM0, YMM1, addr2.broadcast(1, 8));
+    EXPECT_EQ(asmstr(), "vpermps (%edx){1to8}, %ymm1, %ymm0");
+    VPERMPS(ZMM0, ZMM1, ZMM2);
+    EXPECT_EQ(asmstr(), "vpermps %zmm2, %zmm1, %zmm0");
+    VPERMPS(ZMM0, ZMM1, addr1);
+    EXPECT_EQ(asmstr(), "vpermps (%ebx), %zmm1, %zmm0");
+    VPERMPS(ZMM0, ZMM1, addr2.broadcast(1, 16));
+    EXPECT_EQ(asmstr(), "vpermps (%edx){1to16}, %zmm1, %zmm0");
 }
 
 TEST(Instruction6, Type9)
