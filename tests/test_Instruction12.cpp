@@ -281,4 +281,29 @@ TEST(Instruction12, Type5)
     EXPECT_EQ(asmstr(), "vpermpd (%rbx), %zmm1, %zmm2");
     VPERMPD(ZMM2, ZMM1, addr2.broadcast(1, 8));
     EXPECT_EQ(asmstr(), "vpermpd (%rcx){1to8}, %zmm1, %zmm2");
+
+    VPERMQ(YMM2, YMM1, mask);
+    EXPECT_EQ(asmstr(), "vpermq $0xFF, %ymm1, %ymm2");
+    VPERMQ(YMM2, addr1, mask);
+    EXPECT_EQ(asmstr(), "vpermq $0xFF, (%rdx), %ymm2");
+    VPERMQ(YMM2, addr2.broadcast(1, 4), mask);
+    EXPECT_EQ(asmstr(), "vpermq $0xFF, (%rcx){1to4}, %ymm2");
+    VPERMQ(ZMM2, ZMM1, mask);
+    EXPECT_EQ(asmstr(), "vpermq $0xFF, %zmm1, %zmm2");
+    VPERMQ(ZMM2, addr3, mask);
+    EXPECT_EQ(asmstr(), "vpermq $0xFF, (%rbx), %zmm2");
+    VPERMQ(ZMM2, addr2.broadcast(1, 8), mask);
+    EXPECT_EQ(asmstr(), "vpermq $0xFF, (%rcx){1to8}, %zmm2");
+    VPERMQ(YMM2, YMM1, YMM7);
+    EXPECT_EQ(asmstr(), "vpermq %ymm7, %ymm1, %ymm2");
+    VPERMQ(YMM2, YMM1, addr1);
+    EXPECT_EQ(asmstr(), "vpermq (%rdx), %ymm1, %ymm2");
+    VPERMQ(YMM2, YMM1, addr2.broadcast(1, 4));
+    EXPECT_EQ(asmstr(), "vpermq (%rcx){1to4}, %ymm1, %ymm2");
+    VPERMQ(ZMM2, ZMM1, ZMM7);
+    EXPECT_EQ(asmstr(), "vpermq %zmm7, %zmm1, %zmm2");
+    VPERMQ(ZMM2, ZMM1, addr3);
+    EXPECT_EQ(asmstr(), "vpermq (%rbx), %zmm1, %zmm2");
+    VPERMQ(ZMM2, ZMM1, addr2.broadcast(1, 8));
+    EXPECT_EQ(asmstr(), "vpermq (%rcx){1to8}, %zmm1, %zmm2");
 }
