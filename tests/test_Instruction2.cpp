@@ -1441,6 +1441,11 @@ TEST(Instruction2, Type36)
     EXPECT_EQ(asmstr(), "vperm2f128 $0xFF, %ymm2, %ymm1, %ymm0");
     VPERM2F128(YMM0, YMM1, addr, mask);
     EXPECT_EQ(asmstr(), "vperm2f128 $0xFF, (%rax), %ymm1, %ymm0");
+
+    VPERM2I128(YMM0, YMM1, YMM2, mask);
+    EXPECT_EQ(asmstr(), "vperm2i128 $0xFF, %ymm2, %ymm1, %ymm0");
+    VPERM2I128(YMM0, YMM1, addr, mask);
+    EXPECT_EQ(asmstr(), "vperm2i128 $0xFF, (%rax), %ymm1, %ymm0");
 }
 
 TEST(Instruction2, Type37)
