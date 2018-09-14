@@ -270,3 +270,31 @@ TEST(Instruction9, Type5)
     VALIGND(ZMM1, ZMM2, addr4.broadcast(1, 16), value);
     EXPECT_EQ(asmstr(), "valignd $0x01, (%rdx){1to16}, %zmm2, %zmm1");
 }
+
+TEST(Instruction9, Type6)
+{
+    imm8 value { 1 };
+    m128 addr1 { RAX };
+    m256 addr2 { RBX };
+    m512 addr3 { RCX };
+    m64 addr4 { RDX };
+
+    VALIGNQ(XMM1, XMM2, XMM3, value);
+    EXPECT_EQ(asmstr(), "valignq $0x01, %xmm3, %xmm2, %xmm1");
+    VALIGNQ(XMM1, XMM2, addr1, value);
+    EXPECT_EQ(asmstr(), "valignq $0x01, (%rax), %xmm2, %xmm1");
+    VALIGNQ(XMM1, XMM2, addr4.broadcast(1, 2), value);
+    EXPECT_EQ(asmstr(), "valignq $0x01, (%rdx){1to2}, %xmm2, %xmm1");
+    VALIGNQ(YMM1, YMM2, YMM3, value);
+    EXPECT_EQ(asmstr(), "valignq $0x01, %ymm3, %ymm2, %ymm1");
+    VALIGNQ(YMM1, YMM2, addr2, value);
+    EXPECT_EQ(asmstr(), "valignq $0x01, (%rbx), %ymm2, %ymm1");
+    VALIGNQ(YMM1, YMM2, addr4.broadcast(1, 4), value);
+    EXPECT_EQ(asmstr(), "valignq $0x01, (%rdx){1to4}, %ymm2, %ymm1");
+    VALIGNQ(ZMM1, ZMM2, ZMM3, value);
+    EXPECT_EQ(asmstr(), "valignq $0x01, %zmm3, %zmm2, %zmm1");
+    VALIGNQ(ZMM1, ZMM2, addr3, value);
+    EXPECT_EQ(asmstr(), "valignq $0x01, (%rcx), %zmm2, %zmm1");
+    VALIGNQ(ZMM1, ZMM2, addr4.broadcast(1, 8), value);
+    EXPECT_EQ(asmstr(), "valignq $0x01, (%rdx){1to8}, %zmm2, %zmm1");
+}
