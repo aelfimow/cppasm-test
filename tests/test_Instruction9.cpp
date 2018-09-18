@@ -298,3 +298,30 @@ TEST(Instruction9, Type6)
     VALIGNQ(ZMM1, ZMM2, addr4.broadcast(1, 8), value);
     EXPECT_EQ(asmstr(), "valignq $0x01, (%rdx){1to8}, %zmm2, %zmm1");
 }
+
+TEST(Instruction9, Type7)
+{
+    m32 addr1 { RAX };
+    m128 addr2 { RBX };
+    m256 addr3 { RCX };
+    m512 addr4 { RDX };
+
+    VBLENDMPS(XMM2, XMM1, XMM0);
+    EXPECT_EQ(asmstr(), "vblendmps %xmm0, %xmm1, %xmm2");
+    VBLENDMPS(XMM2, XMM1, addr2);
+    EXPECT_EQ(asmstr(), "vblendmps (%rbx), %xmm1, %xmm2");
+    VBLENDMPS(XMM2, XMM1, addr1.broadcast(1, 4));
+    EXPECT_EQ(asmstr(), "vblendmps (%rax){1to4}, %xmm1, %xmm2");
+    VBLENDMPS(YMM2, YMM1, YMM0);
+    EXPECT_EQ(asmstr(), "vblendmps %ymm0, %ymm1, %ymm2");
+    VBLENDMPS(YMM2, YMM1, addr3);
+    EXPECT_EQ(asmstr(), "vblendmps (%rcx), %ymm1, %ymm2");
+    VBLENDMPS(YMM2, YMM1, addr1.broadcast(1, 8));
+    EXPECT_EQ(asmstr(), "vblendmps (%rax){1to8}, %ymm1, %ymm2");
+    VBLENDMPS(ZMM2, ZMM1, ZMM0);
+    EXPECT_EQ(asmstr(), "vblendmps %zmm0, %zmm1, %zmm2");
+    VBLENDMPS(ZMM2, ZMM1, addr4);
+    EXPECT_EQ(asmstr(), "vblendmps (%rdx), %zmm1, %zmm2");
+    VBLENDMPS(ZMM2, ZMM1, addr1.broadcast(1, 16));
+    EXPECT_EQ(asmstr(), "vblendmps (%rax){1to16}, %zmm1, %zmm2");
+}
